@@ -7,23 +7,22 @@ We are planning to create a website to facilitate the buying/selling of sneakers
 <h2> Task Requirements </h2> 
 
 <h3> Minimum Viable Project Requirements </h3> 
-3UI (seller, buyer, admin)
-Create accounts
-Shoes listing
-Basic search (Non Complex query search)
+* 3UI (seller, buyer, admin)
+* Create accounts
+* Shoes listing
+* Basic search (Non Complex query search)
 
 <h3> Standard Requirements </h3> 
-Search with complex filters (size, brand, price, etc)
-Seller reviews 
-View seller profile
-View price history 
-View popular listings 
-Tracking sale process (payment transactions, Delivery)
-“Item tags” (ex. brand, name, product)
-Upcoming release info
+* Search with complex filters (size, brand, price, etc)
+* Seller reviews 
+* View seller profile
+* View price history 
+* View popular listings 
+* Tracking sale process (payment transactions, Delivery)
+* Upcoming release info
 
 <h3> Stretch Requirements </h3> 
-Recommend sneakers
-Display price chart
-360 degree shoes image
+* Recommend sneakers
+* Display price chart
+* 360 degree shoes image
 
