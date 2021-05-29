@@ -34,11 +34,11 @@ We are planning to create a website to facilitate the buying/selling of sneakers
 
 ## Task Breakdown ##
 
-### Create Accounts ### 
+### Register/Login ### 
 * Registration page UI 
 * Login page UI 
-* Storing login data
-* Authenticating login data
+* Storing login data in DB
+* User authentication
 
 ### Shoe Listing ### 
 * Page UI 
