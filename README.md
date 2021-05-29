@@ -19,18 +19,19 @@ We are planning to create a website to facilitate the buying/selling of sneakers
 * Basic search (Non Complex query search)
 
 ### Standard Requirements ###
-* Search with complex filters (size, brand, price, etc)\n
+* Search with complex filters (size, brand, price, etc)
 * Seller reviews 
 * View seller profile
 * View price history 
 * View popular listings 
-* Tracking sale process (payment transactions, Delivery)
+* Implement payment
 * Upcoming release info
 
 ### Stretch Requirements ###
 * Recommend sneakers
 * Display price chart
 * 360 degree shoes image
+* Tracking sale process (payment transactions, Delivery)
 
 ## Task Breakdown ##
 
