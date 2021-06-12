@@ -1,11 +1,22 @@
-import {Button, Card, CardMedia, Container, Input, List, ListItem} from "@material-ui/core";
+import { Button, Card, CardMedia, Container, Input, List, ListItem } from "@material-ui/core";
 import React from "react";
-import {ThemeProvider} from "@material-ui/core/styles";
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
+
+const loginTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#4caf50'
+        },
+        secondary: {
+            main: '#FFFFFF'
+        }
+    },
+});
 
 function Register(props) {
     return <Container maxWidth={"xs"} >
         <ThemeProvider theme={loginTheme}>
-            <Card style={{padding: "1em"}}>
+            <Card style={{ padding: "1em" }}>
                 <CardMedia>
                     logo goes here
                 </CardMedia>
@@ -29,3 +40,4 @@ function Register(props) {
         </ThemeProvider>
     </Container>
 }
+export default Register;
