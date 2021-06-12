@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
             width: "100%"
         },
         [theme.breakpoints.up("md")]: {
-            width: "33%"
         },
     },
 }));
@@ -99,18 +98,20 @@ const shoes = [
 export default function ReleasesGrid() {
     const classes = useStyles();
     return (
-        <Carousel
-            className={classes.root}
-            autoPlay={false}
-            animation={"slide"}
-            indicators={false}
-            NavButtonsAlwaysVisible={true}
-            navButtonsAlwaysInvisible={false}
-            timeout={500}
-        >
-            {shoes.map((shoe => <ShoesCard oShoes={shoe}/>))}
+        <div className='shoesListDiv'>
+            <Carousel
+                className={classes.root}
+                autoPlay={false}
+                animation={"slide"}
+                indicators={false}
+                NavButtonsAlwaysVisible={true}
+                navButtonsAlwaysInvisible={false}
+                timeout={500}
+            >
+                {shoes.map((shoe => <ShoesCard oShoes={shoe}/>))}
 
-        </Carousel>
+            </Carousel>
+        </div>
 
 
     )

@@ -6,20 +6,18 @@ import Login from '../../components/login/Login';
 import Register from '../../components/login/Register';
 function Header() {
     return (
-        <section>
             <Router>
                 <section>
                     <Navbar />
                     <Switch>
-                        <Route path="/" exact component={ReleasesGrid} />
-                        <Route path="/home" component={ReleasesGrid} />
+                        <Route path="/"component={ReleasesGrid}/>
+                        <Route path="/home" component={ReleasesGrid}/>
                         <Route path="/login" component={Login} />
                         <Route path="/registration" component={Register} />
                     </Switch>
 
                 </section>
             </Router>
-        </section>
     )
 }
 export default Header;

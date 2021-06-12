@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
         width: "100%"
       },
       [theme.breakpoints.up("md")]: {
-        width: "33%"
       },
     }, 
   }));
@@ -19,25 +18,25 @@ const ReleasesGrid = () => {
     const classes = useStyles();
 
     return (
-        <Carousel
-            className={classes.root}
-            autoPlay={false}
-            animation={"slide"}
-            indicators={false}
-            NavButtonsAlwaysVisible={true}
-            navButtonsAlwaysInvisible={false}
-            timeout={500}
-        >
-            <ReleasesCard/>
-            <ReleasesCard/>
-            <ReleasesCard/>
-            <ReleasesCard/>
-            <ReleasesCard/>
-            <ReleasesCard/>
+        <div className="releaseListDiv">
+            <Carousel
+                className={classes.root}
+                autoPlay={false}
+                animation={"slide"}
+                indicators={false}
+                NavButtonsAlwaysVisible={true}
+                navButtonsAlwaysInvisible={false}
+                timeout={500}
+            >
+                <ReleasesCard/>
+                <ReleasesCard/>
+                <ReleasesCard/>
+                <ReleasesCard/>
+                <ReleasesCard/>
+                <ReleasesCard/>
 
-        </Carousel>
-        
-
+            </Carousel>
+        </div>
     )
 }
 
