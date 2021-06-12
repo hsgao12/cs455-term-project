@@ -17,7 +17,7 @@ const useStyles = makeStyles({
         width: "100%"
     },
     title: {
-        textAlign: "center", 
+        textAlign: "center",
         ["background-color"]: "#4caf50",
     },
 
@@ -26,8 +26,8 @@ const useStyles = makeStyles({
     },
 
     buyButton: {
-        float: "right", 
-    }, 
+        float: "right",
+    },
 
     content: {
         ["background-color"]: "white",
@@ -38,33 +38,33 @@ const useStyles = makeStyles({
 
 const theme = createMuiTheme({
     palette: {
-      primary: {
-          main: '#4caf50'
-      },
-      secondary: {
-          main: '#FFFFFF'
-      }
+        primary: {
+            main: '#4caf50'
+        },
+        secondary: {
+            main: '#FFFFFF'
+        }
     },
-  });
-  
+});
 
-export default function ReleasesCard() {
+
+export default function ShoesCard(props) {
     const classes = useStyles();
 
     return (
         <Card className={classes.root} variant="outlined">
-            <CardHeader title={"Travis Scott Dunk"} className={classes.title}/>
-            <CardMedia 
-            className={classes.media} 
-            image="/sample-images/travisscottdunk.jpeg"
-            title="Travis Dunk"
+            <CardHeader title={props.oShoes.name} className={classes.title}/>
+            <CardMedia
+                className={classes.media}
+                image= {props.oShoes.img}
+                title= {props.oShoes.name}
             />
             <CardContent className={classes.content}>
                 <Typography variant="h5" className = {classes.dateText}>
-                    June 11
+                    Lowest Asking: {props.oShoes.price}
                 </Typography>
                 <ThemeProvider theme={theme}>
-                    <Button variant="contained" color="primary" className = {classes.buyButton}>Notify Me</Button>
+                    <Button variant="contained" color="primary" className = {classes.buyButton}>Buy Now</Button>
                 </ThemeProvider>
             </CardContent>
 
