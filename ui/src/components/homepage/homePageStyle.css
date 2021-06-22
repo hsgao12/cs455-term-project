@@ -1,0 +1,8 @@
+.infolists {
+    display: flex;
+    justify-content: center;
+}
+
+.infolists .box {
+    inline-size: 500px;
+}
