@@ -6,7 +6,9 @@ import {
   Input,
   List,
   ListItem,
+  Paper,
 } from '@material-ui/core';
+
 import React, { useState } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import PasswordInput from './inputs/PasswordInput';
@@ -24,12 +26,24 @@ const loginTheme = createMuiTheme({
   },
 });
 
+const useStyles = makeStyles({
+  registerBody: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 350,
+  },
+});
+
 function Register(props) {
+  const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   return (
-    <Container maxWidth={'xs'}>
+    <Paper className={classes.registerBody}>
       <ThemeProvider theme={loginTheme}>
         <Card style={{ padding: '1em' }}>
           <CardMedia>logo goes here</CardMedia>
@@ -49,7 +63,7 @@ function Register(props) {
           </List>
         </Card>
       </ThemeProvider>
-    </Container>
+    </Paper>
   );
 }
 export default Register;
