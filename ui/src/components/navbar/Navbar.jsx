@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import Login from "../login/Login";
 import Register from "../login/Register";
 
+
  function Navbar() {
      const [loginFormOpen,setLoginFormOpen] = useState(false);
      const [registerFormOpen,setRegisterFormOpen] = useState(false);
@@ -13,12 +14,13 @@ import Register from "../login/Register";
     return (<div className="NavBar">
         <div className="leftSide">
         <ul className="TopNav">
-                <Link className="navList" to="/home">
-                <li className ="ListStyle">Home</li>
+                <Link className="navList" to="/">
+                    <li className ="ListStyle">Home</li>
                 </Link>
-                <Link className="navList" to="/about">
-                <li className ="ListStyle">About</li>
+                <Link className="navList" to="/productPage">
+                    <li className ="ListStyle">productDetail</li>
                 </Link>
+
                 </ul>
         </div>
         <div className="rightSide">

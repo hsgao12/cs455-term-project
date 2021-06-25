@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import ReleasesGrid from './components/upcoming-releases/ReleasesCarousel';
-import Login from './components/login/Login';
-import { Modal } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
-import Register from './components/login/Register';
 import HomePage from './components/homepage/HomePage';
-
 import { createStore } from 'redux';
-
 import authReducer from './reducers/authReducer';
-
 import { Provider } from 'react-redux';
+import ProductDetailPage from "./components/productDetailPage/productDetailPage";
 
 const store = createStore(
   authReducer,
@@ -25,8 +19,8 @@ function App() {
         <Router>
           <Navbar />
           <Switch>
+            <Route path="/productPage" component={ProductDetailPage} />
             <Route path="/" component={HomePage} />
-            <Route path="/home" component={HomePage} />
           </Switch>
         </Router>
       </Provider>
