@@ -9,11 +9,14 @@ import {
   Paper,
 } from '@material-ui/core';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import PasswordInput from './inputs/PasswordInput';
 import EmailInput from './inputs/EmailInput';
 import ConfirmPasswordInput from './inputs/ConfirmPasswordInput';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { signup, setError, setLoading } from '../../store/actions/authActions';
 
 const loginTheme = createMuiTheme({
   palette: {
@@ -42,6 +45,24 @@ function Register(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setError(''));
+      }
+    };
+  }, [error, dispatch]);
+
+  const clickHandler = (e) => {
+    setLoading(true);
+    dispatch(
+      signup({ email: email, password: password }, () => setLoading(false))
+    );
+  };
+
   return (
     <Paper className={classes.registerBody}>
       <ThemeProvider theme={loginTheme}>
@@ -56,7 +77,11 @@ function Register(props) {
               setConfirmPassword={setConfirmPassword}
             />
             <ListItem>
-              <Button color={'primary'} variant={'contained'}>
+              <Button
+                color={'primary'}
+                variant={'contained'}
+                onClick={clickHandler}
+              >
                 Register
               </Button>
             </ListItem>
