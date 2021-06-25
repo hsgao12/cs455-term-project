@@ -9,6 +9,7 @@ const RegisterButton = () => {
       <Button
         onClick={() => setRegisterFormOpen(true)}
         style={{ color: 'White' }}
+        size={"large"}
       >
         Register
       </Button>

@@ -11,7 +11,13 @@ import Modal from "@material-ui/core/Modal";
 function LoginButton() {
     const [loginFormOpen, setLoginFormOpen] = useState(false);
     return <React.Fragment>
-        <Button onClick={()=>setLoginFormOpen(true)} style={{color:"White"}}>Login</Button>
+        <Button
+            onClick={()=>setLoginFormOpen(true)}
+            style={{color:"White"}}
+            size={"large"}
+        >
+            Login
+        </Button>
         <Modal open={loginFormOpen} onClose={()=>setLoginFormOpen(false)}>
             <Login/>
         </Modal>

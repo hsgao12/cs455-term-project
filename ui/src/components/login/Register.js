@@ -44,6 +44,7 @@ function Register(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsAreEqual,setPasswordsAreEqual] = useState(true);
 
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.auth);
@@ -55,6 +56,10 @@ function Register(props) {
       }
     };
   }, [error, dispatch]);
+
+  useEffect(()=>{
+    setPasswordsAreEqual(password === confirmPassword);
+  },[password,confirmPassword]);
 
   const clickHandler = (e) => {
     setLoading(true);
@@ -81,9 +86,11 @@ function Register(props) {
                 color={'primary'}
                 variant={'contained'}
                 onClick={clickHandler}
+                disabled={!passwordsAreEqual}
               >
                 Register
               </Button>
+              {!passwordsAreEqual && <Paper style={{color:"red", marginLeft:"0.3em",fontSize:"0.8em",padding:"0.3em"}}>Passwords must be equal</Paper>}
             </ListItem>
           </List>
         </Card>
