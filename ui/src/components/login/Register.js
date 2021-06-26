@@ -73,10 +73,6 @@ function Register(props) {
           <CardMedia>logo goes here</CardMedia>
 
           <List>
-            <Alert severity="warning">
-              <AlertTitle>Warning</AlertTitle>
-              Warning Alert
-            </Alert>
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput password={password} setPassword={setPassword} />
             <ConfirmPasswordInput
