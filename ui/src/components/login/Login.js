@@ -6,7 +6,6 @@ import { signin, setError, setLoading } from '../../store/actions/authActions';
 
 import {
   Button,
-  CardMedia,
   List,
   ListItem,
   Typography

@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import './Navbar.css';
 import {Link} from 'react-router-dom';
-import Modal from '@material-ui/core/Modal';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Login from '../login/Login';
-import Register from '../login/Register';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
 import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
+
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles({
@@ -46,13 +44,13 @@ const useStyles = makeStyles({
 function Navbar(props) {
     const [loginFormOpen, setLoginFormOpen] = useState(false);
     //TODO change this to get profile from something, maybe pass it in as a prop?
-    const [profile, setProfile] = useState(null); //null means not logged in,
+    const {authenticated} = useSelector((state) => state.auth);
     const styles = useStyles();
 
     return (
         <AppBar className={styles.root} position={"static"}>
             <div className={styles.leftSide}>
-                <Link to="/home" className={styles.button}>
+                <Link to="/" className={styles.button}>
                     Home
                 </Link>
                 <Link to="/about" className={styles.button}>
@@ -61,8 +59,10 @@ function Navbar(props) {
             </div>
             <div style={{display:"grid",placeContent:"center"}}>LOGO HERE</div>
             <div className={styles.rightSide}>
-                {profile ? (
-                    <React.Fragment></React.Fragment>
+                {authenticated ? (
+                    <React.Fragment>
+                        <Link to="/profile" className={styles.button}> Profile </Link>
+                    </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <LoginButton/>
