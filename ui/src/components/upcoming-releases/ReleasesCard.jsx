@@ -26,7 +26,8 @@ const useStyles = makeStyles({
     },
 
     buyButton: {
-        float: "right", 
+        float: "right",
+        zIndex:100 /*to prevent the carousel buttons from covering the buy buttons*/
     }, 
 
     content: {
