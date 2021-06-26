@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { signin, setError, setLoading } from '../../store/actions/authActions';
+
+
+
 import {
   Button,
-  CardHeader,
   CardMedia,
-  CssBaseline,
-  Input,
   List,
   ListItem,
-  TextField,
+  Typography
 } from '@material-ui/core';
-import { Container, Grid } from '@material-ui/core';
+
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Card, Paper } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+
 import EmailInput from './inputs/EmailInput';
 import PasswordInput from './inputs/PasswordInput';
+import ErrorAlert from '../ErrorAlert';
+
 
 const loginTheme = createMuiTheme({
   palette: {
@@ -36,18 +39,46 @@ const useStyles = makeStyles({
     transform: 'translate(-50%, -50%)',
     width: 350,
   },
+  headerText: {
+    textAlign: 'center',
+    marginBottom: '15px'
+  }
 });
 
 function Login(props) {
+  const setLoginFormOpen = props.setLoginFormOpen;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const styles = useStyles();
+
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const { error, loading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setError(''));
+      }
+    };
+  }, [error, dispatch]);
+
+  const clickHandler = (e) => {
+    if (error) {
+      dispatch(setError(''));
+    }
+    dispatch(setLoading(true));
+    dispatch(
+      signin({ email: email, password: password }, () => dispatch(setLoading(false)), setLoginFormOpen)
+    );
+  };
 
   return (
-    <Paper className={styles.loginBody}>
+    <Paper className={classes.loginBody}>
       <ThemeProvider theme={loginTheme}>
         <Card style={{ padding: '1em' }}>
-          <CardMedia>logo goes here</CardMedia>
+          <Typography variant="h5" className={classes.headerText}> Login </Typography>
+          {error != '' && <ErrorAlert error={error} />}
           <List>
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput
@@ -60,8 +91,10 @@ function Login(props) {
                 className="loginButton"
                 color={'primary'}
                 variant={'contained'}
+                onClick={clickHandler}
+                disabled={loading}
               >
-                Login
+                {loading ? "Loading" : "Login"}
               </Button>
             </ListItem>
           </List>

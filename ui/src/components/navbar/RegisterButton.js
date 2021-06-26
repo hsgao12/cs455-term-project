@@ -14,7 +14,7 @@ const RegisterButton = () => {
         Register
       </Button>
       <Modal open={registerFormOpen} onClose={() => setRegisterFormOpen(false)}>
-        <Register />
+        <Register setRegisterFormOpen={setRegisterFormOpen}/>
       </Modal>
     </React.Fragment>
   );
