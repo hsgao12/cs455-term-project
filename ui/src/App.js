@@ -18,8 +18,8 @@ function App() {
           <Switch>
             <Route path="/productPage" component={ProductDetailPage} />
             <Route path="/" component={HomePage} />
-            <Route path="/home" component={HomePage} />
-            <Route path="/register" component={Register} />
+            {/* <Route path="/home" component={HomePage} />
+            <Route path="/register" component={Register} /> */}
           </Switch>
         </Provider>
       </Router>
