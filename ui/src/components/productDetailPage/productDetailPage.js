@@ -1,6 +1,7 @@
 import React from 'react';
 import "./productDetailStyle.css";
 import SizeQuantityPriceTable from "./sizeQuantityPriceTable";
+import SuggestProductList from "../suggestProductList/suggestProductList";
 
 const shoes =     {
     id: "0001",
@@ -36,6 +37,7 @@ export default function ProductDetailPage(props) {
                     <button className="buy">Click to Buy</button>
 
                 </div>
+                <SuggestProductList/>
             </div>
         </div>
     );

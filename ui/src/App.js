@@ -16,7 +16,7 @@ function App() {
         <Provider store={store}>
           <Navbar />
           <Switch>
-            <Route path="/productPage" component={ProductDetailPage} />
+            <Route path="/productDetail" component={ProductDetailPage} />
             <Route path="/" component={HomePage} />
             {/* <Route path="/home" component={HomePage} />
             <Route path="/register" component={Register} /> */}

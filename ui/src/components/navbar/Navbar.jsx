@@ -55,8 +55,8 @@ function Navbar(props) {
                 <Link to="/home" className={styles.button}>
                     Home
                 </Link>
-                <Link to="/about" className={styles.button}>
-                    About
+                <Link to="/productDetail" className={styles.button}>
+                    product
                 </Link>
             </div>
             <div style={{display:"grid",placeContent:"center"}}>LOGO HERE</div>
