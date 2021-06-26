@@ -11,7 +11,7 @@ import {
 
 import firebase from '../../auth/firebase';
 
-export const signup = (data, onError) => {
+export const signup = (data, onError, setRegisterFormOpen) => {
   return async (dispatch) => {
     try {
       const res = await firebase
@@ -36,6 +36,7 @@ export const signup = (data, onError) => {
           type: SET_USER,
           payload: userData,
         });
+        setRegisterFormOpen(false);
       }
     } catch (err) {
       console.log(err);
@@ -71,12 +72,15 @@ export const setLoading = (value) => {
   };
 };
 
-export const signin = (data, onError) => {
+export const signin = (data, onError, setLoginFormOpen) => {
   return async (dispatch) => {
     try {
-      await firebase
+      const res = await firebase
         .auth()
         .signInWithEmailAndPassword(data.email, data.password);
+      dispatch(getUserById(res.user.uid));
+      dispatch(setLoading(false));
+      setLoginFormOpen(false);
     } catch (err) {
       console.log(err);
       onError();

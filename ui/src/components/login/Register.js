@@ -1,13 +1,13 @@
 import {
   Button,
   Card,
-  CardMedia,
-  Container,
-  Input,
   List,
   ListItem,
   Paper,
+  Typography
 } from '@material-ui/core';
+
+import ErrorAlert from '../ErrorAlert';
 
 import React, { useState, useEffect } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -37,17 +37,24 @@ const useStyles = makeStyles({
     transform: 'translate(-50%, -50%)',
     width: 350,
   },
+  headerText: {
+    textAlign: 'center',
+    marginBottom: '15px'
+  }
+
 });
 
 function Register(props) {
+  const setRegisterFormOpen = props.setRegisterFormOpen;
+
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordsAreEqual,setPasswordsAreEqual] = useState(true);
+  const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
 
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     return () => {
@@ -57,42 +64,52 @@ function Register(props) {
     };
   }, [error, dispatch]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setPasswordsAreEqual(password === confirmPassword);
-  },[password,confirmPassword]);
+  }, [password, confirmPassword]);
 
   const clickHandler = (e) => {
-    setLoading(true);
+    if (error) {
+      dispatch(setError(''));
+    }
+    dispatch(setLoading(true));
     dispatch(
-      signup({ email: email, password: password }, () => setLoading(false))
+      signup({ email: email, password: password }, () => dispatch(setLoading(false)), setRegisterFormOpen)
     );
   };
+
+  // TODO: Change from list to grid
 
   return (
     <Paper className={classes.registerBody}>
       <ThemeProvider theme={loginTheme}>
         <Card style={{ padding: '1em' }}>
-          <CardMedia>logo goes here</CardMedia>
-
+          <Typography variant="h5" className={classes.headerText}> Register </Typography>
           <List>
+            {error != '' && <ErrorAlert error={error} />}
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput password={password} setPassword={setPassword} />
             <ConfirmPasswordInput
               confirmPassword={confirmPassword}
               setConfirmPassword={setConfirmPassword}
             />
-            <ListItem>
+            <ListItem alignItems="center">
               <Button
                 color={'primary'}
                 variant={'contained'}
                 onClick={clickHandler}
-                disabled={!passwordsAreEqual}
+                className={classes.button}
+                disabled={!passwordsAreEqual || loading}
               >
-                Register
+                {loading ? "Loading" : "Register"}
               </Button>
-              {!passwordsAreEqual && <Paper style={{color:"red", marginLeft:"0.3em",fontSize:"0.8em",padding:"0.3em"}}>Passwords must be equal</Paper>}
+            </ListItem>
+            <ListItem alignItems="center">
+              {!passwordsAreEqual && <Paper style={{ color: "red", marginLeft: "0.3em", fontSize: "0.8em", padding: "0.3em" }}>Passwords must be equal</Paper>}
+
             </ListItem>
           </List>
+          
         </Card>
       </ThemeProvider>
     </Paper>

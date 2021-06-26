@@ -19,7 +19,7 @@ function LoginButton() {
             Login
         </Button>
         <Modal open={loginFormOpen} onClose={()=>setLoginFormOpen(false)}>
-            <Login/>
+            <Login setLoginFormOpen={setLoginFormOpen}/>
         </Modal>
     </React.Fragment>;
 }
