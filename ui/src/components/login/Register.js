@@ -2,8 +2,6 @@ import {
   Button,
   Card,
   CardMedia,
-  Container,
-  Input,
   List,
   ListItem,
   Paper,
@@ -47,7 +45,7 @@ function Register(props) {
   const [passwordsAreEqual,setPasswordsAreEqual] = useState(true);
 
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     return () => {
@@ -62,9 +60,9 @@ function Register(props) {
   },[password,confirmPassword]);
 
   const clickHandler = (e) => {
-    setLoading(true);
+    dispatch(setLoading(true));
     dispatch(
-      signup({ email: email, password: password }, () => setLoading(false))
+      signup({ email: email, password: password }, () => dispatch(setLoading(false)))
     );
   };
 
@@ -75,6 +73,10 @@ function Register(props) {
           <CardMedia>logo goes here</CardMedia>
 
           <List>
+            <Alert severity="warning">
+              <AlertTitle>Warning</AlertTitle>
+              Warning Alert
+            </Alert>
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput password={password} setPassword={setPassword} />
             <ConfirmPasswordInput
@@ -86,9 +88,9 @@ function Register(props) {
                 color={'primary'}
                 variant={'contained'}
                 onClick={clickHandler}
-                disabled={!passwordsAreEqual}
+                disabled={!passwordsAreEqual || loading}
               >
-                Register
+                {loading ? "Loading" : "Register" }
               </Button>
               {!passwordsAreEqual && <Paper style={{color:"red", marginLeft:"0.3em",fontSize:"0.8em",padding:"0.3em"}}>Passwords must be equal</Paper>}
             </ListItem>

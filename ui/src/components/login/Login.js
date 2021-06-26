@@ -64,11 +64,6 @@ function Login(props) {
                 Login
               </Button>
             </ListItem>
-            {/* <ListItem>
-              <Link to={'/register'}>
-                <a>Don't have an account? Click here to register</a>
-              </Link>
-            </ListItem> */}
           </List>
         </Card>
       </ThemeProvider>
