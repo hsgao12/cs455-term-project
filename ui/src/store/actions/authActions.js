@@ -93,7 +93,7 @@ export const signout = () => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      await firebase.auth.signout();
+      await firebase.auth().signOut();
       dispatch({
         type: SIGN_OUT,
       });
