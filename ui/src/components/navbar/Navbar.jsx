@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import {
+    makeStyles,
+    createMuiTheme,
+    ThemeProvider,
+    useMediaQuery,
+    Menu,
+    MenuList,
+    MenuItem,
+    Popover, ClickAwayListener
+} from '@material-ui/core';
 
-import { Button } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
-import { signout } from '../../store/actions/authActions';
+import {signout} from '../../store/actions/authActions';
+import ContrastNavButton from "./ContrastNavButton";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto auto auto",
-        background: "#333",
+        background: theme.palette.info.main,
+        color: "white",
         fontFamily: "Arial, Helvetica, sans-serif",
         paddingTop: "0.5em",
         paddingBottom: "0.5em"
@@ -25,9 +37,10 @@ const useStyles = makeStyles({
     leftSide: {
         marginLeft: "1em",
         background: "inherit",
-        display: "flex",
         alignContent: "center",
-        textAlign: "center"
+        marginTop: "auto",
+        marginBottom: "auto",
+
     },
     rightSide: {
         marginLeft: "auto",
@@ -35,26 +48,37 @@ const useStyles = makeStyles({
         display: "grid",
         gridTemplateColumns: "auto auto"
     },
+    rightSideSmall: {
+        [theme.breakpoints.up('md')]: {}
+    },
     button: {
         marginTop: "auto",
         marginBottom: "auto",
-        color: "white",
+        color: theme.palette.info.contrastText,
         fontSize: "1.2em",
         textAlign: "center",
         marginLeft: "2em"
+    },
+    menuPaper: {
+        background: theme.palette.info.main
     }
-});
+}));
 
 function Navbar(props) {
-    const [loginFormOpen, setLoginFormOpen] = useState(false);
-    //TODO change this to get profile from something, maybe pass it in as a prop?
-    const { authenticated, loading } = useSelector((state) => state.auth);
+
+    const {authenticated, loading} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const styles = useStyles();
 
     const handleClick = () => {
         dispatch(signout());
     }
+
+    const isSmall = useMediaQuery("(max-width: 600px)");
+    //const isSmall = true;
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     return (
         <AppBar className={styles.root} position={"static"}>
@@ -66,27 +90,69 @@ function Navbar(props) {
                     product
                 </Link>
             </div>
-            <div style={{ display: "grid", placeContent: "center" }}>LOGO HERE</div>
+            <div style={{display: "grid", placeContent: "center"}}>LOGO HERE</div>
+            {/*^^^this is temporary^^^*/}
+            {!isSmall &&
             <div className={styles.rightSide}>
                 {authenticated ? (
                     <React.Fragment>
                         <Link to="/profile">
-                            <Button
-                                style={{ color: "White" }}
+                            <ContrastNavButton
                                 size={"large"}
                             >
                                 Profile
-                            </Button>
+                            </ContrastNavButton>
                         </Link>
-                        <Button onClick={handleClick} style={{color: "White"}} size={"large"}>Sign Out</Button>
+                        <ContrastNavButton onClick={handleClick}  size={"large"}>Sign Out</ContrastNavButton>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <LoginButton />
-                        <RegisterButton />
+                        <LoginButton/>
+                        <RegisterButton/>
                     </React.Fragment>
                 )}
             </div>
+            }
+            {isSmall && <div className={styles.rightSide}>
+                <Button onClick={(e) => {
+                    setMenuOpen(true);
+                    setAnchorEl(e.currentTarget)
+                }}>
+                    <MenuIcon/>
+                </Button>
+
+                <Menu open={menuOpen} onClose={() => setMenuOpen(false)} anchorEl={anchorEl}
+                      classes={{paper: styles.menuPaper}}>
+                    <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
+                        {authenticated ? (
+                            <React.Fragment>
+                                <Link to="/profile">
+                                    <MenuItem>
+                                        <ContrastNavButton
+                                            size={"large"}
+                                        >
+                                            Profile
+                                        </ContrastNavButton>
+                                    </MenuItem>
+                                </Link>
+                                <MenuItem>
+                                    <ContrastNavButton onClick={handleClick}  size={"large"}>Sign Out</ContrastNavButton>
+                                </MenuItem>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <MenuItem>
+                                    <LoginButton/>
+                                </MenuItem>
+                                <MenuItem>
+                                    <RegisterButton/>
+                                </MenuItem>
+                            </React.Fragment>
+                        )}
+                    </ClickAwayListener>
+                </Menu>
+            </div>
+            }
         </AppBar>
     );
 }

@@ -6,18 +6,19 @@ import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import {Card} from '@material-ui/core';
 import Login from "../login/Login";
 import Modal from "@material-ui/core/Modal";
+import ContrastNavButton from "./ContrastNavButton";
 
 
 function LoginButton() {
     const [loginFormOpen, setLoginFormOpen] = useState(false);
     return <React.Fragment>
-        <Button
+        <ContrastNavButton
             onClick={()=>setLoginFormOpen(true)}
             style={{color:"White"}}
             size={"large"}
         >
             Login
-        </Button>
+        </ContrastNavButton>
         <Modal open={loginFormOpen} onClose={()=>setLoginFormOpen(false)}>
             <Login setLoginFormOpen={setLoginFormOpen}/>
         </Modal>

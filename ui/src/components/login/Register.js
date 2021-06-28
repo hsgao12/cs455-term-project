@@ -1,118 +1,119 @@
 import {
-  Button,
-  Card,
-  List,
-  ListItem,
-  Paper,
-  Typography
+    Button,
+    Card,
+    List,
+    ListItem,
+    Paper,
+    Typography
 } from '@material-ui/core';
 
 import ErrorAlert from '../ErrorAlert';
 
-import React, { useState, useEffect } from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
 import PasswordInput from './inputs/PasswordInput';
 import EmailInput from './inputs/EmailInput';
 import ConfirmPasswordInput from './inputs/ConfirmPasswordInput';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { signup, setError, setLoading } from '../../store/actions/authActions';
+import {useDispatch, useSelector} from 'react-redux';
+import {signup, setError, setLoading} from '../../store/actions/authActions';
 
 const loginTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#4caf50',
+    palette: {
+        primary: {
+            main: '#4caf50',
+        },
+        secondary: {
+            main: '#FFFFFF',
+        },
     },
-    secondary: {
-      main: '#FFFFFF',
-    },
-  },
 });
 
 const useStyles = makeStyles({
-  registerBody: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 350,
-  },
-  headerText: {
-    textAlign: 'center',
-    marginBottom: '15px'
-  }
+    registerBody: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 350,
+    },
+    headerText: {
+        textAlign: 'center',
+        marginBottom: '15px'
+    }
 
 });
 
 function Register(props) {
-  const setRegisterFormOpen = props.setRegisterFormOpen;
+    const setRegisterFormOpen = props.setRegisterFormOpen;
 
-  const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
+    const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
 
-  const dispatch = useDispatch();
-  const { error, loading } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const {error, loading} = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    return () => {
-      if (error) {
-        dispatch(setError(''));
-      }
+    useEffect(() => {
+        return () => {
+            if (error) {
+                dispatch(setError(''));
+            }
+        };
+    }, [error, dispatch]);
+
+    useEffect(() => {
+        setPasswordsAreEqual(password === confirmPassword);
+    }, [password, confirmPassword]);
+
+    const clickHandler = (e) => {
+        if (error) {
+            dispatch(setError(''));
+        }
+        dispatch(setLoading(true));
+        dispatch(
+            signup({email: email, password: password}, () => dispatch(setLoading(false)), setRegisterFormOpen)
+        );
     };
-  }, [error, dispatch]);
 
-  useEffect(() => {
-    setPasswordsAreEqual(password === confirmPassword);
-  }, [password, confirmPassword]);
+    // TODO: Change from list to grid
 
-  const clickHandler = (e) => {
-    if (error) {
-      dispatch(setError(''));
-    }
-    dispatch(setLoading(true));
-    dispatch(
-      signup({ email: email, password: password }, () => dispatch(setLoading(false)), setRegisterFormOpen)
+    return (
+        <Paper className={classes.registerBody}>
+            <Card style={{padding: '1em'}}>
+                <Typography variant="h5" className={classes.headerText}> Register </Typography>
+                <List>
+                    {error !== '' && <ErrorAlert error={error}/>}
+                    <EmailInput email={email} setEmail={setEmail}/>
+                    <PasswordInput password={password} setPassword={setPassword}/>
+                    <ConfirmPasswordInput
+                        confirmPassword={confirmPassword}
+                        setConfirmPassword={setConfirmPassword}
+                    />
+                    <ListItem alignItems="center">
+                        <Button
+                            color={'primary'}
+                            variant={'contained'}
+                            onClick={clickHandler}
+                            className={classes.button}
+                            disabled={!passwordsAreEqual || loading}
+                        >
+                            {loading ? "Loading" : "Register"}
+                        </Button>
+                    </ListItem>
+                    <ListItem alignItems="center">
+                        {!passwordsAreEqual &&
+                        <Paper style={{color: "red", marginLeft: "0.3em", fontSize: "0.8em", padding: "0.3em"}}>Passwords
+                            must be equal</Paper>}
+
+                    </ListItem>
+                </List>
+
+            </Card>
+        </Paper>
     );
-  };
-
-  // TODO: Change from list to grid
-
-  return (
-    <Paper className={classes.registerBody}>
-      <ThemeProvider theme={loginTheme}>
-        <Card style={{ padding: '1em' }}>
-          <Typography variant="h5" className={classes.headerText}> Register </Typography>
-          <List>
-            {error != '' && <ErrorAlert error={error} />}
-            <EmailInput email={email} setEmail={setEmail} />
-            <PasswordInput password={password} setPassword={setPassword} />
-            <ConfirmPasswordInput
-              confirmPassword={confirmPassword}
-              setConfirmPassword={setConfirmPassword}
-            />
-            <ListItem alignItems="center">
-              <Button
-                color={'primary'}
-                variant={'contained'}
-                onClick={clickHandler}
-                className={classes.button}
-                disabled={!passwordsAreEqual || loading}
-              >
-                {loading ? "Loading" : "Register"}
-              </Button>
-            </ListItem>
-            <ListItem alignItems="center">
-              {!passwordsAreEqual && <Paper style={{ color: "red", marginLeft: "0.3em", fontSize: "0.8em", padding: "0.3em" }}>Passwords must be equal</Paper>}
-
-            </ListItem>
-          </List>
-          
-        </Card>
-      </ThemeProvider>
-    </Paper>
-  );
 }
+
 export default Register;

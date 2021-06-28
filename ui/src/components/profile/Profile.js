@@ -1,13 +1,18 @@
 import React from 'react';
+import {Container} from "@material-ui/core";
+
+
 
 const Profile = (props) => {
+
+
     return (
-        <div>
+        <Container>
             <h1>
                 Profile Placeholder
             </h1>
 
-        </div>
+        </Container>
     );
 }
 

@@ -4,16 +4,14 @@ import SearchBar from "../searchBar/SearchBar";
 import ShoesList from "../shoesListing/ShoesList";
 import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
+import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles({
-    boxHeader: {
-        fontWeight: "bold",
-        fontSize: "1.3rem"
-    },
     box: {
-        width: "31.25rem"
+        width: "31.25rem",
     },
-    infolists: {},
+    infolists: {
+    },
 
 });
 
@@ -25,11 +23,11 @@ export default function HomePage() {
             <SearchBar/>
             <div className="infolists">
                 <div className={styles.box}>
-                    <span className={styles.boxHeader}>Popular Listings</span>
+                    <Typography variant={'h6'}>Popular Listings</Typography>
                     <ShoesList/>
                 </div>
                 <div className={styles.box}>
-                    <span className={styles.boxHeader}>Upcoming Releases</span>
+                    <Typography variant={'h6'}>Upcoming Releases</Typography>
                     <ReleasesGrid/>
                 </div>
             </div>

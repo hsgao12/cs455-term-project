@@ -1,13 +1,14 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {useTheme} from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
         width: "95%",
         margin: "auto",
@@ -18,7 +19,8 @@ const useStyles = makeStyles({
     },
     title: {
         textAlign: "center",
-        ["background-color"]: "#4caf50",
+        ["background-color"]: theme.palette.primary.main,
+        textOverflow:"ellipsis"
     },
 
     dateText: {
@@ -27,6 +29,7 @@ const useStyles = makeStyles({
 
     buyButton: {
         float: "right",
+        zIndex: 100
     },
 
     content: {
@@ -34,19 +37,7 @@ const useStyles = makeStyles({
 
     }
 
-});
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#4caf50'
-        },
-        secondary: {
-            main: '#FFFFFF'
-        }
-    },
-});
-
+}));
 
 export default function ShoesCard(props) {
     const classes = useStyles();
@@ -56,16 +47,14 @@ export default function ShoesCard(props) {
             <CardHeader title={props.oShoes.name} className={classes.title}/>
             <CardMedia
                 className={classes.media}
-                image= {props.oShoes.img}
-                title= {props.oShoes.name}
+                image={props.oShoes.img}
+                title={props.oShoes.name}
             />
             <CardContent className={classes.content}>
-                <Typography variant="h5" className = {classes.dateText}>
+                <Typography variant="h5" className={classes.dateText}>
                     Lowest Asking: {props.oShoes.price}
                 </Typography>
-                <ThemeProvider theme={theme}>
-                    <Button variant="contained" color="primary" className = {classes.buyButton}>Buy Now</Button>
-                </ThemeProvider>
+                <Button variant="contained" color="primary" className={classes.buyButton}>Buy Now</Button>
             </CardContent>
 
         </Card>

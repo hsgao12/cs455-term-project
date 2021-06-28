@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
         width: "95%",
         margin: "auto",
@@ -17,8 +17,8 @@ const useStyles = makeStyles({
         width: "100%"
     },
     title: {
-        textAlign: "center", 
-        ["background-color"]: "#4caf50",
+        textAlign: "center",
+        ["background-color"]: theme.palette.primary.main,
     },
 
     dateText: {
@@ -27,27 +27,27 @@ const useStyles = makeStyles({
 
     buyButton: {
         float: "right",
-        zIndex:100 /*to prevent the carousel buttons from covering the buy buttons*/
-    }, 
+        zIndex: 100 /*to prevent the carousel buttons from covering the buy buttons*/
+    },
 
     content: {
         ["background-color"]: "white",
 
     }
 
-});
+}));
 
 const theme = createMuiTheme({
     palette: {
-      primary: {
-          main: '#4caf50'
-      },
-      secondary: {
-          main: '#FFFFFF'
-      }
+        primary: {
+            main: '#4caf50'
+        },
+        secondary: {
+            main: '#FFFFFF'
+        }
     },
-  });
-  
+});
+
 
 export default function ReleasesCard() {
     const classes = useStyles();
@@ -55,18 +55,16 @@ export default function ReleasesCard() {
     return (
         <Card className={classes.root} variant="outlined">
             <CardHeader title={"Travis Scott Dunk"} className={classes.title}/>
-            <CardMedia 
-            className={classes.media} 
-            image="/sample-images/travisscottdunk.jpeg"
-            title="Travis Dunk"
+            <CardMedia
+                className={classes.media}
+                image="/sample-images/travisscottdunk.jpeg"
+                title="Travis Dunk"
             />
             <CardContent className={classes.content}>
-                <Typography variant="h5" className = {classes.dateText}>
+                <Typography variant="h5" className={classes.dateText}>
                     June 11
                 </Typography>
-                <ThemeProvider theme={theme}>
-                    <Button variant="contained" color="primary" className = {classes.buyButton}>Notify Me</Button>
-                </ThemeProvider>
+                <Button variant="contained" color="primary" className={classes.buyButton}>Notify Me</Button>
             </CardContent>
 
         </Card>

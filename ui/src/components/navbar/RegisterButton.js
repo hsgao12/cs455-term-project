@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Modal } from '@material-ui/core';
 import Register from '../login/Register';
+import ContrastNavButton from "./ContrastNavButton";
 
 const RegisterButton = () => {
   const [registerFormOpen, setRegisterFormOpen] = useState(false);
   return (
     <React.Fragment>
-      <Button
+      <ContrastNavButton
         onClick={() => setRegisterFormOpen(true)}
         style={{ color: 'White' }}
         size={"large"}
       >
         Register
-      </Button>
+      </ContrastNavButton>
       <Modal open={registerFormOpen} onClose={() => setRegisterFormOpen(false)}>
         <Register setRegisterFormOpen={setRegisterFormOpen}/>
       </Modal>
