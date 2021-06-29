@@ -14,7 +14,6 @@ function LoginButton() {
     return <React.Fragment>
         <ContrastNavButton
             onClick={()=>setLoginFormOpen(true)}
-            style={{color:"White"}}
             size={"large"}
         >
             Login

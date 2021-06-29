@@ -4,7 +4,7 @@ import {signin, setError, setLoading} from '../../store/actions/authActions';
 
 
 import {
-    Button,
+    Button, FormControl,
     List,
     ListItem,
     Typography
@@ -59,12 +59,19 @@ function Login(props) {
         );
     };
 
+    const enterHandler = (e)=>{
+        if(e.key==="Enter"){
+            clickHandler(null);
+        }
+    };
+
     return (
         <Paper className={classes.loginBody}>
-            <Card style={{padding: '1em'}}>
+            <Card style={{padding: '1em'}} onKeyPress={enterHandler}>
                 <Typography variant="h5" className={classes.headerText}> Login </Typography>
                 {error != '' && <ErrorAlert error={error}/>}
                 <List>
+
                     <EmailInput email={email} setEmail={setEmail}/>
                     <PasswordInput
                         password={password}

@@ -9,7 +9,6 @@ const RegisterButton = () => {
     <React.Fragment>
       <ContrastNavButton
         onClick={() => setRegisterFormOpen(true)}
-        style={{ color: 'White' }}
         size={"large"}
       >
         Register

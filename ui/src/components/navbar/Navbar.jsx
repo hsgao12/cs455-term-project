@@ -13,7 +13,7 @@ import {
     Menu,
     MenuList,
     MenuItem,
-    Popover, ClickAwayListener
+    Popover, ClickAwayListener, useTheme
 } from '@material-ui/core';
 
 import {Button} from '@material-ui/core';
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 function Navbar(props) {
 
     const {authenticated, loading} = useSelector((state) => state.auth);
+
     const dispatch = useDispatch();
     const styles = useStyles();
 
@@ -75,11 +76,11 @@ function Navbar(props) {
     }
 
     const isSmall = useMediaQuery("(max-width: 600px)");
-    //const isSmall = true;
+
     const [menuOpen, setMenuOpen] = useState(false);
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    const theme = useTheme();
     return (
         <AppBar className={styles.root} position={"static"}>
             <div className={styles.leftSide}>
@@ -117,7 +118,9 @@ function Navbar(props) {
                 <Button onClick={(e) => {
                     setMenuOpen(true);
                     setAnchorEl(e.currentTarget)
-                }}>
+                }}
+                        style={{color:theme.palette.info.contrastText}}
+                >
                     <MenuIcon/>
                 </Button>
 
