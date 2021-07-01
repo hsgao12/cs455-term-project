@@ -1,4 +1,4 @@
-import {Typography, Paper} from "@material-ui/core";
+import {Typography, Paper, useTheme} from "@material-ui/core";
 import React from "react";
 import {useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
         gridColumnGap: "0.5em"
     },
     profileInfo:{
-        
+        display:"grid",
+        gridRowGap:"0.5em",
+
     }
 }));
 
@@ -23,9 +25,10 @@ export function MainProfilePage(props) {
     const user = useSelector((state) => state.auth.user);
     const sellerRating = 4.3;
     const styles = useStyles();
+    const theme = useTheme();
 
     return <React.Fragment>
-        <div className={styles.root}>
+        <div className={styles.root} key={"main"}>
             <Paper>
                 <div className={styles.profileHeader}>
                     <div style={{width: "150px", background: "red", height: "150px"}}>
@@ -42,7 +45,7 @@ export function MainProfilePage(props) {
                 </div>
             </Paper>
 
-            <Paper>
+            <Paper className={styles.profileInfo}>
                 <div>
                     <Typography>
                         Email

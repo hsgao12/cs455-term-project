@@ -41,7 +41,7 @@ export function EditProfile(props) {
     const [currentPassword, setCurrentPassword] = useState("");
 
     return <React.Fragment>
-        <div className={styles.root}>
+        <div className={styles.root} key={"edit"}>
             <div>
                 <span>New profile Picture</span>
                 <div>

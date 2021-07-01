@@ -16,6 +16,7 @@ import {
     Popover, ClickAwayListener, useTheme
 } from '@material-ui/core';
 
+
 import {Button} from '@material-ui/core';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto auto auto",
-        background: theme.palette.info.main,
+        background: theme.palette.nav.main,
         color: "white",
         fontFamily: "Arial, Helvetica, sans-serif",
         paddingTop: "0.5em",
@@ -54,13 +55,13 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: "auto",
         marginBottom: "auto",
-        color: theme.palette.info.contrastText,
+        color: theme.palette.getContrastText(theme.palette.nav.main),
         fontSize: "1.2em",
         textAlign: "center",
         marginLeft: "2em"
     },
     menuPaper: {
-        background: theme.palette.info.main
+        background: theme.palette.nav.main
     }
 }));
 
@@ -104,7 +105,7 @@ function Navbar(props) {
                                 Profile
                             </ContrastNavButton>
                         </Link>
-                        <ContrastNavButton onClick={handleClick}  size={"large"}>Sign Out</ContrastNavButton>
+                        <ContrastNavButton onClick={handleClick} size={"large"}>Sign Out</ContrastNavButton>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
@@ -115,14 +116,14 @@ function Navbar(props) {
             </div>
             }
             {isSmall && <div className={styles.rightSide}>
-                <Button onClick={(e) => {
+                <ContrastNavButton onClick={(e) => {
                     setMenuOpen(true);
                     setAnchorEl(e.currentTarget)
                 }}
-                        style={{color:theme.palette.info.contrastText}}
+                                   size={"large"}
                 >
                     <MenuIcon/>
-                </Button>
+                </ContrastNavButton>
 
                 <Menu open={menuOpen} onClose={() => setMenuOpen(false)} anchorEl={anchorEl}
                       classes={{paper: styles.menuPaper}}>
@@ -139,7 +140,7 @@ function Navbar(props) {
                                     </MenuItem>
                                 </Link>
                                 <MenuItem>
-                                    <ContrastNavButton onClick={handleClick}  size={"large"}>Sign Out</ContrastNavButton>
+                                    <ContrastNavButton onClick={handleClick} size={"large"}>Sign Out</ContrastNavButton>
                                 </MenuItem>
                             </React.Fragment>
                         ) : (

@@ -11,7 +11,8 @@ import store from './store/store';
 
 import {Provider} from 'react-redux';
 import ProductDetailPage from "./components/productDetailPage/productDetailPage";
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery} from '@material-ui/core';
+
 
 const theme = createMuiTheme({
     palette: {
@@ -21,13 +22,28 @@ const theme = createMuiTheme({
         secondary: {
             main: '#FFFFFF',
         },
-        info:{
-            main:"#333"
-        }
+        nav: {
+            main: "#333"
+        },
+        search: {
+            main: "#FFFF00",
+            dark: "#DDDD00",
+        },
+
+
     },
+
+});
+
+const useStyles = makeStyles({//can't use theme version
+    app: {
+        "@media()":{}
+    }
 });
 
 function App() {
+
+
     return (
         <div className="App">
             <ThemeProvider theme={theme}>

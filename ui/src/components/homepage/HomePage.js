@@ -6,14 +6,31 @@ import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Typography} from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     box: {
         width: "31.25rem",
+
+        maxWidth:"90vw",
+        margin:"0 auto"
     },
     infolists: {
+        display: "grid",
+        gridTemplateColumns: "auto auto",
+        gridColumnGap: "3.5em",
+        justifyContent: "center",
+        gridRowGap:"1rem",
+        [theme.breakpoints.down("md")]:{
+            gridTemplateColumns: "auto",
+            gridColumnGap: "0",
+        }
     },
+    boxHeader:{
+        [theme.breakpoints.down("sm")]:{
+            textAlign:"center"
+        }
+    }
 
-});
+}));
 
 export default function HomePage() {
     const styles = useStyles();
@@ -21,13 +38,13 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <SearchBar/>
-            <div className="infolists">
+            <div className={styles.infolists}>
                 <div className={styles.box}>
-                    <Typography variant={'h6'}>Popular Listings</Typography>
+                    <Typography variant={'h6'} className={styles.boxHeader}>Popular Listings</Typography>
                     <ShoesList/>
                 </div>
                 <div className={styles.box}>
-                    <Typography variant={'h6'}>Upcoming Releases</Typography>
+                    <Typography variant={'h6'} className={styles.boxHeader}>Upcoming Releases</Typography>
                     <ReleasesGrid/>
                 </div>
             </div>

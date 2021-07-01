@@ -13,12 +13,9 @@ import Modal from "@material-ui/core/Modal";
 function ContrastNavButton(props) {
     const theme = useTheme();
 
-
-
-
     return <Button
             {...props}
-            style={{...props.style,color:theme.palette.info.contrastText}}
+            style={{...props.style,color:theme.palette.getContrastText(theme.palette.nav.main)}}
         >
             {props.children}
         </Button>;

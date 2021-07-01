@@ -37,16 +37,6 @@ const useStyles = makeStyles((theme)=>({
 
 }));
 
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#4caf50'
-        },
-        secondary: {
-            main: '#FFFFFF'
-        }
-    },
-});
 
 
 export default function ReleasesCard() {
