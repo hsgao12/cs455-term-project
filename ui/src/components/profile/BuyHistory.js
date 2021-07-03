@@ -39,7 +39,7 @@ const shoesBought = [
         sellerID: "1233556",
         dateBought: "21/5/27",
         orderID: "23231",
-        rating: 3.4
+        rating: 3.2
 
     }
 ];

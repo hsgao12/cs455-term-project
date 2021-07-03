@@ -27,8 +27,7 @@ export function MainProfilePage(props) {
     const styles = useStyles();
     const theme = useTheme();
 
-    return <React.Fragment>
-        <div className={styles.root} key={"main"}>
+    return <div className={styles.root} key={"main"}>
             <Paper>
                 <div className={styles.profileHeader}>
                     <div style={{width: "150px", background: "red", height: "150px"}}>
@@ -61,6 +60,5 @@ export function MainProfilePage(props) {
                     shipping info
                 </div>
             </Paper>
-        </div>
-    </React.Fragment>;
+        </div>;
 }

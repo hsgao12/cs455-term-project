@@ -8,16 +8,17 @@ import {
     Menu,
     Paper,
     Typography,
-    useMediaQuery, useTheme
+    useMediaQuery, useTheme,
+    makeStyles,
+    Button
 } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
 import {useSelector} from "react-redux";
 import {MainProfilePage} from "./MainProfilePage";
 import {EditProfile} from "./EditProfile"
 import ListItemPage from "./ListItemPage";
-import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import BuyHistory from "./BuyHistory";
+import SellHistory from "./SellHistory";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,8 +50,9 @@ const Profile = (props) => {
     const handleEditButton = setPage("edit");
     const handleListButton = setPage("list");
     const handleBuyButton = setPage("buy");
+    const handleSellButton = setPage("sell");
 
-    const sideBar = <List>
+    const sideBar = (<List>
         <ListItem button onClick={handleMainButton}>
             Main{/*rename this?*/}
         </ListItem>
@@ -63,11 +65,11 @@ const Profile = (props) => {
         <ListItem button onClick={handleBuyButton}>
             Buy History
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={handleSellButton}>
             Sell History
         </ListItem>
 
-    </List>;
+    </List>);
 
     const isSmall = useMediaQuery("(max-width:600px)");
     const [menuEl, setMenuEl] = useState(null);
@@ -77,7 +79,7 @@ const Profile = (props) => {
             <Paper className={styles.root}>
                 {!isSmall && sideBar}
                 {isSmall &&
-                <React.Fragment>
+                <div>
                     <div>
                         <Button onClick={(e) => setMenuEl(e.currentTarget)} className={styles.menuButton}>
                             <MenuIcon/>
@@ -88,14 +90,14 @@ const Profile = (props) => {
                             {sideBar}
                         </ClickAwayListener>
                     </Menu>
-                </React.Fragment>
+                </div>
                 }
                 <div>
                     {currentPage === "main" && <MainProfilePage/>}
                     {currentPage === "edit" && <EditProfile/>}
                     {currentPage === "list" && <ListItemPage/>}
                     {currentPage === "buy" && <BuyHistory/>}
-                    {currentPage === "sell" && <ListItemPage/>}
+                    {currentPage === "sell" && <SellHistory/>}
                 </div>
             </Paper>
         </Container>

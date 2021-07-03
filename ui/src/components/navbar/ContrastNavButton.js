@@ -1,12 +1,7 @@
 
 import React, {useState} from 'react';
-import {Button, CardHeader, CardMedia, CssBaseline, Input, List, ListItem, useTheme} from '@material-ui/core';
-import {Container, Grid} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core';
-import {Card} from '@material-ui/core';
-import Login from "../login/Login";
-import Modal from "@material-ui/core/Modal";
+import {Button, useTheme} from '@material-ui/core';
+
 
 
 

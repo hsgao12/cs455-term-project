@@ -31,7 +31,7 @@ const useCardStyles = makeStyles((theme) => ({
 
 }));
 
-export default function BuyCard(props) {
+export default function SellCard(props) {
     const item = props.item;
     const styles = useCardStyles();
 
@@ -52,7 +52,7 @@ export default function BuyCard(props) {
                 Price:{item.price}
             </div>
             <div>
-                Seller:{item.sellerName}
+                Buyer:{item.buyerName}
             </div>
             <div>
                 Date:{item.dateBought}
