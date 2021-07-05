@@ -23,7 +23,7 @@ const theme = createMuiTheme({
             main: '#FFFFFF',
         },
         nav: {
-            main: "#333"
+            main: "#333333"
         },
         search: {
             main: "#FFFF00",
