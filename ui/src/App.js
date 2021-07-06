@@ -12,6 +12,7 @@ import store from './store/store';
 import {Provider} from 'react-redux';
 import ProductDetailPage from "./components/productDetailPage/productDetailPage";
 import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery} from '@material-ui/core';
+import SearchPage from "./components/SearchPage/SearchPage";
 
 
 const theme = createMuiTheme({
@@ -54,6 +55,7 @@ function App() {
                             <Route path="/productDetail" component={ProductDetailPage} exact/>
                             <PrivateRoute path={"/profile"} component={Profile} exact/>
                             <Route path="/" component={HomePage} exact/>
+                            <Route path="/search" component={SearchPage} exact/>
                         </Switch>
                     </Provider>
                 </Router>

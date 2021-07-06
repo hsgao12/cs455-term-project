@@ -67,8 +67,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SearchBar() {
-    const [searchTerm, setSearchTerm] = useState("");
+export default function SearchBar(props) {
+
+    const [searchTerm, setSearchTerm] = useState(props.init ?? "");
     const [filterTabOpen, setFilterTabOpen] = useState(false);
     const [priceRange, setPriceRange] = useState([0, 100]);
     const [sizeRange, setSizeRange] = useState([0, 20]);
@@ -90,7 +91,9 @@ export default function SearchBar() {
                 onChange={handleInputChange}
                 endAdornment={<div style={{height:"100%"}}><Button className={style.searchButton}>
                     <SearchIcon/>
-                </Button></div>}
+                </Button></div>
+                }
+                value={searchTerm}
             />
 
 
