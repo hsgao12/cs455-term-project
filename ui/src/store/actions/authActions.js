@@ -1,4 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
+import axios from 'axios';
 
 import {
   SET_USER,
@@ -21,13 +22,8 @@ export const signup = (data, onError, setRegisterFormOpen) => {
         const userData = {
           email: data.email,
           id: res.user.uid,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        await firebase
-          .firestore()
-          .collection('/users')
-          .doc(res.user.uid)
-          .set(userData);
+        await axios.post('http://localhost:3000/users/addUser', userData);
         await res.user.sendEmailVerification();
         dispatch({
           type: NEED_VERIFICATION,
@@ -49,9 +45,9 @@ export const signup = (data, onError, setRegisterFormOpen) => {
 export const getUserById = (id) => {
   return async (dispatch) => {
     try {
-      const user = await firebase.firestore().collection('users').doc(id).get();
-      if (user.exists) {
-        const userData = user.data();
+      const res = await axios.get(`http://localhost:3000/users/getUser/${id}`);
+      if (res != null) {
+        const userData = res.data.user;
         dispatch({
           type: SET_USER,
           payload: userData,
