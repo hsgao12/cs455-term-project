@@ -8,10 +8,12 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/addUser', async (req, res) => {
-  const { email, id, createdAt } = req.body;
+  const { email, id, firstName, lastName } = req.body;
   const user = new User({
     email: email,
     id: id,
+    firstName: firstName,
+    lastName: lastName,
   });
 
   try {
