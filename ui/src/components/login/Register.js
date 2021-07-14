@@ -14,6 +14,8 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import PasswordInput from './inputs/PasswordInput';
 import EmailInput from './inputs/EmailInput';
 import ConfirmPasswordInput from './inputs/ConfirmPasswordInput';
+import FirstNameInput from './inputs/FirstNameInput';
+import LastNameInput from './inputs/LastNameInput';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { signup, setError, setLoading } from '../../store/actions/authActions';
@@ -50,6 +52,8 @@ function Register(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
 
   const dispatch = useDispatch();
@@ -74,7 +78,12 @@ function Register(props) {
     dispatch(setLoading(true));
     dispatch(
       signup(
-        { email: email, password: password },
+        {
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+        },
         () => dispatch(setLoading(false)),
         setRegisterFormOpen
       )
@@ -93,6 +102,8 @@ function Register(props) {
         <List>
           {error !== '' && <ErrorAlert error={error} />}
           <EmailInput email={email} setEmail={setEmail} />
+          <FirstNameInput firstName={firstName} setFirstName={setFirstName} />
+          <LastNameInput lastName={lastName} setLastName={setLastName} />
           <PasswordInput password={password} setPassword={setPassword} />
           <ConfirmPasswordInput
             confirmPassword={confirmPassword}

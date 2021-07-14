@@ -15,6 +15,9 @@ import firebase from '../../auth/firebase';
 export const signup = (data, onError, setRegisterFormOpen) => {
   return async (dispatch) => {
     try {
+      if (data.firstName === '' || data.lastName === '') {
+        throw new Error('Please include your full name');
+      }
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
@@ -22,6 +25,8 @@ export const signup = (data, onError, setRegisterFormOpen) => {
         const userData = {
           email: data.email,
           id: res.user.uid,
+          firstName: data.firstName,
+          lastName: data.lastName,
         };
         await axios.post('http://localhost:3000/users/addUser', userData);
         await res.user.sendEmailVerification();
