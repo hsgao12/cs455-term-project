@@ -2,7 +2,7 @@ import React from 'react';
 import "./productDetailStyle.css";
 import SizeQuantityPriceTable from "./sizeQuantityPriceTable";
 import SuggestProductList from "../suggestProductList/suggestProductList";
-
+import { Link } from 'react-router-dom';
 const shoes =     {
     id: "0001",
     img: '/shoes-images/Adidas-Yeezy360-zyon.webp',
@@ -15,30 +15,37 @@ const shoes =     {
 export default function ProductDetailPage(props) {
 
     return (
-        <div className="detailPage">
-            <div className="priceTable">
-                <SizeQuantityPriceTable/>
-            </div>
-
-            <div className="details" key={shoes.id}>
-                <div>
-                    <img className="shoesImage" src={shoes.img} alt=""/>
-                </div>
-
-                <div className="box">
-                    <div className="row">
-                        <h2>{shoes.name}</h2>
-                        <span>{shoes.price}</span>
-                    </div>
-
-                    <p>{shoes.description}</p>
-
-                    <button className="sell">Click to sell</button>
-                    <button className="buy">Click to Buy</button>
-
-                </div>
-                <SuggestProductList/>
-            </div>
+      <div className="detailPage">
+        <div className="priceTable">
+          <SizeQuantityPriceTable />
         </div>
+
+        <div className="details" key={shoes.id}>
+          <div>
+            <img className="shoesImage" src={shoes.img} alt="" />
+          </div>
+
+          <div className="box">
+            <div className="row">
+              <h2>{shoes.name}</h2>
+              <span>{shoes.price}</span>
+            </div>
+
+            <p>{shoes.description}</p>
+            <Link
+              to={{
+                pathname: "/productSellPage",
+                state: {
+                  shoe: shoes,
+                },
+              }}
+            >
+              <button className="sell">Click to sell</button>
+            </Link>
+            <button className="buy">Click to Buy</button>
+          </div>
+          <SuggestProductList />
+        </div>
+      </div>
     );
 }

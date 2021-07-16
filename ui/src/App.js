@@ -11,6 +11,7 @@ import store from './store/store';
 
 import {Provider} from 'react-redux';
 import ProductDetailPage from "./components/productDetailPage/productDetailPage";
+import ProductSellPage from "./components/productSellPage/productSellPage";
 import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery} from '@material-ui/core';
 import SearchPage from "./components/SearchPage/SearchPage";
 
@@ -56,6 +57,8 @@ function App() {
                             <PrivateRoute path={"/profile"} component={Profile} exact/>
                             <Route path="/" component={HomePage} exact/>
                             <Route path="/search" component={SearchPage} exact/>
+                            <Route path="/ProductSellPage" component={ProductSellPage} exact/>
+
                         </Switch>
                     </Provider>
                 </Router>
