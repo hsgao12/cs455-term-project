@@ -15,6 +15,7 @@ import {
     Tooltip,
     Slider
 } from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     searchInput: {
@@ -73,6 +74,7 @@ export default function SearchBar(props) {
     const [filterTabOpen, setFilterTabOpen] = useState(false);
     const [priceRange, setPriceRange] = useState([0, 100]);
     const [sizeRange, setSizeRange] = useState([0, 20]);
+    const onButtonClick = props.buttonClick ?? (()=>{});
 
     const style = useStyles();
 
@@ -89,10 +91,22 @@ export default function SearchBar(props) {
                 color={"primary"}
                 className={style.searchInput}
                 onChange={handleInputChange}
-                endAdornment={<div style={{height:"100%"}}><Button className={style.searchButton}>
-                    <SearchIcon/>
-                </Button></div>
+                endAdornment={
+                    <div style={{height: "100%"}}>
+                        <Link to={{pathname:`/search/${searchTerm}`,
+                            search:`?query=${searchTerm}&minPrice=${"a b c"}&maxPrice=${0}&minSize=${0}&maxSize=${0}&brands=${0}`
+                        }}>
+                            <Button className={style.searchButton} onClick={onButtonClick}>
+                                <SearchIcon/>
+                            </Button>
+                        </Link>
+                    </div>
                 }
+                onKeyPress={(e)=>{
+                    if(e.key ==="enter"){
+
+                    }
+                }}
                 value={searchTerm}
             />
 

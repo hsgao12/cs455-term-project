@@ -6,6 +6,8 @@ import ShoeCardBig from "./ShoeCardBig";
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: "1em",
+        display:"grid",
+        gridRowGap:"0.5em"
 
     }
 }))

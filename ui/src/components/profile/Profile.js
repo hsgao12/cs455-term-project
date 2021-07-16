@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { MainProfilePage } from './MainProfilePage';
-import { EditProfile } from './EditProfile';
 import ListItemPage from './ListItemPage';
 import MenuIcon from '@material-ui/icons/Menu';
 import BuyHistory from './BuyHistory';
@@ -46,7 +45,6 @@ const Profile = (props) => {
 
   const setPage = (newPage) => () => setCurrentPage(newPage);
   const handleMainButton = setPage('main');
-  const handleEditButton = setPage('edit');
   const handleListButton = setPage('list');
   const handleBuyButton = setPage('buy');
   const handleSellButton = setPage('sell');
@@ -54,10 +52,7 @@ const Profile = (props) => {
   const sideBar = (
     <List>
       <ListItem button onClick={handleMainButton}>
-        Main{/*rename this?*/}
-      </ListItem>
-      <ListItem button onClick={handleEditButton}>
-        Edit Profile
+        My Profile{/*rename this?*/}
       </ListItem>
       <ListItem button onClick={handleListButton}>
         List item to sell
@@ -97,7 +92,6 @@ const Profile = (props) => {
         )}
         <div>
           {currentPage === 'main' && <MainProfilePage />}
-          {currentPage === 'edit' && <EditProfile />}
           {currentPage === 'list' && <ListItemPage />}
           {currentPage === 'buy' && <BuyHistory />}
           {currentPage === 'sell' && <SellHistory />}

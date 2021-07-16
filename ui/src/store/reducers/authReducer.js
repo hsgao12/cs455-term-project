@@ -5,6 +5,7 @@ import {
   SET_ERROR,
   NEED_VERIFICATION,
   SET_SUCCESS,
+  SET_SHIPPING,
 } from '../types';
 
 const initialState = {
@@ -50,6 +51,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         success: action.payload,
+      };
+    case SET_SHIPPING:
+      console.log(action.payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          address: action.payload.address,
+          city: action.payload.city,
+          country: action.payload.country,
+        },
       };
     default:
       return state;

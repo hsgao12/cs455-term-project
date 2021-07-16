@@ -1,62 +1,61 @@
 import React from 'react';
-import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import {useTheme} from "@material-ui/core";
+import {Card, CardMedia, CardContent, CardActions, CardActionArea, Typography, IconButton} from "@material-ui/core";
+import {AddShoppingCart} from '@material-ui/icons';
+import {makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     root: {
-        width: "95%",
-        margin: "auto",
+        maxWidth: '100%',
+        height:300,
+        width: 300,
     },
     media: {
-        height: "15rem",
-        width: "100%"
-    },
-    title: {
-        textAlign: "center",
-        ["background-color"]: theme.palette.primary.main,
-        textOverflow:"ellipsis"
-    },
+        height: 0,
+        paddingTop: '56.25%',
 
-    dateText: {
-        display: "inline-block",
+        image: {
+            display: 'block',
+        }
+
     },
-
-    buyButton: {
-        float: "right",
-        zIndex: 100
+    cardActions: {
+        display: 'flex',
+        justifyContent: 'flex-end',
     },
-
-    content: {
-        ["background-color"]: "white",
-
+    cardContent: {
+        display: 'block',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+    },
+    numSale: {
+        color: 'rgba(0,0,0,0.5)',
+        fontFamily: 'RingsideRegular-Book, sans-serif',
+    },
+    price: {
+        fontWeight: '700',
     }
-
 }));
 
-export default function ShoesCard(props) {
+export default function ShoesCard ({shoe}) {
     const classes = useStyles();
-
     return (
-        <Card className={classes.root} variant="outlined">
-            <CardHeader title={props.oShoes.name} className={classes.title}/>
-            <CardMedia
-                className={classes.media}
-                image={props.oShoes.img}
-                title={props.oShoes.name}
-            />
-            <CardContent className={classes.content}>
-                <Typography variant="h5" className={classes.dateText}>
-                    Lowest Asking: {props.oShoes.price}
-                </Typography>
-                <Button variant="contained" color="primary" className={classes.buyButton}>Buy Now</Button>
-            </CardContent>
-
+        <Card className={classes.root}>
+            <CardActionArea href={`/shoes/${shoe._id}`}>
+                <CardMedia className={classes.media} image= {shoe.img} title ={shoe.name} />
+                <CardContent>
+                    <div className={classes.cardContent}>
+                        <Typography variant= "subtitle2" gutterBottom>
+                            {shoe.name}
+                        </Typography>
+                        <Typography variant="h5" className={classes.price}>
+                            ${shoe.price}
+                        </Typography>
+                        <Typography className={classes.numSale}>
+                            #Of Sale: {shoe.numberOfSale}
+                        </Typography>
+                    </div>
+                </CardContent>
+            </CardActionArea>
         </Card>
     );
 }
