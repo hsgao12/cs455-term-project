@@ -8,6 +8,7 @@ import {
   SET_ERROR,
   NEED_VERIFICATION,
   SET_SUCCESS,
+  SET_SHIPPING,
 } from '../types';
 
 import firebase from '../../auth/firebase';
@@ -53,6 +54,7 @@ export const getUserById = (id) => {
       const res = await axios.get(`http://localhost:3000/users/getUser/${id}`);
       if (res != null) {
         const userData = res.data.user;
+        console.log(userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -101,6 +103,38 @@ export const signout = () => {
     } catch (err) {
       console.log(err);
       dispatch(setLoading(false));
+    }
+  };
+};
+
+export const editShipping = (id, newAddress, setModal) => {
+  return async (dispatch) => {
+    try {
+      if (
+        newAddress.address === '' ||
+        newAddress.country === '' ||
+        newAddress.city === ''
+      ) {
+        throw new Error('You must fill in all fields!');
+      }
+      dispatch(setLoading(true));
+      const res = await axios.put(
+        `http://localhost:3000/users/setUserAddress/${id}`,
+        newAddress
+      );
+      const user = res.data.user;
+      dispatch({
+        type: SET_SHIPPING,
+        payload: {
+          address: user.address,
+          city: user.city,
+          country: user.country,
+        },
+      });
+      dispatch(setLoading(false));
+      setModal(false);
+    } catch (err) {
+      dispatch(setError(err.message));
     }
   };
 };
