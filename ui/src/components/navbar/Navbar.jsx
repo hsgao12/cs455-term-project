@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
 import MenuIcon from '@material-ui/icons/Menu';
+
 import {
     makeStyles,
     createMuiTheme,
@@ -88,11 +89,10 @@ function Navbar(props) {
                 <Link to="/" className={styles.button}>
                     Home
                 </Link>
-                <Link to="/productDetail" className={styles.button}>
-                    product
-                </Link>
             </div>
-            <div style={{display: "grid", placeContent: "center"}}>LOGO HERE</div>
+            <div style={{display: "grid", placeContent: "center"}}>
+                LOGO
+            </div>
             {/*^^^this is temporary^^^*/}
             {!isSmall &&
             <div className={styles.rightSide}>

@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function PopularList() {
+export default function AdidasList() {
     const [shoes, setShoes] =useState([]);
 
     const updateShoes = () => {
-        Axios.get('http://localhost:3000/getPopularShoes')
+        Axios.get('http://localhost:3000/getShoes/Adidas')
             .then(res => {
                 const shoesData = res.data;
                 const randNum = Math.floor(Math.random() * (shoesData.length - 4));

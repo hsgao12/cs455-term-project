@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import ReleasesGrid from '../../components/upcoming-releases/ReleasesCarousel';
+import NikeList from "../shoesListing/NikeList";
 import SearchBar from "../searchBar/SearchBar";
 import PopularList from "../shoesListing/PopularList";
+import AdidasList from "../shoesListing/AdidasList";
 import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Typography} from "@material-ui/core";
@@ -49,6 +50,18 @@ export default function HomePage() {
                 <div className={styles.box}>
                     <Typography variant={'h6'} className={styles.boxHeader}>Popular Listings</Typography>
                     <PopularList/>
+                </div>
+            </div>
+            <div className={styles.infolists}>
+                <div className={styles.box}>
+                    <Typography variant={'h6'} className={styles.boxHeader}>Nike</Typography>
+                    <NikeList/>
+                </div>
+            </div>
+            <div className={styles.infolists}>
+                <div className={styles.box}>
+                    <Typography variant={'h6'} className={styles.boxHeader}>Adidas</Typography>
+                    <AdidasList/>
                 </div>
             </div>
         </div>
