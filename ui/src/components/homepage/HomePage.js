@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import ReleasesGrid from '../../components/upcoming-releases/ReleasesCarousel';
 import SearchBar from "../searchBar/SearchBar";
-import ShoesList from "../shoesListing/ShoesList";
+import PopularList from "../shoesListing/PopularList";
 import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     box: {
-        width: "31.25rem",
-
-        maxWidth: "90vw",
-        margin: "0 auto"
+        margin: "auto"
     },
     infolists: {
         display: "grid",
@@ -22,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("md")]: {
             gridTemplateColumns: "auto",
             gridColumnGap: "0",
-        }
+        },
+        margin: 'auto',
     },
     boxHeader: {
         [theme.breakpoints.down("sm")]: {
@@ -50,11 +48,7 @@ export default function HomePage() {
             <div className={styles.infolists}>
                 <div className={styles.box}>
                     <Typography variant={'h6'} className={styles.boxHeader}>Popular Listings</Typography>
-                    <ShoesList/>
-                </div>
-                <div className={styles.box}>
-                    <Typography variant={'h6'} className={styles.boxHeader}>Upcoming Releases</Typography>
-                    <ReleasesGrid/>
+                    <PopularList/>
                 </div>
             </div>
         </div>

@@ -4,3 +4,7 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const NEED_VERIFICATION = 'NEED_VERIFICATION';
 export const SET_SUCCESS = 'SET_SUCCESS';
+export const ADD_SHOES ='ADD_SHOES';
+export const DELETE_SHOES = 'DELETE_SHOES';
+export const GET_ALL_SHOES = 'GET_ALL_SHOES';
+export const GET_BRAND_SHOES = 'GET_BRAND_SHOES';
