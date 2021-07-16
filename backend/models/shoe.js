@@ -13,6 +13,7 @@ const Shoes = new mongoose.Schema({
     {
         collection: 'sneakers'
 
-});
+}
+);
 
 module.exports = mongoose.model('Shoes', Shoes);
