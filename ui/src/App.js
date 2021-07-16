@@ -55,6 +55,7 @@ function App() {
                             <Route path="/shoes/:shoesId" component={ProductDetailPage} exact/>
                             <PrivateRoute path={"/profile"} component={Profile} exact/>
                             <Route path="/" component={HomePage} exact/>
+                            <Route path="/search/:query" component={SearchPage} exact/>
                             <Route path="/search" component={SearchPage} exact/>
                         </Switch>
                     </Provider>
