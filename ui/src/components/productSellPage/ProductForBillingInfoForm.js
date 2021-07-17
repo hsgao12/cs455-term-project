@@ -97,7 +97,6 @@ export default function ProductForBillingInfoForm({
         <Grid container>
           <Grid item xs={6} sm={6}>
             <TextField
-              defaultValue="Card Number"
               label="Card Number"
               onChange={handleCreditCardChange}
               variant="outlined"
@@ -105,7 +104,6 @@ export default function ProductForBillingInfoForm({
           </Grid>
           <Grid item xs={6} sm={6}>
             <TextField
-              defaultValue="000"
               label="CVV"
               onChange={handleCVVChange}
               variant="outlined"
@@ -134,14 +132,12 @@ export default function ProductForBillingInfoForm({
         </div>
         <br></br>
         <TextField
-          defaultValue="First Name"
           label="First Name"
           onChange={handleFirstNameChange}
           variant="outlined"
         />
         <br></br>
         <TextField
-          defaultValue="Last Name"
           label="Last Name"
           onChange={handleLastNameChange}
           variant="outlined"
@@ -160,7 +156,6 @@ export default function ProductForBillingInfoForm({
         />{" "}
         <br></br>
         <TextField
-          defaultValue="Address"
           label="Address"
           onChange={handleAddressChange}
           variant="outlined"
@@ -169,7 +164,6 @@ export default function ProductForBillingInfoForm({
         <Grid container>
           <Grid item xs={6} sm={6}>
             <TextField
-              defaultValue="Province"
               label="Province"
               onChange={handleProvinceChange}
               variant="outlined"
@@ -177,7 +171,6 @@ export default function ProductForBillingInfoForm({
           </Grid>
           <Grid item xs={6} sm={6}>
             <TextField
-              defaultValue="Postal Code"
               label="Postal Code"
               onChange={handlePostalChange}
               variant="outlined"
@@ -196,7 +189,7 @@ export default function ProductForBillingInfoForm({
             Back
           </Button>
         </Grid>
-        <Grid item  xs={6} sm={6} >
+        <Grid item xs={6} sm={6}>
           <Button
             variant="contained"
             color="primary"

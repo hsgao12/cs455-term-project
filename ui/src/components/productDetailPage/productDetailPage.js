@@ -34,7 +34,7 @@ export default function ProductDetailPage(props) {
             </div>
 
             <p>{shoes.description}</p>
-
+         
             <Link
               to={{
                 pathname: "/productSellPage",

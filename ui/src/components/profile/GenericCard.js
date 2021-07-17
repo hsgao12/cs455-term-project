@@ -33,7 +33,7 @@ const useCardStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SellCard(props) {
+export default function GenericCard(props) {
     const item = props.item;
     const styles = useCardStyles();
 

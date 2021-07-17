@@ -5,16 +5,16 @@ const UserBilling = new mongoose.Schema(
     id: mongoose.Schema.Types.ObjectId,
     userId: String,
     billing: {
-        address: String,
-        province: String,
-        country: String,
-        postalCode: String,
+      address: String,
+      province: String,
+      country: String,
+      postalCode: String,
     },
-    payment :{
-        cardNumber: String,
-        expDate: String,
-        cvv: Number
-    }
+    payment: {
+      cardNumber: String,
+      expDate: String,
+      cvv: Number,
+    },
   },
   {
     collection: "userBilling",
