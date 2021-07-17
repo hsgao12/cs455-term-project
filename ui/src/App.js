@@ -44,8 +44,6 @@ const useStyles = makeStyles({//can't use theme version
 });
 
 function App() {
-
-
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
