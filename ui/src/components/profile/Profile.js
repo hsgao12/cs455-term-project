@@ -70,7 +70,7 @@ const Profile = (props) => {
   const [menuEl, setMenuEl] = useState(null);
 
   return (
-    <Container style={{ background: theme.palette.background }}>
+    <Container style={{ background: theme.palette.background, minHeight: "500px" }}>
       <Paper className={styles.root}>
         {!isSmall && sideBar}
         {isSmall && (

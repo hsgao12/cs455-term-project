@@ -1,7 +1,7 @@
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core";
 
-const ErrorAlert = ({error}) => {
+const SuccessAlert = ({success}) => {
     const useStyles = makeStyles({
         alert: {
             marginBottom: "15px"
@@ -9,11 +9,11 @@ const ErrorAlert = ({error}) => {
     })
     const classes = useStyles()
     return (
-        <Alert severity="error" className={classes.alert}>
-            <AlertTitle>Error!</AlertTitle>
-            {error}
+        <Alert severity="success" className={classes.alert}>
+            <AlertTitle>Success!</AlertTitle>
+            {success}
         </Alert>
     );
 }
 
-export default ErrorAlert;
+export default SuccessAlert;

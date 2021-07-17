@@ -68,6 +68,9 @@ export default function SellHistory(props) {
           {shoesBought.map((e) => (
             <SellCard item={e} />
           ))}
+          {shoesBought.map((e) => (
+            <SellCard item={e} />
+          ))}
         </List>
       </div>
     </React.Fragment>

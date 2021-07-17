@@ -1,4 +1,4 @@
-import { Typography, Paper, useTheme } from '@material-ui/core';
+import { Typography, Paper, useTheme, Box } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -66,11 +66,19 @@ export function MainProfilePage(props) {
 
       <Paper className={styles.profileInfo} elevation={0}>
         <div className={styles.profileEmail}>
-          <Typography>My Email</Typography>
+          <Typography fontWeight>
+            <Box fontWeight={"fontWeightBold"}>
+              My Email
+            </Box>
+          </Typography>
           {user.email}
         </div>
         <div className={styles.profileRating}>
-          <Typography>My Rating</Typography>
+          <Typography>
+            <Box fontWeight={"fontWeightBold"}>
+              My Rating
+            </Box>
+          </Typography>
           <Rating
             name="userRating"
             defaultValue={user.rating}
@@ -80,7 +88,11 @@ export function MainProfilePage(props) {
         </div>
 
         <div className={styles.profileShipping}>
-          <Typography>Shipping Information</Typography>
+          <Typography>
+            <Box fontWeight={"fontWeightBold"}>
+              Shipping Information
+            </Box>
+          </Typography>
           <ShippingInformation />
           <EditProfileButton edit={user.address !== null} />
         </div>

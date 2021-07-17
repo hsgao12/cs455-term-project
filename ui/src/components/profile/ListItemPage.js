@@ -1,107 +1,136 @@
-import {useSelector} from "react-redux";
-import React, {useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from 'axios';
+import { setLoading, setError, setSuccess } from '../../store/actions/authActions'; 
+import ErrorAlert from '../ErrorAlert'; 
+import SuccessAlert from '../SuccessAlert';
+
+import React, { useState, useEffect } from "react";
 import {
-    IconButton,
-    Input,
     makeStyles,
-    OutlinedInput,
-    TextareaAutosize,
     TextField,
-    Toolbar,
-    Tooltip,
-    Typography
+    Typography,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel
 } from "@material-ui/core";
-import {Label} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: "inline-grid",
-        gridTemplateColumns: "auto 1fr",
-        gridRowGap: "1em",
-        gridColumnGap: "0.2em",
-        marginTop: "1em",
-        "&>div": {
-            display: "contents",
-            "&>span": {
-                textAlign: "right",
-                marginTop: "auto",
-                marginBottom: "auto"
-            }
-        },
-        marginBottom: "1em"
+        width: "75%"
     },
-    listItemButton: {
-        gridColumn: "span 2"
-    }
 
+    formControl: {
+        minWidth: 100,
+        float: "right"
+    }, 
+    priceTextField: {
+        width: "75%"
+    }, 
+    container: {
+        marginBottom: "1rem"
+    }
 }));
 
 export default function ListItemPage(props) {
-    const user = useSelector((state) => state.auth.user);
+    const {loading, error, user, success} = useSelector((state) => state.auth);
     const styles = useStyles();
 
-    const [images, setImages] = useState([]);
+    const dispatch = useDispatch();
 
-    const [itemName, setItemName] = useState("");
-    const [itemDescription, setItemDescription] = useState("");
+    const [itemName, setItemName] = useState('');
+    const [size, setSize] = useState('');
     const [price, setPrice] = useState(0);
+
+    const handleSelect = (event) => {
+        setSize(event.target.value);
+    }
 
     const onPriceChange = (e) => {
         const newVal = e.target.value;
-        try {
-            if (newVal === "") {
-                setPrice(0);
-            } else {
-                const num = parseFloat(newVal);
-                if (!isNaN(num)) {
-                    setPrice(num);
-                }
-            }
-        } catch (e) {
-
+        if (newVal < 0) {
+            setPrice(0); 
+        } else {
+            setPrice(newVal);
         }
-
     };
 
-    return <React.Fragment>
-        <div className={styles.root} key={"list"}>
-            <div>
-                <span>Pictures</span>
-                <div>
-                    <Button color={"primary"} variant={"contained"}> upload</Button>
-                </div>
-            </div>
-            <div>
-                <span>Item name</span>
-                <OutlinedInput onChange={(e) => setItemName(e.target.value)}>
+    useEffect(() => {
+        return () => {
+          if (error) {
+            dispatch(setError(''));
+          }
+          if (success) {
+            dispatch(setSuccess(''));
+          }
+        };
+      }, [error, dispatch]);
 
-                </OutlinedInput>
-            </div>
-            <div>
-                <span>Item description</span>
-                <TextField
-                    multiline={true}
-                    variant={"outlined"}
-                    rows={5}
-                    onChange={(e) => setItemDescription(e.target.value)}
-                >
-                </TextField>
-            </div>
-            <div>
-                <span>Price</span>
-                <OutlinedInput
-                    onChange={onPriceChange}
-                    type={"numbers"}
-                    value={price}
-                >
+    const onClick = async () => {
+        try {
+            if (error) {
+                dispatch(setError(''));
+            }
+            if (success) {
+                dispatch(setSuccess(''));
+            }
+            if (size === '') {
+                throw new Error("Please select a size");
+            }
+            dispatch(setLoading(true));
+            const result = await axios.post(`http://localhost:3000/addNewSellerItem`, {name: itemName, sellerId: user.id, size: size, price: price});
+            console.log(result);
+            dispatch(setLoading(false));
+            console.log(result);
+            dispatch(setSuccess('Item has been added!')); 
 
-                </OutlinedInput>
+        } catch (err) {
+            console.log(err.message);
+            dispatch(setError(err.message));
+        }
+    }
+
+    const onNameChange = (e) => {
+        setItemName(e.target.value);
+    }
+
+    return (
+        <div className={styles.root}>
+            <div className={styles.topText, styles.container}>
+                <Typography variant={"h5"}>
+                    Add New Listing
+                </Typography>
             </div>
-            <Button className={styles.listItemButton} color={"primary"} variant={"contained"}> List Item</Button>
+            {(error.length > 0) && <ErrorAlert error={error} />}
+            {(success.length > 0) && <SuccessAlert success={success} />} 
+            <div className={styles.nameContainer, styles.container}>
+                <TextField className={styles.nameTextField} label="Name" type="search" variant="filled" fullWidth={true} value={itemName} onChange={onNameChange}/>
+            </div>
+            <div className={styles.container}>
+                <TextField className={styles.priceTextField} label="Price" type="number" variant="filled" onChange={onPriceChange} value={price} />
+                <FormControl variant="filled" className={styles.formControl}>
+                    <InputLabel>Size</InputLabel>
+                    <Select onChange={handleSelect}>
+                        <MenuItem value={4}>4</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={6}>6</MenuItem>
+                        <MenuItem value={7}>7</MenuItem>
+                        <MenuItem value={8}>8</MenuItem>
+                        <MenuItem value={9}>9</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={11}>11</MenuItem>
+                        <MenuItem value={12}>12</MenuItem>
+                        <MenuItem value={13}>13</MenuItem>
+                        <MenuItem value={14}>14</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+            <div className={styles.buttonContainer}>
+                <Button variant="contained" color="primary" onClick={onClick}>Add Listing</Button>
+            </div>
         </div>
-    </React.Fragment>;
+    )
 }
