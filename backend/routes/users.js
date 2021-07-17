@@ -30,10 +30,22 @@ router.get('/getUser/:id', async (req, res) => {
   try {
     const user = await User.findOne({ id: id });
     console.log(user);
-    res.status(200).send({ user: { email: user.email, id: user.id } });
+    res.status(200).send({ user: user});
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ message: err.message });
   }
 });
+
+router.put('/setUserAddress/:id', async (req, res) => {
+  const id = req.params.id; 
+  const {address, city, country} = req.body; 
+  try  {
+    await User.updateOne({id: id}, {address: address, city: city, country: country}); 
+    const user = await User.findOne({id: id});
+    res.status(200).json({user: user});
+  } catch (err) {
+    res.status(404).json({error: err.message});
+  }
+})
 module.exports = router;

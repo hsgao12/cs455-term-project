@@ -48,24 +48,21 @@ router.post('/addUserBilling',async (req,res) => {
 });
 
 //Post request to add a SellerItem
-router.post('/addNewSellerItem',async (req,res) => {
-  const sellerItem = new SellerItem(req.body);
-  sellerItem.save()
-  .then(result => {
-    console.log(result)
-    res.status(200).json(
-      {
-        message: "Seller Item successfully added to database",
-        sellerItem: result
-      }
-    );
-  })
-  .catch(err => {
-    console.error(err)
-    res.status(500).json({
-      error: err
-    });
-  })
+router.post('/addNewSellerItem', async (req,res) => {
+  const {name, sellerId, size, price} = req.body; 
+  // const sellerItem = new SellerItem({...req.body, sold: false});
+  try {
+    const shoe = await Shoes.findOne({name: name}); 
+    console.log(shoe);
+    if (shoe === null) {
+      res.status(404).json({message: "Shoe not found"});
+    }
+    const sellerItem = new SellerItem({sneakerId: shoe._id, sellerId: sellerId, size: size, price: price, sold: false}); 
+    const result = await sellerItem.save(); 
+    res.status(200).json({result: result});
+  } catch (err) {
+    res.status(400).json({message: err.message});
+  }
 });
  //delete Sneakers
 router.delete('/deleteSneaker/:id', async (req,res) => {

@@ -4,9 +4,11 @@ const SellerItem = new mongoose.Schema(
   {
     id: mongoose.Schema.Types.ObjectId,
     sneakerId: String,
-    userId: String,
+    sellerId: String,
     size: Number,
     price: Number,
+    buyerId: String, 
+    sold: Boolean
   },
   {
     collection: "sellerItem",
