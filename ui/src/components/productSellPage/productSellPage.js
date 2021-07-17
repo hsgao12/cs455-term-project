@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ProductForSaleForm from "./ProductForSaleForm";
 import ProductForBillingInfoForm from "./ProductForBillingInfoForm";
+import ProductSellConfirmation from "./ProductSellConfirmation";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -55,6 +56,27 @@ export default function ProductSellPage(props) {
   const classes = useStyles();
   const [billingInfo, setBillingInfo] = React.useState(false);
   const [size, setSize] = React.useState('');
+  const initialAmount = {
+    intitialAmount: "",
+    transAmount: "",
+    proccessingAmount: "",
+    payOut: "",
+  };
+  const [amount, setAmount] = React.useState(initialAmount);
+  const initialBillingInfo= {
+    firstName: "",
+    lastName: "",
+    address: "",
+    province: "",
+    postalCode: "",
+    country: "",
+    creditCard: "",
+    cvv: "",
+    ExpDate:"",
+
+  };
+  const [billingData, setBillingData] = React.useState(initialBillingInfo);
+  const [confirmationInfo, setConfirmationInfo] = React.useState(false);
   return (
     <div className={classes.root}>
       <Grid container >
@@ -64,16 +86,35 @@ export default function ProductSellPage(props) {
           </Paper>
         </Grid>
         <Grid item xs={6} sm={6}>
+        { confirmationInfo && (
+        <Paper style={{height: '100vh'}}className={classes.paper}>
+        <ProductSellConfirmation
+        props = {props}
+        size = {size}
+        amount = {amount}
+        billingData ={billingData}
+        setBillingInfo = {setBillingInfo}
+        /> 
+        </Paper>)}
+        { !confirmationInfo && (
           <Paper style={{height: '100vh'}}className={classes.paper}>
-          {billingInfo?  <ProductForBillingInfoForm
+          {billingInfo ? <ProductForBillingInfoForm
           props={props}
+          size ={size}
+          amount = {amount}
+          setSize = {setSize}
           setBillingInfo = {setBillingInfo}
+          setConfirmationInfo = {setConfirmationInfo}
+          billingData = {billingData}
+          setBillingData = {setBillingData}
           /> :<ProductForSaleForm
           props={props}
           setSize = {setSize}
+          amount = {amount}
+          setAmount = {setAmount}
           setBillingInfo = {setBillingInfo}
           />}
-          </Paper>
+          </Paper>)}
         </Grid>
       </Grid>
     </div>

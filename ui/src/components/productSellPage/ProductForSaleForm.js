@@ -24,16 +24,9 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   }));
-export default function ProductForSaleForm({ props, setSize, setBillingInfo }) {
+export default function ProductForSaleForm({ props, setSize, amount, setAmount, setBillingInfo }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const initialAmount = {
-      intitialAmount: "",
-      transAmount: "",
-      proccessingAmount: "",
-      payOut: "",
-    };
-    const [amount, setAmount] = React.useState(initialAmount);
     const handleChange = (event) => {
       setSize(event.target.value);
     };
