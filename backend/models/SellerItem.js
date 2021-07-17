@@ -1,19 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const SellerItem = new mongoose.Schema({
+const SellerItem = new mongoose.Schema(
+  {
     id: mongoose.Schema.Types.ObjectId,
-    brand: String,
-    name: String,
-    img: String,
+    sneakerId: String,
+    userId: String,
+    size: Number,
     price: Number,
-    numberOfSale: Number,
-    description: String,
-    priceHistory: Object,
-},
-    {
-        collection: 'sellerItem'
-
-}
+  },
+  {
+    collection: "sellerItem",
+  }
 );
 
-module.exports = mongoose.model('SellerItem', SellerItem);
+module.exports = mongoose.model("SellerItem", SellerItem);
