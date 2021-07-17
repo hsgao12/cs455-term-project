@@ -28,7 +28,7 @@
     letter-spacing: 2px;
 }
 .box .row span{
-    color: crimson;
+    color: #dc4e67;
 }
 .box .colors button{
     width: 30px;
@@ -51,7 +51,7 @@
 }
 
 .box .buy{
-    background: mediumvioletred;
+    background: #c72275;
     color: white;
     outline: none;
     border: none;
@@ -62,7 +62,7 @@
 }
 
 .box .sell{
-    background: green;
+    background: #3a8016;
     color: white;
     outline: none;
     border: none;

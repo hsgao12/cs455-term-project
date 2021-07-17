@@ -20,9 +20,12 @@ import ShoeCardBig from "./ShoeCardBig";
 import DetailedInfoView from "./DetailedInfoView";
 import DenseView from "./DenseView"
 import axios from "axios";
+import ResultPanel from "./ResultPanel";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        align:'right',
+        marginTop: 30,
         display: "grid",
 
     },
@@ -32,9 +35,29 @@ const useStyles = makeStyles((theme) => ({
     },
     shoesContentVertical: {
         display: "grid"
+    },
+    rPanel: {
+        marginLeft: "1em",
     }
 }));
 
+export default function SearchPage(props) {
+    const searchTerm = props.match.params.query;
+    const classes = useStyles();
+
+    return (
+      <div className={classes.root}>
+          <div className={classes.rPanel}>
+            <ResultPanel searchTerm={searchTerm}/>
+          </div>
+      </div>
+    );
+
+}
+
+
+
+/*
 export default function SearchPage() {
     const params = new URLSearchParams(useLocation().search);
     const theme = useTheme();
@@ -63,14 +86,14 @@ export default function SearchPage() {
             <div style={{visibility: "hidden"}}>
                 <SearchBar init={searchTerm}/>
             </div>
-            {/*lol*/}
+            {/!*lol*!/}
             <div style={{position: "absolute", top: "0", width: "100%"}}>
                 <SearchBar init={searchTerm} buttonClick={()=>setWat(!wat)}/>
             </div>
         </div>
         <div className={styles.content}>
             <div style={{display: "grid"}}>
-                {/*search options*/}
+                {/!*search options*!/}
                 <div>
                     <Button>button1</Button>
                 </div>
@@ -84,4 +107,4 @@ export default function SearchPage() {
             </div>
         </div>
     </Container>);
-}
+}*/

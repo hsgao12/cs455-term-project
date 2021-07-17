@@ -5,6 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Logo from './wiener X Logo.jpg';
+import TextLogo from '../images/TextLogo.png';
 
 import {
     makeStyles,
@@ -24,14 +26,15 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {signout} from '../../store/actions/authActions';
 import ContrastNavButton from "./ContrastNavButton";
+import Background from "../homepage/mainPPic.jpeg";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto auto auto",
-        background: theme.palette.nav.main,
-        color: "white",
+        background: "white",
+        color: "black",
         fontFamily: "Arial, Helvetica, sans-serif",
         paddingTop: "0.5em",
         paddingBottom: "0.5em"
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: "auto",
         marginBottom: "auto",
-        color: theme.palette.getContrastText(theme.palette.nav.main),
+        color: 'black',
         fontSize: "1.2em",
         textAlign: "center",
         marginLeft: "2em"
@@ -87,11 +90,11 @@ function Navbar(props) {
         <AppBar className={styles.root} position={"static"}>
             <div className={styles.leftSide}>
                 <Link to="/" className={styles.button}>
-                    Home
+                    <img src={Logo} style={{width:43, height:43}}/>
                 </Link>
             </div>
-            <div style={{display: "grid", placeContent: "center"}}>
-                LOGO
+            <div style={{display: "grid", placeContent: "center" }}>
+                <img src={TextLogo} style={{height:43}}/>
             </div>
             {/*^^^this is temporary^^^*/}
             {!isSmall &&
@@ -105,7 +108,7 @@ function Navbar(props) {
                                 Profile
                             </ContrastNavButton>
                         </Link>
-                        <ContrastNavButton onClick={handleClick} size={"large"}>Sign Out</ContrastNavButton>
+                        <ContrastNavButton onClick={handleClick} size={"large"} >Sign Out</ContrastNavButton>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>

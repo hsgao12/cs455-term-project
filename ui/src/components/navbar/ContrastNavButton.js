@@ -10,7 +10,7 @@ function ContrastNavButton(props) {
 
     return <Button
             {...props}
-            style={{...props.style,color:theme.palette.getContrastText(theme.palette.nav.main)}}
+            style={{...props.style,color:theme.palette.getContrastText(theme.palette.common.white)}}
         >
             {props.children}
         </Button>;

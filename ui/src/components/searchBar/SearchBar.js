@@ -1,192 +1,67 @@
-import React, {useState} from "react";
+import React ,{useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import TuneIcon from '@material-ui/icons/Tune';
-import "./SearchBarStyle.css";
-import {
-    Button,
-    Input,
-    OutlinedInput,
-    TextField,
-    makeStyles,
-    IconButton,
-    Collapse,
-    Box,
-    Paper,
-    Tooltip,
-    Slider
-} from "@material-ui/core";
+import DirectionsIcon from '@material-ui/icons/Directions';
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-    searchInput: {
-        height: "3rem",
-        paddingRight: "0"
+    root: {
+        padding: '2px 4px',
+        display: 'flex',
+        alignItems: 'center',
+        width: 500,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)'
     },
-    searchWrapper: {
-        maxWidth: "min(550px,100vw)",
-        background: "rgba(0,0,0,0.6)",
-        gridColumnGap: "0rem",
-        padding: "1em",
-        borderRadius: "5px",
-        margin: "0 auto",
-        color: "white"
-
+    input: {
+        marginLeft: theme.spacing(1),
+        flex: 1,
     },
-    searchWrapperInner: {
-        display: "grid",
-        gridTemplateColumns: "1fr auto auto",
-
-        gridColumnGap: "0.3rem",
+    iconButton: {
+        padding: 10,
     },
-    searchButton: {
-        background: theme.palette.search.main,
-        '&:hover': {
-            background: theme.palette.search.dark
-        },
-        border: "1px solid currentcolor",
-        height: "100%"
+    divider: {
+        height: 28,
+        margin: 4,
     },
-
-    filterStuff: {
-        gridColumn: "span 2"
-
-    },
-
-    filterStuffPaper: {
-        paddingTop: "2.3em",
-        paddingBottom: "1em",
-        borderTopLeftRadius: "0",
-        borderTopRightRadius: "0",
-    },
-    filterStuffInputForm: {
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        paddingRight: "1em",
-        gridRowGap: "0.1em",
-        gridColumnGap: "1em"
-    }
-
 }));
 
-export default function SearchBar(props) {
+export default function SearchBar() {
+    const [term, setTerm] = useState("");
+    const classes = useStyles();
+    const handleChange = (event) => {
+        setTerm(event.target.value);
+    }
 
-    const [searchTerm, setSearchTerm] = useState(props.init ?? "");
-    const [filterTabOpen, setFilterTabOpen] = useState(false);
-    const [priceRange, setPriceRange] = useState([0, 100]);
-    const [sizeRange, setSizeRange] = useState([0, 20]);
-    const onButtonClick = props.buttonClick ?? (()=>{});
+    const handleSearch = (event) => {
 
-    const style = useStyles();
+    }
 
-    const handleInputChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-
-    return (<div className={style.searchWrapper}>
-        <Paper className={style.searchWrapperInner}>
-            <OutlinedInput
+    return (
+        <Paper component="form" className={classes.root}>
+            <InputBase
+                className={classes.input}
                 placeholder="What are you looking for?"
-                fullWidth={true}
-                color={"primary"}
-                className={style.searchInput}
-                onChange={handleInputChange}
-                endAdornment={
-                    <div style={{height: "100%"}}>
-                        <Link to={{pathname:`/search/${searchTerm}`,
-                            search:`?query=${searchTerm}&minPrice=${"a b c"}&maxPrice=${0}&minSize=${0}&maxSize=${0}&brands=${0}`
-                        }}>
-                            <Button className={style.searchButton} onClick={onButtonClick}>
-                                <SearchIcon/>
-                            </Button>
-                        </Link>
-                    </div>
-                }
-                onKeyPress={(e)=>{
-                    if(e.key ==="enter"){
-
-                    }
-                }}
-                value={searchTerm}
+                inputProps={{ 'aria-label': 'What are you looking for?' }}
+                onChange={handleChange}
             />
+            <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <Link
+                    to={{
+                        pathname: `/search/${term}`,
 
-
-            <Tooltip title={"filters"}>
-                <IconButton variant={"contained"}
-                            onClick={() => setFilterTabOpen(!filterTabOpen)}>
-                    <TuneIcon style={{color: "black"}}/>
-                </IconButton>
-            </Tooltip>
-            {/*this looks ugly ;-;*/}
-            <Collapse in={filterTabOpen} className={style.filterStuff}>
-
-                <div className={style.filterStuffPaper}>
-
-
-                    <div className={style.filterStuffInputForm}>
-                        {<React.Fragment>{/*to organize the thingys*/}
-                            <div dir={"rtl"} style={{marginTop: "auto", marginBottom: "auto"}}>Price</div>
-                            <Slider style={{gridColumn: "span 2"}} valueLabelDisplay={"on"}
-                                    value={priceRange}
-                                    onChange={(e, v) => setPriceRange(v)}
-                                    scale={(e) => 5 * Math.floor(1.1 ** (e - 1))}
-
-                            />
-                            <Input/>
-                        </React.Fragment>}
-
-                        {<React.Fragment>{/*to organize the thingys*/}
-                            <div dir={"rtl"} style={{marginTop: "auto", marginBottom: "auto"}}>Brand</div>
-                            <div style={{gridColumn: "span 3"}}><Input fullWidth margin={"dense"}/></div>
-                        </React.Fragment>}
-
-                        {<React.Fragment>{/*to organize the thingys*/}
-                            <div dir={"rtl"} style={{marginTop: "auto", marginBottom: "auto"}}>Size</div>
-                            <Slider style={{gridColumn: "span 2"}}
-                                    valueLabelDisplay={"auto"}
-                                    value={sizeRange}
-                                    onChange={(e, v) => setSizeRange(v)}
-                                    max={20}
-                                    step={0.5}
-
-                            />
-                            <div style={{
-                                display: "grid",
-                                gridTemplateColumns: "auto auto auto",
-                                gridColumnGap: "0.2rem"
-                            }}>
-                                <Input
-                                    value={sizeRange[0]}
-                                    inputProps={{type: "number", min: 0, max: 20, step: 0.5}}
-                                    onChange={(e) => setSizeRange([Number(e.target.value), sizeRange[1]])}
-                                />
-                                <span>-</span>
-                                <Input
-                                    value={sizeRange[1]}
-                                    inputProps={{type: "number", min: 0, max: 20, step: 0.5}}
-                                    onChange={(e) => setSizeRange(
-                                        [sizeRange[0],
-                                            Number(e.target.value)
-                                        ])
-                                    }
-
-                                />
-                            </div>
-                        </React.Fragment>}
-
-
-                    </div>
-
-                </div>
-            </Collapse>
+                    }}
+                >
+                    <SearchIcon/>
+                </Link>
+            </IconButton>
         </Paper>
-    </div>);
-
-    return (<div className="searchBackground">
-        <div className="searchWrapper">
-            <input type="text" className="searchInput" placeholder="What are you looking for?"
-                   onChange={(e) => setSearchTerm(e.target.value)}/>
-            <SearchIcon className="searchBtn"></SearchIcon>
-        </div>
-    </div>)
+    );
 }

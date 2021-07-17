@@ -30,7 +30,7 @@ export default function ProductDetailPage(props) {
           <div className="box">
             <div className="row">
               <h2>{shoes.name}</h2>
-              <span>{shoes.price}</span>
+              <span>${shoes.price}</span>
             </div>
 
             <p>{shoes.description}</p>

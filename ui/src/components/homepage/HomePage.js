@@ -6,10 +6,11 @@ import AdidasList from "../shoesListing/AdidasList";
 import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Typography} from "@material-ui/core";
+import Background from './mainPPic.jpeg';
 
 const useStyles = makeStyles((theme) => ({
     box: {
-        margin: "auto"
+        margin: "auto",
     },
     infolists: {
         display: "grid",
@@ -21,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
             gridTemplateColumns: "auto",
             gridColumnGap: "0",
         },
-        margin: 'auto',
+        margin: ' auto',
     },
     boxHeader: {
+        marginTop: 10,
         [theme.breakpoints.down("sm")]: {
             textAlign: "center"
         }
@@ -31,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     searchBackground: {
         margin: "auto",
         width: "100%",
-        minHeight: "450px",
+        minHeight: "1050px",
         height: "100%",
-        background: "#3f51b5",
+        backgroundImage: `url(${Background})`,
     }
 
 }));
