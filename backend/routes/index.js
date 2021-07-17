@@ -2,6 +2,7 @@ var express = require('express');
 const { Mongoose } = require('mongoose');
 var router = express.Router();
 const Shoes = require('../models/shoe');
+const SellerItems = require('../models/SellerItem');
 
 //Post request to add a sneaker for sale
 router.post('/addNewSneaker',async (req,res) => {
@@ -24,6 +25,26 @@ router.post('/addNewSneaker',async (req,res) => {
   })
 });
 
+//Post request to add a SellerItem
+router.post('/addNewSellerItem',async (req,res) => {
+  const sellerItem = new Shoes(req.body);
+  sellerItem.save()
+  .then(result => {
+    console.log(result)
+    res.status(200).json(
+      {
+        message: "Seller Item successfully added to database",
+        addedShoe: result
+      }
+    );
+  })
+  .catch(err => {
+    console.error(err)
+    res.status(500).json({
+      error: err
+    });
+  })
+});
  //delete Sneakers
 router.delete('/deleteSneaker/:id', async (req,res) => {
  Shoes.deleteOne({_id: req.params.id}).then(result => {
