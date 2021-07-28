@@ -10,7 +10,7 @@ router.post("/:shoeID/:userID", async (req, res, next) => {
         res.json(
             await shoesViewed.findOneAndUpdate(
                 {id: req.params.userID},
-                {$push: {items: {$each:[req.params.shoeID],$slice:50}}, $set: {id: req.params.userID}},
+                {$push: {items: {$each:[req.params.shoeID],$slice:-50}}, $set: {id: req.params.userID}},
                 {upsert: true, new: true, setDefaultsOnInsert: true,useFindAndModify:false})
         );
     } catch (e) {
