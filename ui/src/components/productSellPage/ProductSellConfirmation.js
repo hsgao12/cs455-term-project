@@ -1,10 +1,10 @@
-import { React, useState } from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import userIDValue from "../../store/actions/authActions";
-import axios from "axios";
+import { React, useState } from 'react';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import userIDValue from '../../store/actions/authActions';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: "left",
+    textAlign: 'left',
     color: theme.palette.text.secondary,
   },
 }));
@@ -26,7 +26,7 @@ export default function ProductSellConfirmation({
 }) {
   const classes = useStyles();
   const [messageDisplay, setMessageDisplay] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const handleVerifyAndSubmitClick = async () => {
     setMessageDisplay(true);
@@ -54,26 +54,26 @@ export default function ProductSellConfirmation({
     };
     console.log(billing);
 
-    await axios.post("http://localhost:3000/addNewSellerItem", sellerItemData);
-    await axios.post("http://localhost:3000/addUserBilling", billing);
+    await axios.post('/addNewSellerItem', sellerItemData);
+    await axios.post('/addUserBilling', billing);
 
-    setMessage("Saved");
+    setMessage('Saved');
   };
 
   return (
     <Grid container direction="column">
       <Grid item xs={12} sm={12}>
-        <div style={{ fontWeight: "bolder" }}>Payment and Billing Summary </div>
+        <div style={{ fontWeight: 'bolder' }}>Payment and Billing Summary </div>
         <br></br>
         <Paper className={classes.paper}>
-          <div style={{ fontWeight: "bold" }}>Payment Summary </div>
+          <div style={{ fontWeight: 'bold' }}>Payment Summary </div>
           <br></br>
           Selling Price: ${amount.intitialAmount}
           <br></br>
           Total Payout: ${amount.payOut}
           <br></br>
           <br></br>
-          <div style={{ fontWeight: "bold" }}>Card Details</div>
+          <div style={{ fontWeight: 'bold' }}>Card Details</div>
           <br></br>
           Card Number: {billingData.creditCard}
           <br></br>
@@ -82,7 +82,7 @@ export default function ProductSellConfirmation({
           Exp Date: {billingData.ExpDate}
           <br></br>
           <br></br>
-          <div style={{ fontWeight: "bold" }}>Billing Address </div>
+          <div style={{ fontWeight: 'bold' }}>Billing Address </div>
           <br></br>
           {billingData.firstName} {billingData.lastName} <br></br>
           {billingData.address} {billingData.province} <br></br>

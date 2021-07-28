@@ -1,5 +1,5 @@
-import { ThunkAction } from "redux-thunk";
-import axios from "axios";
+import { ThunkAction } from 'redux-thunk';
+import axios from 'axios';
 
 import {
   SET_USER,
@@ -9,17 +9,17 @@ import {
   NEED_VERIFICATION,
   SET_SUCCESS,
   SET_SHIPPING,
-} from "../types";
+} from '../types';
 
-import firebase from "../../auth/firebase";
-var userIDValue = { userID: "" };
+import firebase from '../../auth/firebase';
+var userIDValue = { userID: '' };
 export default userIDValue;
 
 export const signup = (data, onError, setRegisterFormOpen) => {
   return async (dispatch) => {
     try {
-      if (data.firstName === "" || data.lastName === "") {
-        throw new Error("Please include your full name");
+      if (data.firstName === '' || data.lastName === '') {
+        throw new Error('Please include your full name');
       }
       const res = await firebase
         .auth()
@@ -31,7 +31,7 @@ export const signup = (data, onError, setRegisterFormOpen) => {
           firstName: data.firstName,
           lastName: data.lastName,
         };
-        await axios.post("http://localhost:3000/users/addUser", userData);
+        await axios.post('/users/addUser', userData);
         await res.user.sendEmailVerification();
         dispatch({
           type: NEED_VERIFICATION,
@@ -53,7 +53,7 @@ export const signup = (data, onError, setRegisterFormOpen) => {
 export const getUserById = (id) => {
   return async (dispatch) => {
     try {
-      const res = await axios.get(`http://localhost:3000/users/getUser/${id}`);
+      const res = await axios.get(`/users/getUser/${id}`);
       if (res != null) {
         const userData = res.data.user;
         console.log(userData);
@@ -116,17 +116,14 @@ export const editShipping = (id, newAddress, setModal) => {
   return async (dispatch) => {
     try {
       if (
-        newAddress.address === "" ||
-        newAddress.country === "" ||
-        newAddress.city === ""
+        newAddress.address === '' ||
+        newAddress.country === '' ||
+        newAddress.city === ''
       ) {
-        throw new Error("You must fill in all fields!");
+        throw new Error('You must fill in all fields!');
       }
       dispatch(setLoading(true));
-      const res = await axios.put(
-        `http://localhost:3000/users/setUserAddress/${id}`,
-        newAddress
-      );
+      const res = await axios.put(`/users/setUserAddress/${id}`, newAddress);
       const user = res.data.user;
       dispatch({
         type: SET_SHIPPING,
