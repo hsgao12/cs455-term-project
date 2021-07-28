@@ -47,11 +47,11 @@ export default function ShoeCardSmall(props) {
             </Typography>
 
             <div>
-                {item.seller.name}
+                {""}
             </div>
             <div>size:{item.size}</div>
             <div>
-                <Rating value={item.rating} precision={0.1} readOnly={true} size={"small"}/>
+                <Rating value={item.rating ?? 0} precision={0.1} readOnly={true} size={"small"}/>
             </div>
             <div>
                 brand:{item.brand}
