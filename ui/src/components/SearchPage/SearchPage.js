@@ -1,61 +1,60 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
-import {useLocation, useParams} from "react-router";
+import { useLocation, useParams } from 'react-router';
 import {
-    Button,
-    Input,
-    OutlinedInput,
-    TextField,
-    makeStyles,
-    IconButton,
-    Collapse,
-    Box,
-    Paper,
-    Tooltip,
-    Slider, Container, useMediaQuery, useTheme
-} from "@material-ui/core";
-import SearchBar from "../searchBar/SearchBar";
-import ShoeCardBig from "./ShoeCardBig";
-import DetailedInfoView from "./DetailedInfoView";
-import DenseView from "./DenseView"
-import axios from "axios";
-import ResultPanel from "./ResultPanel";
+  Button,
+  Input,
+  OutlinedInput,
+  TextField,
+  makeStyles,
+  IconButton,
+  Collapse,
+  Box,
+  Paper,
+  Tooltip,
+  Slider,
+  Container,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
+import SearchBar from '../searchBar/SearchBar';
+import ShoeCardBig from './ShoeCardBig';
+import DetailedInfoView from './DetailedInfoView';
+import DenseView from './DenseView';
+import axios from 'axios';
+import ResultPanel from './ResultPanel';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        align:'right',
-        marginTop: 30,
-        display: "grid",
-
-    },
-    content: {
-        display: "inline-grid",
-        gridTemplateColumns: "auto auto"
-    },
-    shoesContentVertical: {
-        display: "grid"
-    },
-    rPanel: {
-        marginLeft: "1em",
-    }
+  root: {
+    align: 'right',
+    marginTop: 30,
+    display: 'grid',
+  },
+  content: {
+    display: 'inline-grid',
+    gridTemplateColumns: 'auto auto',
+  },
+  shoesContentVertical: {
+    display: 'grid',
+  },
+  rPanel: {
+    marginLeft: '1em',
+  },
 }));
 
 export default function SearchPage(props) {
-    const searchTerm = props.match.params.query;
-    const classes = useStyles();
+  const searchTerm = props.match.params.query;
+  const classes = useStyles();
 
-    return (
-      <div className={classes.root}>
-          <div className={classes.rPanel}>
-            <ResultPanel searchTerm={searchTerm}/>
-          </div>
+  return (
+    <div className={classes.root}>
+      <div className={classes.rPanel}>
+        <ResultPanel searchTerm={searchTerm} />
       </div>
-    );
-
+    </div>
+  );
 }
-
-
 
 /*
 export default function SearchPage() {
@@ -76,7 +75,7 @@ export default function SearchPage() {
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(async ()=>{
-        const data = (await axios.get(`http://localhost:3000/search/${searchTerm}`)).data;
+        const data = (await axios.get(`/search/${searchTerm}`)).data;
         console.log(data);
         setShoesList(data);
     },[wat]);
