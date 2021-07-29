@@ -32,7 +32,9 @@ export default function ProductSellConfirmation({
     setMessageDisplay(true);
     const sellerItemData = {
       sneakerId: props.location.state.shoe._id,
-      userId: userIDValue.userID,
+      sellerId: userIDValue.userID,
+      buyerID:'',
+      sold:false,
       size: size,
       price: amount.intitialAmount,
     };
@@ -57,7 +59,7 @@ export default function ProductSellConfirmation({
     await axios.post('/addNewSellerItem', sellerItemData);
     await axios.post('/addUserBilling', billing);
 
-    setMessage('Saved');
+    setMessage('Great, the sneaker has been added to the Sale List.');
   };
 
   return (
