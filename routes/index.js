@@ -78,6 +78,33 @@ router.get('/getSizeAndPrice/:id', async (req, res) => {
       });
     });
 });
+
+//update sellerItem collection with buyer id and sold flag
+router.put('/updateSellerItem/:id/:size/:price', async (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const id = req.params.id;
+  const size = req.params.size;
+  const price = req.params.price;
+  console.log(size)
+  SellerItem.findOneAndUpdate({"sneakerId": id,"price": price, "size": size},
+     req.body, { useFindAndModify: false })
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update SelerItem with id=${id}. Maybe SellerItem was not found!`
+        });
+      } else res.send({ message: "Seller Item was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Selleritem with id=" + id
+      });
+    });
+});
 //delete Sneakers
 router.delete('/deleteSneaker/:id', async (req, res) => {
   Shoes.deleteOne({ _id: req.params.id })

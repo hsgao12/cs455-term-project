@@ -39,7 +39,10 @@ export default function ProductBuyConfirmation({
       price: amount.intitialAmount,
     };
     console.log(sellerItemData);
-
+  const buyerData = {
+    buyerId:userIDValue.userID,
+    sold:true,
+  }
     const billing = {
       userId: userIDValue.userID,
       billing: {
@@ -56,9 +59,8 @@ export default function ProductBuyConfirmation({
     };
     console.log(billing);
 
-    await axios.post('/addNewSellerItem', sellerItemData);
+    await axios.put('/updateSellerItem'+'/'+sellerItemData.sneakerId+'/'+sellerItemData.size+'/'+sellerItemData.price, buyerData);
     await axios.post('/addUserBilling', billing);
-
     setMessage('Great, the sneaker has been added to the Sale List.');
   };
 
