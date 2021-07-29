@@ -64,6 +64,20 @@ router.post('/addNewSellerItem', async (req, res) => {
       });
     });
 });
+//Query SellerItem to get list of sneaker price and size from SneakerId 
+router.get('/getSizeAndPrice/:id', async (req, res) => {
+  SellerItem.find({sneakerId: req.params.id }, { price: 1, size: 1, _id:0 })
+    .exec()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
 //delete Sneakers
 router.delete('/deleteSneaker/:id', async (req, res) => {
   Shoes.deleteOne({ _id: req.params.id })

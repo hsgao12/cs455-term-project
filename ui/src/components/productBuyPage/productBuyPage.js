@@ -2,9 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import ProductForSaleForm from './ProductForBuyForm';
+import ProductForBuyForm from './ProductForBuyForm';
 import ProductForBillingInfoForm from '../productSellPage/ProductForBillingInfoForm';
-import ProductSellConfirmation from "../productSellPage/ProductSellConfirmation";
+import ProductBuyConfirmation from "./ProductBuyConfirmation";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -49,7 +49,7 @@ function ProductForSale(props, size) {
   );
 }
 
-export default function ProductSellPage(props) {
+export default function ProductBuyPage(props) {
   const classes = useStyles();
   const [billingInfo, setBillingInfo] = React.useState(false);
   const [size, setSize] = React.useState("");
@@ -84,7 +84,7 @@ export default function ProductSellPage(props) {
         <Grid item xs={6} sm={6}>
           {confirmationInfo && (
             <Paper style={{ height: "100vh" }} className={classes.paper}>
-              <ProductSellConfirmation
+              <ProductBuyConfirmation
                 props={props}
                 size={size}
                 amount={amount}
@@ -107,8 +107,9 @@ export default function ProductSellPage(props) {
                   setBillingData={setBillingData}
                 />
               ) : (
-                <ProductForSaleForm
+                <ProductForBuyForm
                   props={props}
+                  size = {size}
                   setSize={setSize}
                   amount={amount}
                   setAmount={setAmount}

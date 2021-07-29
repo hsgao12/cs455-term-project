@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductSellConfirmation({
+export default function ProductBuyConfirmation({
   props,
   size,
   amount,
@@ -70,9 +70,9 @@ export default function ProductSellConfirmation({
         <Paper className={classes.paper}>
           <div style={{ fontWeight: 'bold' }}>Payment Summary </div>
           <br></br>
-          Selling Price: ${amount.intitialAmount}
+          Price: ${amount.intitialAmount}
           <br></br>
-          Total Payout: ${amount.payOut}
+          Total: ${amount.total}
           <br></br>
           <br></br>
           <div style={{ fontWeight: 'bold' }}>Card Details</div>
