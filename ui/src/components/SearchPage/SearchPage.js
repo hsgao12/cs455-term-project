@@ -41,6 +41,14 @@ const useStyles = makeStyles((theme) => ({
   rPanel: {
     marginLeft: '1em',
   },
+  topPanel: {
+    minHeight: '250px',
+  },
+  topHeader: {
+    textAlign: 'center',
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: 'normal',
+  }
 }));
 
 export default function SearchPage(props) {
@@ -49,6 +57,9 @@ export default function SearchPage(props) {
 
   return (
     <div className={classes.root}>
+      <div className={classes.topPanel}>
+        <h1 className={classes.topHeader}>Search Results</h1>
+      </div>
       <div className={classes.rPanel}>
         <ResultPanel searchTerm={searchTerm} />
       </div>

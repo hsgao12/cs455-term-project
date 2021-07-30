@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www", 
-    "build": "cd ui && npm run build", 
-    "install-client": "cd ui && npm install", 
+    "start": "node ./bin/www",
+    "build": "cd ui && npm run build",
+    "install-client": "cd ui && npm install",
     "heroku-postbuild": "npm run install-client && npm run build"
   },
   "dependencies": {
