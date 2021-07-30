@@ -55,7 +55,16 @@ export default function ProductDetailPage(props) {
           >
             <button className="sell">Click to sell</button>
           </Link>
+          <Link
+            to={{
+              pathname: '/productBuyPage',
+              state: {
+                shoe: shoes,
+              },
+            }}
+          >
           <button className="buy">Click to Buy</button>
+          </Link>
         </div>
       </div>
     </div>
