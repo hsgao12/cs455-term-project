@@ -14,7 +14,7 @@ import ProductDetailPage from "./components/productDetailPage/productDetailPage"
 import ProductSellPage from "./components/productSellPage/productSellPage";
 
 import ProductBuyPage from "./components/productBuyPage/productBuyPage";
-import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery} from '@material-ui/core';
+import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery,createTheme} from '@material-ui/core';
 
 import SearchPage from "./components/SearchPage/SearchPage";
 
