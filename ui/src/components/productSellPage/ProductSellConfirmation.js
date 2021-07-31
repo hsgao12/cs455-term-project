@@ -27,7 +27,7 @@ export default function ProductSellConfirmation({
   const classes = useStyles();
   const [messageDisplay, setMessageDisplay] = useState(false);
   const [message, setMessage] = useState('');
-
+  const [sellerItemId, setSellerItemId] = useState('');
   const handleVerifyAndSubmitClick = async () => {
     setMessageDisplay(true);
     const sellerItemData = {
@@ -40,8 +40,14 @@ export default function ProductSellConfirmation({
     };
     console.log(sellerItemData);
 
+
+    var response = await axios.post('/addNewSellerItem', sellerItemData);
+    setSellerItemId(response.data);
+    console.log(sellerItemId)
     const billing = {
+      sellerItemId: response.data,
       userId: userIDValue.userID,
+      userType: "seller",
       billing: {
         address: billingData.address,
         province: billingData.province,
@@ -55,10 +61,7 @@ export default function ProductSellConfirmation({
       },
     };
     console.log(billing);
-
-    await axios.post('/addNewSellerItem', sellerItemData);
     await axios.post('/addUserBilling', billing);
-
     setMessage('Great, the sneaker has been added to the Sale List.');
   };
 

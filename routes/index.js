@@ -27,6 +27,9 @@ router.post('/addNewSneaker', async (req, res) => {
 
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
+  console.log("called with")
+  console.log(req.body)
+
   const userBilling = new UserBilling(req.body);
   userBilling
     .save()
@@ -51,11 +54,10 @@ router.post('/addNewSellerItem', async (req, res) => {
   sellerItem
     .save()
     .then((result) => {
-      console.log(result);
-      res.status(200).json({
-        message: 'Seller Item successfully added to database',
-        sellerItem: result,
-      });
+      let id = result._id;
+      console.log(id);
+      res.status(200).send(
+        id);
     })
     .catch((err) => {
       console.error(err);
@@ -97,7 +99,7 @@ router.put('/updateSellerItem/:id/:size/:price', async (req, res) => {
         res.status(404).send({
           message: `Cannot update SelerItem with id=${id}. Maybe SellerItem was not found!`
         });
-      } else res.send({ message: "Seller Item was updated successfully." });
+      } else res.send(data._id);
     })
     .catch(err => {
       res.status(500).send({
