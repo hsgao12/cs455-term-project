@@ -1,0 +1,32 @@
+.sizebtn {
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.1);
+    border: none;
+
+}
+
+.sizebtnSelected {
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.1);
+    border: none;
+    color: #ff7133;
+
+}
+
+.btnGroup button:hover {
+    background-color: #bf8a00;
+}
+
+.selected {
+    color: #3c70ff;
+}

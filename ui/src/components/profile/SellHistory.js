@@ -61,6 +61,9 @@ export default function SellHistory(props) {
   const user = useSelector((state) => state.auth.user);
   const styles = useStyles();
 
+
+
+
   return (
     <React.Fragment>
       <div className={styles.root}>

@@ -32,12 +32,14 @@ export default function ResultPanel({ searchTerm }) {
   const [results, setResults] = useState([]);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(24);
+  const [isLoading, setLoading] = useState(true);
   const classes = useStyles();
 
-  useEffect(() => {
-    Axios.get(`/getShoes/${searchTerm}`).then((res) => {
+  useEffect(async () => {
+    Axios.get(`/searchShoes/${searchTerm}`).then((res) => {
       const resultData = res.data;
       setResults(resultData);
+      setLoading(false);
     });
   }, []);
 
@@ -47,8 +49,8 @@ export default function ResultPanel({ searchTerm }) {
       setMinIndex(0);
       setMaxIndex(24);
     } else {
-      setMinIndex(maxIndex);
-      setMaxIndex(value * 24);
+      setMinIndex((value-1) * 24);
+      setMaxIndex((value) * 24);
     }
   };
 
@@ -70,7 +72,7 @@ export default function ResultPanel({ searchTerm }) {
           ))}
         </Grid>
         <Pagination
-          count={Math.floor(results.length / 24 + 2)}
+          count={Math.floor(results.length / 24 + 1)}
           shape="rounded"
           onChange={handleChange}
         />
