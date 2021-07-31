@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductSellConfirmation({
+export default function ProductBuyConfirmation({
   props,
   size,
   amount,
@@ -39,7 +39,10 @@ export default function ProductSellConfirmation({
       price: amount.intitialAmount,
     };
     console.log(sellerItemData);
-
+  const buyerData = {
+    buyerId:userIDValue.userID,
+    sold:true,
+  }
     const billing = {
       userId: userIDValue.userID,
       billing: {
@@ -56,9 +59,8 @@ export default function ProductSellConfirmation({
     };
     console.log(billing);
 
-    await axios.post('/addNewSellerItem', sellerItemData);
+    await axios.put('/updateSellerItem'+'/'+sellerItemData.sneakerId+'/'+sellerItemData.size+'/'+sellerItemData.price, buyerData);
     await axios.post('/addUserBilling', billing);
-
     setMessage('Great, the sneaker has been added to the Sale List.');
   };
 
@@ -70,9 +72,9 @@ export default function ProductSellConfirmation({
         <Paper className={classes.paper}>
           <div style={{ fontWeight: 'bold' }}>Payment Summary </div>
           <br></br>
-          Selling Price: ${amount.intitialAmount}
+          Price: ${amount.intitialAmount}
           <br></br>
-          Total Payout: ${amount.payOut}
+          Total: ${amount.total}
           <br></br>
           <br></br>
           <div style={{ fontWeight: 'bold' }}>Card Details</div>

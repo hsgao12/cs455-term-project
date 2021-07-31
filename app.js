@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const searchRouter = require('./routes/search');
+const viewRouter = require('./routes/viewHistory');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
+app.use('/viewHistory',viewRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('ui/build'));

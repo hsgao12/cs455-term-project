@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto auto auto",
-        background: "white",
+        background: theme.palette.background.default,
         color: "black",
         fontFamily: "Arial, Helvetica, sans-serif",
         paddingTop: "0.5em",
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2em"
     },
     menuPaper: {
-        background: theme.palette.nav.main
+        background: theme.palette.background.default
     }
 }));
 
@@ -89,20 +89,21 @@ function Navbar(props) {
     return (
         <AppBar className={styles.root} position={"static"}>
             <div className={styles.leftSide}>
-                <Link to="/" className={styles.button}>
+                <Link to="/" className={styles.button} style={{textDecoration:"none"}}>
                     <img src={Logo} style={{width:43, height:43}}/>
                 </Link>
             </div>
             <div style={{display: "grid", placeContent: "center" }}>
                 <img src={TextLogo} style={{height:43}}/>
             </div>
-            {/*^^^this is temporary^^^*/}
+
             {!isSmall &&
             <div className={styles.rightSide}>
                 {authenticated ? (
                     <React.Fragment>
                         <Link to="/profile">
                             <ContrastNavButton
+                                style={{height:"100%"}}
                                 size={"large"}
                             >
                                 Profile

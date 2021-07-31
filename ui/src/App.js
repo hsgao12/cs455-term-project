@@ -12,11 +12,14 @@ import store from './store/store';
 import {Provider} from 'react-redux';
 import ProductDetailPage from "./components/productDetailPage/productDetailPage";
 import ProductSellPage from "./components/productSellPage/productSellPage";
-import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery} from '@material-ui/core';
+
+import ProductBuyPage from "./components/productBuyPage/productBuyPage";
+import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery,createTheme} from '@material-ui/core';
+
 import SearchPage from "./components/SearchPage/SearchPage";
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: '#4caf50',
@@ -39,7 +42,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({//can't use theme version
     app: {
-        "@media()":{}
+        "@media()": {}
     }
 });
 
@@ -47,6 +50,7 @@ function App() {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
+
                 <Router>
                     <Provider store={store}>
                         <Navbar/>
@@ -57,6 +61,7 @@ function App() {
                             <Route path="/search/:query" component={SearchPage} exact/>
                             <Route path="/search" component={SearchPage} exact/>
                             <Route path="/ProductSellPage" component={ProductSellPage} exact/>
+                            <Route path="/ProductBuyPage" component={ProductBuyPage} exact/>
 
                         </Switch>
                     </Provider>
