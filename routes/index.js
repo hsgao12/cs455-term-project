@@ -68,7 +68,7 @@ router.post('/addNewSellerItem', async (req, res) => {
 });
 //Query SellerItem to get list of sneaker price and size from SneakerId 
 router.get('/getSizeAndPrice/:id', async (req, res) => {
-  SellerItem.find({sneakerId: req.params.id }, { price: 1, size: 1, _id:0 })
+  SellerItem.find({"sneakerId": req.params.id, "sold": false}, { price: 1, size: 1, _id:0 })
     .exec()
     .then((result) => {
       res.status(200).json(result);
