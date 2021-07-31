@@ -2,6 +2,7 @@ import { Card, makeStyles, Paper, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab"
 import Button from "@material-ui/core/Button";
 import React from "react";
+import {Link} from "react-router-dom";
 
 
 const useCardStyles = makeStyles((theme) => ({
@@ -29,6 +30,10 @@ const useCardStyles = makeStyles((theme) => ({
     itemButtons: {
         display: "grid",
         gridRowGap: "0.4em",
+    },
+    linkStyle:{
+        textDecoration:"none",
+        color:"black"
     }
 
 }));
@@ -41,7 +46,9 @@ export default function GenericCard(props) {
         <div className={styles.itemDetails}>
             <div>
                 <Typography variant={"h5"}>
-                    {item.name}
+                    <Link to={`/shoes/${item._id}`} className={styles.linkStyle}>
+                        {item.name}
+                    </Link>
                 </Typography>
 
             </div>
