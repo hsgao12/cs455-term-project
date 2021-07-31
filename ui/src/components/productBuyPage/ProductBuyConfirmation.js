@@ -43,8 +43,11 @@ export default function ProductBuyConfirmation({
     buyerId:userIDValue.userID,
     sold:true,
   }
+    var response = await axios.put('/updateSellerItem'+'/'+sellerItemData.sneakerId+'/'+sellerItemData.size+'/'+sellerItemData.price, buyerData);
     const billing = {
+      sellerItemId: response.data,
       userId: userIDValue.userID,
+      userType: "buyer",
       billing: {
         address: billingData.address,
         province: billingData.province,
@@ -58,10 +61,8 @@ export default function ProductBuyConfirmation({
       },
     };
     console.log(billing);
-
-    await axios.put('/updateSellerItem'+'/'+sellerItemData.sneakerId+'/'+sellerItemData.size+'/'+sellerItemData.price, buyerData);
     await axios.post('/addUserBilling', billing);
-    setMessage('Great, the sneaker has been added to the Sale List.');
+    setMessage('Great, Thanks for buying the sneaker!');
   };
 
   return (
