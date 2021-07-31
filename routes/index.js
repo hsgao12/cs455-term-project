@@ -164,6 +164,21 @@ router.get('/getShoes/:brand', async (req, res) => {
     });
 });
 
+//Get request to get shoes by query
+router.get('/searchShoes/:query', async (req, res) => {
+    Shoes.find({ $or: [{ brand: req.params.query }, {name: {$regex : req.params.query}}]} )
+        .exec()
+        .then((docs) => {
+            res.status(200).json(docs);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                error: err,
+            });
+        });
+});
+
 // Get Sneaker against given sneaker id
 router.get('/sneaker/:id', async (req, res) => {
   Shoes.findOne({ _id: req.params.id })
