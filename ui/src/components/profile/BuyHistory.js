@@ -19,8 +19,6 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import BuyCard from './BuyCard';
 import { List } from '@material-ui/core';
 
-import GenericCard from './GenericCard';
-
 const shoesBought = [
   {
     name: 'Adidas-Yeezy360-zyon',
@@ -65,7 +63,7 @@ export default function BuyHistory(props) {
       <div className={styles.root}>
         <List className={styles.container}>
           {shoesBought.map((e) => (
-            <GenericCard item={e} />
+            <BuyCard item={e} />
           ))}
         </List>
       </div>
