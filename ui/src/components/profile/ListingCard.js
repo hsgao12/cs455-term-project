@@ -2,6 +2,7 @@ import { Card, makeStyles, Paper, Typography } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import Button from '@material-ui/core/Button';
 import React from 'react';
+import EditListingButton from './EditListingButton';
 
 const useCardStyles = makeStyles((theme) => ({
   root: {
@@ -30,17 +31,25 @@ const useCardStyles = makeStyles((theme) => ({
   },
   priceText: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 15,
+  },
+  sizeText: {
+    position: 'absolute', 
+    bottom: 40
   },
   itemName: {
     position: 'absolute',
-    top: 10,
+    top: 15,
   },
 }));
 
 export default function ListingCard(props) {
   const item = props.item;
   const styles = useCardStyles();
+
+  const handleDelete = () => {
+    props.deleteItem(item._id);
+  }
 
   return (
     <Paper
@@ -52,11 +61,8 @@ export default function ListingCard(props) {
       <div className={styles.itemImageRoot}>
         <img src={item.img} className={styles.itemImage} />
         <div className={styles.itemButtons}>
-          <Button color={'primary'} variant={'contained'}>
-            {' '}
-            Edit
-          </Button>
-          <Button color={'primary'} variant={'contained'}>
+          <EditListingButton item={item} editItem={props.editItem} loading={props.loading}/>
+          <Button color={'primary'} variant={'contained'} onClick={handleDelete}>
             {' '}
             Delete
           </Button>
@@ -68,6 +74,9 @@ export default function ListingCard(props) {
         </Typography>
         <Typography className={styles.priceText}>
           Price: ${item.price}
+        </Typography>
+        <Typography className={styles.sizeText}>
+          Size {item.size}
         </Typography>
       </div>
     </Paper>

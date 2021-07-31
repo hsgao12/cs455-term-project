@@ -60,7 +60,7 @@ const Profile = (props) => {
         My Profile{/*rename this?*/}
       </ListItem>
       <ListItem button onClick={handleListButton}>
-        List item to sell
+        My Listings
       </ListItem>
       <ListItem button onClick={handleBuyButton}>
         Buy History
