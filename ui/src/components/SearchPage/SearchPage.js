@@ -24,6 +24,7 @@ import DetailedInfoView from './DetailedInfoView';
 import DenseView from './DenseView';
 import axios from 'axios';
 import ResultPanel from './ResultPanel';
+import FilterPanel from "./FilterPanel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +36,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-grid',
     gridTemplateColumns: 'auto auto',
   },
-  shoesContentVertical: {
-    display: 'grid',
+  shoesPanel: {
+    display: 'flex',
+  },
+  lPanel:{
+    marginRight: '1em',
+    minWidth: '15%',
   },
   rPanel: {
-    marginLeft: '1em',
+    marginRight: '1em',
   },
+  topPanel: {
+    minHeight: '250px',
+  },
+  topHeader: {
+    textAlign: 'center',
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: 'normal',
+  }
 }));
 
 export default function SearchPage(props) {
@@ -49,8 +62,16 @@ export default function SearchPage(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.rPanel}>
-        <ResultPanel searchTerm={searchTerm} />
+      <div className={classes.topPanel}>
+        <h1 className={classes.topHeader}>Search Results</h1>
+      </div>
+      <div className={classes.shoesPanel}>
+        <div className={classes.lPanel}>
+          <FilterPanel/>
+        </div>
+        <div className={classes.rPanel}>
+          <ResultPanel searchTerm={searchTerm} />
+        </div>
       </div>
     </div>
   );

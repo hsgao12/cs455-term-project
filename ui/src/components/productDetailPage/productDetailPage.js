@@ -3,8 +3,11 @@ import './productDetailStyle.css';
 import SizeQuantityPriceTable from './sizeQuantityPriceTable';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 export default function ProductDetailPage(props) {
+  const user = useSelector((state) => state.auth.user);
+
   const shoeId = props.match.params.shoesId;
   const [shoes, setShoes] = useState({});
 
@@ -14,6 +17,14 @@ export default function ProductDetailPage(props) {
       setShoes(shoesData);
     });
   }, []);
+
+  useEffect(async ()=>{
+    if(user){
+      await Axios.post(`/viewHistory/${shoeId}/${user.id}`);
+    }
+  },[])
+
+
 
   return (
     <div className="detailPage">
@@ -44,7 +55,16 @@ export default function ProductDetailPage(props) {
           >
             <button className="sell">Click to sell</button>
           </Link>
+          <Link
+            to={{
+              pathname: '/productBuyPage',
+              state: {
+                shoe: shoes,
+              },
+            }}
+          >
           <button className="buy">Click to Buy</button>
+          </Link>
         </div>
       </div>
     </div>

@@ -19,6 +19,7 @@ import MyListings from './MyListings';
 import MenuIcon from '@material-ui/icons/Menu';
 import BuyHistory from './BuyHistory';
 import SellHistory from './SellHistory';
+import ViewHistory from './ViewHistory';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,7 @@ const Profile = (props) => {
   const handleListButton = setPage('list');
   const handleBuyButton = setPage('buy');
   const handleSellButton = setPage('sell');
+  const handleViewButton = setPage('view');
 
   const sideBar = (
     <List>
@@ -65,6 +67,9 @@ const Profile = (props) => {
       </ListItem>
       <ListItem button onClick={handleSellButton}>
         Sell History
+      </ListItem>
+      <ListItem button onClick={handleViewButton}>
+        View History
       </ListItem>
     </List>
   );
@@ -98,6 +103,7 @@ const Profile = (props) => {
           {currentPage === 'list' && <MyListings />}
           {currentPage === 'buy' && <BuyHistory />}
           {currentPage === 'sell' && <SellHistory />}
+          {currentPage === 'view' && <ViewHistory />}
         </div>
       </Paper>
     </Container>

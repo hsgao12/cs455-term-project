@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 export function MainProfilePage(props) {
   const user = useSelector((state) => state.auth.user);
   const styles = useStyles();
+  console.log(user);
 
   return (
     <div className={styles.root} key={'main'}>

@@ -64,6 +64,47 @@ router.post('/addNewSellerItem', async (req, res) => {
       });
     });
 });
+//Query SellerItem to get list of sneaker price and size from SneakerId 
+router.get('/getSizeAndPrice/:id', async (req, res) => {
+  SellerItem.find({sneakerId: req.params.id }, { price: 1, size: 1, _id:0 })
+    .exec()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
+//update sellerItem collection with buyer id and sold flag
+router.put('/updateSellerItem/:id/:size/:price', async (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const id = req.params.id;
+  const size = req.params.size;
+  const price = req.params.price;
+  console.log(size)
+  SellerItem.findOneAndUpdate({"sneakerId": id,"price": price, "size": size},
+     req.body, { useFindAndModify: false })
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update SelerItem with id=${id}. Maybe SellerItem was not found!`
+        });
+      } else res.send({ message: "Seller Item was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Selleritem with id=" + id
+      });
+    });
+});
 //delete Sneakers
 router.delete('/deleteSneaker/:id', async (req, res) => {
   Shoes.deleteOne({ _id: req.params.id })
@@ -121,6 +162,21 @@ router.get('/getShoes/:brand', async (req, res) => {
         error: err,
       });
     });
+});
+
+//Get request to get shoes by query
+router.get('/searchShoes/:query', async (req, res) => {
+    Shoes.find({ $or: [{ brand: req.params.query }, {name: {$regex : req.params.query}}]} )
+        .exec()
+        .then((docs) => {
+            res.status(200).json(docs);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                error: err,
+            });
+        });
 });
 
 // Get Sneaker against given sneaker id
