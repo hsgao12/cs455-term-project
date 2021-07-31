@@ -40,11 +40,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   lPanel:{
+    marginLeft: '1em',
     marginRight: '1em',
     minWidth: '15%',
   },
   rPanel: {
-    marginRight: '1em',
+    marginRight: '4em',
   },
   topPanel: {
     minHeight: '250px',
