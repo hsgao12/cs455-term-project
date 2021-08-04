@@ -197,20 +197,22 @@ router.get('/sneaker/:id', async (req, res) => {
 router.get("/buyHistory/:id",async (req,res,next)=>{
     const id = req.params.id;
     try{
-        const items = await SellerItem.find({sold:true,buyerID:id});
-        if(items.length ===0){
+        const items = await SellerItem.find({sold:true,buyerId:id});
+        if(items.length === 0){
             res.json([]);
         }else {
             const item_ids = items.map((a) => Types.ObjectId(a.sneakerId));
             let shoesBought = {};
-            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}})
+            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}}).lean()
             for (const shoeBought of shoesBoughtList) {
-                shoesBought[shoeBought.id] = shoeBought;
+                shoesBought[shoeBought._id.toString()] = shoeBought;
             }
-            res.json(items.map((a) => ({
+
+            const returnVal = items.map((a) => ({
                 ...shoesBought[a.sneakerId],
-                price: a.price
-            })));
+                price: a.price,
+            }));
+            res.json(returnVal);
         }
     } catch (e) {
 
@@ -226,14 +228,16 @@ router.get("/sellHistory/:id",async (req,res,next)=>{
         }else {
             const item_ids = items.map((a) => Types.ObjectId(a.sneakerId));
             let shoesBought = {};
-            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}})
+            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}}).lean()
             for (const shoeBought of shoesBoughtList) {
-                shoesBought[shoeBought.id] = shoeBought;
+                shoesBought[shoeBought._id.toString()] = shoeBought;
             }
-            res.json(items.map((a) => ({
+
+            const returnVal = items.map((a) => ({
                 ...shoesBought[a.sneakerId],
-                price: a.price
-            })));
+                price: a.price,
+            }));
+            res.json(returnVal);
         }
     } catch (e) {
 

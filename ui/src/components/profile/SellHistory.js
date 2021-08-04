@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
-import {List} from '@material-ui/core';
+import {List, Paper} from '@material-ui/core';
 
 import {
     Card,
@@ -22,39 +22,17 @@ import BuyCard from './BuyCard';
 import SellCard from './SellCard';
 import {Autocomplete} from '@material-ui/lab';
 import axios from "axios";
-
-const shoesBought = [
-    {
-        name: 'Adidas-Yeezy360-zyon',
-        image: '/shoes-images/Adidas-Yeezy360-zyon.webp',
-        price: 500,
-        buyerName: 'potato',
-        sellerID: '1233556',
-        dateBought: '21/5/27',
-        orderID: '23231',
-        rating: 3.4,
-    },
-    {
-        name: 'Adidas-Yeezy360-zyon',
-        image: '/shoes-images/Adidas-Yeezy360-zyon.webp',
-        price: 500,
-        buyerName: 'potato',
-        sellerID: '1233556',
-        dateBought: '21/5/27',
-        orderID: '23231',
-        rating: 3.2,
-    },
-];
+import GenericCard from "./GenericCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '75%',
+        marginRight:"1rem",
+        paddingLeft:"1rem"
     },
     container: {
         display: 'grid',
         gridRowGap: '1rem',
         maxHeight: '100%',
-        overflow: 'auto',
     },
 }));
 
@@ -71,13 +49,13 @@ export default function SellHistory(props) {
 
     return (
         <React.Fragment>
-            <div className={styles.root}>
+            <Paper className={styles.root}>
                 <List className={styles.container}>
                     {shoesSold.map((e) => (
-                        <SellCard item={e}/>
+                        <GenericCard item={e}/>
                     ))}
                 </List>
-            </div>
+            </Paper>
         </React.Fragment>
     );
 }

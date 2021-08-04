@@ -25,7 +25,6 @@ import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '100%',
         marginRight:"1rem",
         paddingLeft:"1rem"
     },
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'grid',
         gridRowGap: '1rem',
         maxHeight: '100%',
-        overflow: 'auto',
     },
 }));
 
