@@ -98,7 +98,7 @@ const Profile = (props) => {
             </Menu>
           </div>
         )}
-        <div style={{ height: '45rem' }}>
+        <div style={{ minHeight: '45rem' }}>
           {currentPage === 'main' && <MainProfilePage />}
           {currentPage === 'list' && <MyListings />}
           {currentPage === 'buy' && <BuyHistory />}

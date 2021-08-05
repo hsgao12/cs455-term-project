@@ -1,5 +1,5 @@
 var express = require('express');
-const { Mongoose } = require('mongoose');
+const { Mongoose,Types } = require('mongoose');
 var router = express.Router();
 const Shoes = require('../models/shoe');
 const SellerItem = require('../models/SellerItem');
@@ -134,6 +134,7 @@ router.get('/getShoes', async (req, res) => {
         error: err,
       });
     });
+
 });
 
 //Get request to get popular list of sneaker
@@ -193,5 +194,55 @@ router.get('/sneaker/:id', async (req, res) => {
     });
 });
 
+router.get("/buyHistory/:id",async (req,res,next)=>{
+    const id = req.params.id;
+    try{
+        const items = await SellerItem.find({sold:true,buyerId:id});
+        if(items.length === 0){
+            res.json([]);
+        }else {
+            const item_ids = items.map((a) => Types.ObjectId(a.sneakerId));
+            let shoesBought = {};
+            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}}).lean()
+            for (const shoeBought of shoesBoughtList) {
+                shoesBought[shoeBought._id.toString()] = shoeBought;
+            }
+
+            const returnVal = items.map((a) => ({
+                ...shoesBought[a.sneakerId],
+                price: a.price,
+            }));
+            res.json(returnVal);
+        }
+    } catch (e) {
+
+    }
+});
+
+router.get("/sellHistory/:id",async (req,res,next)=>{
+    const id = req.params.id;
+    try{
+        const items = await SellerItem.find({sold:true,sellerId:id});
+        if(items.length === 0){
+            res.json([]);
+        }else {
+            const item_ids = items.map((a) => Types.ObjectId(a.sneakerId));
+            let shoesBought = {};
+            const shoesBoughtList = await Shoes.find({_id: {$in: item_ids}}).lean()
+            for (const shoeBought of shoesBoughtList) {
+                shoesBought[shoeBought._id.toString()] = shoeBought;
+            }
+
+            const returnVal = items.map((a) => ({
+                ...shoesBought[a.sneakerId],
+                price: a.price,
+            }));
+            res.json(returnVal);
+        }
+    } catch (e) {
+
+    }
+
+});
 
 module.exports = router;
