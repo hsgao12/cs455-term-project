@@ -17,6 +17,7 @@ import ProductBuyPage from "./components/productBuyPage/productBuyPage";
 import {makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQuery,createTheme} from '@material-ui/core';
 
 import SearchPage from "./components/SearchPage/SearchPage";
+import Admin from "./components/admin/admin"
 
 
 const theme = createTheme({
@@ -62,6 +63,7 @@ function App() {
                             <Route path="/search" component={SearchPage} exact/>
                             <Route path="/ProductSellPage" component={ProductSellPage} exact/>
                             <Route path="/ProductBuyPage" component={ProductBuyPage} exact/>
+                            <Route path="/Admin" component={Admin} exact/>
 
                         </Switch>
                     </Provider>

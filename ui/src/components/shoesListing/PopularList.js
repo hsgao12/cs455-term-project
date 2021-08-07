@@ -31,7 +31,7 @@ export default function PopularList() {
   const [shoes, setShoes] = useState([]);
 
   const updateShoes = () => {
-    Axios.get('/getPopularShoes')
+    Axios.get('/popularListings')
       .then((res) => {
         const shoesData = res.data;
         const randNum = Math.floor(Math.random() * (shoesData.length - 4));
