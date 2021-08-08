@@ -9,14 +9,14 @@ router.get('/autocomplete', async (req, res) => {
       {
         $search: {
           index: 'default',
-          autocomplete: { path: 'name', query: req.query.term },
+          autocomplete: { path: 'name', query: req.query.term, fuzzy: {maxEdits: 1}},
         },
       },
       {
         $project: { _id: 1, name: 1 },
       },
       {
-        $limit: 5,
+        $limit: 10,
       },
     ]);
     console.log(result);

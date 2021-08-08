@@ -4,7 +4,7 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
 import { Typography, LinearProgress, List, Paper } from '@material-ui/core';
 import ListingCard from './ListingCard';
-import EditListing from './EditListing';
+import AddListingButton from './AddListingButton';
 
 const useStyles = makeStyles((theme) => ({
   root: { maxHeight: '100%', overflow: 'auto', textAlign: 'center' },
@@ -15,7 +15,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "5%"
   }, 
   container: {
-    display: 'grid', gridRowGap: '1rem'
+    display: 'grid', gridRowGap: '1rem', paddingLeft: '1rem'
+  }, 
+  addListingContainer: {
+    textAlign: 'right',
+    width: '90%',
+    padding: '0.5rem'
   }
 }));
 
@@ -62,6 +67,9 @@ const MyListings = () => {
   return (
     <div className={styles.root}>
       <Typography className={styles.topText} variant="h5">My Listings</Typography>
+      <div className={styles.addListingContainer}>
+        <AddListingButton loading={loading} />
+      </div>
       {loading ? (
         <LinearProgress className={styles.loading} />
       ) : (

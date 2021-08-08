@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { editShipping, setError } from '../../store/actions/authActions';
+import { setError } from '../../store/actions/authActions';
 
 import ErrorAlert from '../ErrorAlert';
 
