@@ -5,12 +5,23 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
 
+
 export default function ProductDetailPage(props) {
   const user = useSelector((state) => state.auth.user);
-
+  var arrayR = [];
   const shoeId = props.match.params.shoesId;
   const [shoes, setShoes] = useState({});
-
+  const [resultArray, setResultArray] = useState([]);
+  
+  function fillRows(dict) {
+    for (var key in dict) {
+        var sizes = key;
+        var quantity = dict[key][0];
+        var price = dict[key][1];
+        arrayR.push({sizes, quantity, price});
+    }
+     setResultArray(arrayR);
+  }
   useEffect(() => {
     Axios.get(`/sneaker/${shoeId}`).then((res) => {
       const shoesData = res.data;
@@ -24,14 +35,37 @@ export default function ProductDetailPage(props) {
     }
   },[])
 
-
-
+  useEffect(async () => {
+    Axios.get(`/getSizeAndPrice/${shoeId}`)
+        .then((res) => {
+           const dict = {};
+            for (var i = 0; i < res.data.length; i++) {
+              if (!dict.hasOwnProperty(res.data[i].size)) {
+                  dict[res.data[i].size] = [1, res.data[i].price];
+              }
+              else {
+                  var qnt = dict[res.data[i].size][0];
+                  qnt = qnt + 1;
+                  var price = dict[res.data[i].size][1];
+                  if(res.data[i].price < dict[res.data[i].size][1]){
+                      price = res.data[i].price;
+                  }
+                  dict[res.data[i].size] = [qnt, price];
+              }
+          }
+          fillRows(dict);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []); 
   return (
     <div className="detailPage">
       <div className="priceTable">
-        <SizeQuantityPriceTable />
+        <SizeQuantityPriceTable
+        resultArray={resultArray} 
+        />
       </div>
-
       <div className="details" key={shoes.id}>
         <div>
           <img className="shoesImage" src={shoes.img} alt="" />

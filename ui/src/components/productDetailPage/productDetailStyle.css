@@ -74,8 +74,10 @@
 
 .detailPage {
     display: flex;
+    
 }
 
 .priceTable {
-    margin: auto;
+    margin-top: 50px;
+
 }
