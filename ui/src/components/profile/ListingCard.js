@@ -1,5 +1,5 @@
 import { Card, makeStyles, Paper, Typography } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import EditListingButton from './EditListingButton';
@@ -34,13 +34,17 @@ const useCardStyles = makeStyles((theme) => ({
     bottom: 15,
   },
   sizeText: {
-    position: 'absolute', 
+    position: 'absolute',
     bottom: 40
   },
   itemName: {
     position: 'absolute',
     top: 15,
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.getContrastText(theme.palette.background.default)
+  }
 }));
 
 export default function ListingCard(props) {
@@ -61,7 +65,7 @@ export default function ListingCard(props) {
       <div className={styles.itemImageRoot}>
         <img src={item.img} className={styles.itemImage} />
         <div className={styles.itemButtons}>
-          <EditListingButton item={item} editItem={props.editItem} loading={props.loading}/>
+          <EditListingButton item={item} editItem={props.editItem} loading={props.loading} />
           <Button color={'primary'} variant={'contained'} onClick={handleDelete}>
             {' '}
             Delete
@@ -69,16 +73,18 @@ export default function ListingCard(props) {
         </div>
       </div>
       <div className={styles.itemDetails}>
+        <Link to={`/shoes/${item.sneakerId}`} className={styles.link}>
         <Typography variant={'h5'} className={styles.itemName}>
           {item.name}
         </Typography>
-        <Typography className={styles.priceText}>
-          Price: ${item.price}
-        </Typography>
-        <Typography className={styles.sizeText}>
-          Size {item.size}
-        </Typography>
+        </Link>
+      <Typography className={styles.priceText}>
+        Price: ${item.price}
+      </Typography>
+      <Typography className={styles.sizeText}>
+        Size {item.size}
+      </Typography>
       </div>
-    </Paper>
+    </Paper >
   );
 }
