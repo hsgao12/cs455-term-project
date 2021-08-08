@@ -44,17 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ResultPanel({ results }) {
+export default function ResultPanel({ results, originalResults, setResults, setOriginalResults }) {
   const [shoes, setShoes] = useState([]);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(24);
   const [originList, setOriginList] = useState([]);
   const [sort, setSort] = useState("none");
   const classes = useStyles();
-
-  useEffect(()=> {
-    setShoes(results);
-  }, [results]);
 
   const handleChange = (event) => {
     let value = parseInt(event.target.outerText);
@@ -70,36 +66,40 @@ export default function ResultPanel({ results }) {
   const handleSort = (event) => {
     let sortValue = event.target.value;
     setSort(sortValue);
-    let tmpArr = results;
+    let tmpArr = [...results];
     switch(sortValue) {
       case "Highest Price":
         tmpArr.sort(function(a,b){
           return b.price-a.price;
         });
+        setResults(tmpArr);
         break;
       case "Lowest Price":
         tmpArr.sort(function(a,b){
           return a.price-b.price;
         });
+        setResults(tmpArr);
         break;
       case "Highest Sale":
         tmpArr.sort(function(a,b){
           return b.numberOfSale-a.numberOfSale;
         });
+        setResults(tmpArr);
         break;
       case "Lowest Sale":
         tmpArr.sort(function(a,b){
           return a.numberOfSale-b.numberOfSale;
         });
+        setResults(tmpArr);
         break;
       case "None":
-        break;
+        setResults([...originalResults]);
       default:
         break;
     }
   }
 
-  if (shoes.length === 0) {
+  if (results.length === 0) {
     return (
       <div>
         <h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS</h2>
