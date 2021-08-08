@@ -40,6 +40,7 @@ export const signup = (data, onError, setRegisterFormOpen) => {
           type: SET_USER,
           payload: userData,
         });
+        dispatch(setLoading(false));
         setRegisterFormOpen(false);
       }
     } catch (err) {

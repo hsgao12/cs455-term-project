@@ -62,12 +62,15 @@ router.get('/myListings/:id', async (req, res) => {
     const ret = [];
     for (let listing of myListings) {
       console.log(listing);
-      let thisShoe = allShoes.filter((shoe) => shoe._id == listing.sneakerId);
-      ret.push({
-        ...listing._doc,
-        name: thisShoe[0].name,
-        img: thisShoe[0].img,
-      });
+      if (listing.sold !== true) {
+        let thisShoe = allShoes.filter((shoe) => shoe._id == listing.sneakerId);
+        ret.push({
+          ...listing._doc,
+          name: thisShoe[0].name,
+          img: thisShoe[0].img,
+        });
+
+      }
     }
     res.status(200).json({ listings: ret });
   } catch (err) {
