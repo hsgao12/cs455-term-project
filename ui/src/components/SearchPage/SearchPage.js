@@ -60,10 +60,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchPage(props) {
   const searchTerm = props.match.params.query;
-  const [results, setResults] = useState({
+  const [results, setResults] = useState([]);
+  const [filters, setFilters] = useState(
+  {
     price: [],
-    size:[]
-  });
+        size:[]
+  }
+  );
   const classes = useStyles();
 
   const handleFilter = (filters, category) => {
