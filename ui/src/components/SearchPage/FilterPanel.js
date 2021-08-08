@@ -1,55 +1,84 @@
 import React, {useState} from 'react';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles} from '@material-ui/core/styles';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
 import "./FilterPanel.css";
 
-var sizeOptions ={
-    '1':false,
-    '1.5':false,
-    '2':false,
-    '2.5':false,
-    '3':false,
-    '3.5':false,
-    '4':false,
-    '4.5':false,
-    '5':false,
-    '5.5':false,
-    '6':false,
-    '6.5':false,
-    '7':false,
-    '7.5':false,
-    '8':false,
-    '8.5':false,
-    '9':false,
-    '9.5':false,
-    '10':false,
-    '10.5':false,
-    '11':false,
-    '11.5':false,
-    '12':false,
-    '12.5':false,
-    '13':false,
-    '13.5':false,
-    '14':false,
-    '14.5':false,
-    '15':false,
-    '16':false,
-    '17':false,
-    '18':false
-};
 
-export default function FilterPanel() {
 
-    const [selected, setSelect] = useState(true);
+var sizeOptions =
+    {
+        '1': false,
+        '1.5': false,
+        '2': false,
+        '2.5': false,
+        '3': false,
+        '3.5': false,
+        '4': false,
+        '4.5': false,
+        '5': false,
+        '5.5': false,
+        '6': false,
+        '6.5': false,
+        '7': false,
+        '7.5': false,
+        '8': false,
+        '8.5': false,
+        '9': false,
+        '9.5': false,
+        '10': false,
+        '10.5': false,
+        '11': false,
+        '11.5': false,
+        '12': false,
+        '12.5': false,
+        '13': false,
+        '13.5': false,
+        '14': false,
+        '14.5': false,
+        '15': false,
+        '16': false,
+        '17': false,
+        '18': false
+    };
 
-    function handleSize(btnNum) {
-        console.log("I am clicked "+btnNum);
-        sizeOptions[btnNum] = !sizeOptions[btnNum];
-        setSelect(!selected);
-        console.log(sizeOptions);
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    formControl: {
+        margin: theme.spacing(3),
+    },
+}));
+
+
+export default function FilterPanel({handleFilter}) {
+    const classes = useStyles();
+    const [selectedSize, setSelectedSize] = useState(false);
+    const [selectedPrice, setSelectedPrice] = useState({
+        first: false,
+        second: false,
+        third: false,
+        forth: false,
+        fifth: false,
+        sixth : false
+    });
+    const [checked, setChecked] = React.useState(true);
+    const  handleSize = (num) => {
+        sizeOptions[num] = !sizeOptions[num];
+        setSelectedSize(!selectedSize);
 
     }
+
+    const handleChange = (event) => {
+        setSelectedPrice({ ...selectedPrice, [event.target.name]: event.target.checked });
+    };
+
+    const {first, second, third, forth, fifth, sixth} = selectedPrice;
 
     return (
         <div>
@@ -104,8 +133,38 @@ export default function FilterPanel() {
                     <button className={sizeOptions["18"] ? "sizebtnSelected" : "sizebtn"} id='18' onClick={() => {handleSize('18')}}>18</button>
                 </div>
             </div>
-            <div className='priceBtn'>
-                <h2>Prices</h2>
+            <div className="priceBtn">
+            <h2>Prices</h2>
+            <div className={classes.root}>
+                <FormControl component="fieldset" className={classes.formControl}>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={first} onChange={handleChange} name="first" />}
+                            label="Under $100"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={second} onChange={handleChange} name="second" />}
+                            label="$100 - $200"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={third} onChange={handleChange} name="third" />}
+                            label="$200 - $300"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={forth} onChange={handleChange} name="forth" />}
+                            label="$300 - $400"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={fifth} onChange={handleChange} name="fifth" />}
+                            label="$400 - $500"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={sixth} onChange={handleChange} name="sixth" />}
+                            label="Over $600"
+                        />
+                    </FormGroup>
+                </FormControl>
+            </div>
             </div>
         </div>
     );

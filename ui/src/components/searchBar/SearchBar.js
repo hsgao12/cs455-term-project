@@ -34,14 +34,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchBar() {
-    const [term, setTerm] = useState("");
+    const [term, setTerm] = useState(" ");
     const classes = useStyles();
     const handleChange = (event) => {
         setTerm(event.target.value);
-    }
-
-    const handleSearch = (event) => {
-
     }
 
     return (

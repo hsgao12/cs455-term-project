@@ -4,6 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import ShoesCard from '../shoesListing/ShoesCard';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -26,22 +32,29 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     textAlign: 'right',
   },
+  sortbtn: {
+
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
-export default function ResultPanel({ searchTerm }) {
-  const [results, setResults] = useState([]);
+export default function ResultPanel({ results }) {
+  const [shoes, setShoes] = useState([]);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(24);
-  const [isLoading, setLoading] = useState(true);
+  const [originList, setOriginList] = useState([]);
+  const [sort, setSort] = useState("none");
   const classes = useStyles();
 
-  useEffect(async () => {
-    Axios.get(`/searchShoes/${searchTerm}`).then((res) => {
-      const resultData = res.data;
-      setResults(resultData);
-      setLoading(false);
-    });
-  }, []);
+  useEffect(()=> {
+    setShoes(results);
+  }, [results]);
 
   const handleChange = (event) => {
     let value = parseInt(event.target.outerText);
@@ -54,7 +67,39 @@ export default function ResultPanel({ searchTerm }) {
     }
   };
 
-  if (results.length === 0) {
+  const handleSort = (event) => {
+    let sortValue = event.target.value;
+    setSort(sortValue);
+    let tmpArr = results;
+    switch(sortValue) {
+      case "Highest Price":
+        tmpArr.sort(function(a,b){
+          return b.price-a.price;
+        });
+        break;
+      case "Lowest Price":
+        tmpArr.sort(function(a,b){
+          return a.price-b.price;
+        });
+        break;
+      case "Highest Sale":
+        tmpArr.sort(function(a,b){
+          return b.numberOfSale-a.numberOfSale;
+        });
+        break;
+      case "Lowest Sale":
+        tmpArr.sort(function(a,b){
+          return a.numberOfSale-b.numberOfSale;
+        });
+        break;
+      case "None":
+        break;
+      default:
+        break;
+    }
+  }
+
+  if (shoes.length === 0) {
     return (
       <div>
         <h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS</h2>
@@ -63,6 +108,24 @@ export default function ResultPanel({ searchTerm }) {
   } else {
     return (
       <main className={classes.content}>
+        <div className={classes.sortbtn}>
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel id="sort-label">Sort By:{sort}</InputLabel>
+            <Select
+                labelId="sort-select-filled-label"
+                id="sort-select-id"
+                onChange={handleSort}
+            >
+              <MenuItem value="None">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Highest Price"}>Highest Price </MenuItem>
+              <MenuItem value={"Lowest Price"}>Lowest Price</MenuItem>
+              <MenuItem value={"Highest Sale"}>Highest Sale</MenuItem>
+              <MenuItem value={"Lowest Sale"}>Lowest Sale</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
         <div className={classes.toolbar} />
         <Grid container justify="center" spacing={4}>
           {results.slice(minIndex, maxIndex).map((shoe) => (
@@ -72,7 +135,7 @@ export default function ResultPanel({ searchTerm }) {
           ))}
         </Grid>
         <Pagination
-          count={Math.floor(results.length / 24 + 1)}
+          count={Math.floor(shoes.length / 24 + 1)}
           shape="rounded"
           onChange={handleChange}
         />

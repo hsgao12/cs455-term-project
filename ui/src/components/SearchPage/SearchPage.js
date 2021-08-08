@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
 import { useLocation, useParams } from 'react-router';
+import Axios from 'axios';
 import {
   Button,
   Input,
@@ -59,7 +60,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchPage(props) {
   const searchTerm = props.match.params.query;
+  const [results, setResults] = useState({
+    price: [],
+    size:[]
+  });
   const classes = useStyles();
+
+  const handleFilter = (filters, category) => {
+      const newFilters = {...filters};
+      newFilters[category] = filters;
+  }
+
+  useEffect(async () => {
+    if(searchTerm && searchTerm !== " ") {
+       Axios.get(`/searchShoes/${searchTerm}`).then((res) => {
+        const resultData = res.data;
+        setResults(resultData);
+      });
+    } else {
+       Axios.get(`/getShoes`).then((res) => {
+        const resultData = res.data;
+        setResults(resultData);
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -68,10 +92,10 @@ export default function SearchPage(props) {
       </div>
       <div className={classes.shoesPanel}>
         <div className={classes.lPanel}>
-          <FilterPanel/>
+          <FilterPanel handleFilter={{}}/>
         </div>
         <div className={classes.rPanel}>
-          <ResultPanel searchTerm={searchTerm} />
+          <ResultPanel results={results} />
         </div>
       </div>
     </div>

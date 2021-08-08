@@ -25,6 +25,12 @@ router.post('/addNewSneaker', async (req, res) => {
     });
 });
 
+//update shoes stock
+router.patch('/updateShoesStock', async (req, res) => {
+    const shoes = req.body;
+    //update stock
+});
+
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
   const userBilling = new UserBilling(req.body);
@@ -166,17 +172,18 @@ router.get('/getShoes/:brand', async (req, res) => {
 
 //Get request to get shoes by query
 router.get('/searchShoes/:query', async (req, res) => {
-    Shoes.find({ $or: [{ brand: req.params.query }, {name: {$regex : req.params.query}}]} )
-        .exec()
-        .then((docs) => {
-            res.status(200).json(docs);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json({
-                error: err,
+    let term = req.params.query;
+        Shoes.find({$or: [{brand: term}, {name: {$regex: term}}]})
+            .exec()
+            .then((docs) => {
+                res.status(200).json(docs);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    error: err,
+                });
             });
-        });
 });
 
 // Get Sneaker against given sneaker id

@@ -9,6 +9,7 @@ const Shoes = new mongoose.Schema({
     numberOfSale: Number,
     description: String,
     priceHistory: Object,
+    stock: { type: Array , "default": []}
 },
     {
         collection: 'sneakers'
