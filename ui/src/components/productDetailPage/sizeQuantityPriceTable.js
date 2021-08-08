@@ -12,23 +12,28 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
     table: {
         minWidth: 300,
+    },
+    textError: {
+      color: "red", 
     }
 });
-export default function SizeQuantityPriceTable(resultArray) { 
+export default function SizeQuantityPriceTable( {resultArray, itemsForPurchaseAvailable}) { 
     const classes = useStyles();
     console.log(resultArray);
+    console.log(itemsForPurchaseAvailable);
     return (
+        <div>
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead >
                     <TableRow>
                         <TableCell>Size</TableCell>
                         <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Price</TableCell>
+                        <TableCell align="right">Min Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {resultArray.resultArray.map(row => (
+                    {resultArray.map(row => (
                         <TableRow key={row.size}>
                             <TableCell component="th" scope="row">
                                 {row.sizes}
@@ -40,5 +45,8 @@ export default function SizeQuantityPriceTable(resultArray) {
                 </TableBody>
             </Table>
         </TableContainer>
+        {!itemsForPurchaseAvailable && (
+        <div className = {classes.textError}>No item in stock for Purchase!</div>)}
+        </div>
     );
 }

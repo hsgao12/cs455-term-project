@@ -12,7 +12,7 @@ export default function ProductDetailPage(props) {
   const shoeId = props.match.params.shoesId;
   const [shoes, setShoes] = useState({});
   const [resultArray, setResultArray] = useState([]);
-  
+  const [itemsForPurchaseAvailable, setItemsForPurchaseAvailable] = useState(false);
   function fillRows(dict) {
     for (var key in dict) {
         var sizes = key;
@@ -21,6 +21,12 @@ export default function ProductDetailPage(props) {
         arrayR.push({sizes, quantity, price});
     }
      setResultArray(arrayR);
+     if(arrayR.length > 0){
+       console.log(arrayR.length);
+      setItemsForPurchaseAvailable(true);
+      console.log(itemsForPurchaseAvailable);
+     }
+     console.log(itemsForPurchaseAvailable);
   }
   useEffect(() => {
     Axios.get(`/sneaker/${shoeId}`).then((res) => {
@@ -63,7 +69,8 @@ export default function ProductDetailPage(props) {
     <div className="detailPage">
       <div className="priceTable">
         <SizeQuantityPriceTable
-        resultArray={resultArray} 
+        resultArray={resultArray}
+        itemsForPurchaseAvailable={itemsForPurchaseAvailable} 
         />
       </div>
       <div className="details" key={shoes.id}>
@@ -89,6 +96,7 @@ export default function ProductDetailPage(props) {
           >
             <button className="sell">Click to sell</button>
           </Link>
+          {itemsForPurchaseAvailable && (
           <Link
             to={{
               pathname: '/productBuyPage',
@@ -98,7 +106,7 @@ export default function ProductDetailPage(props) {
             }}
           >
           <button className="buy">Click to Buy</button>
-          </Link>
+          </Link>)}
         </div>
       </div>
     </div>
