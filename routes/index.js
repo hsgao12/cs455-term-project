@@ -184,6 +184,19 @@ router.get('/searchShoes/:query', async (req, res) => {
         });
 });
 
+router.get('/searchShoes/', async (req, res) => {
+    Shoes.find()
+        .then((docs) => {
+            res.status(200).json(docs);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                error: err,
+            });
+        });
+});
+
 // Get Sneaker against given sneaker id
 router.get('/sneaker/:id', async (req, res) => {
     Shoes.findOne({_id: req.params.id})
