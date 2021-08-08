@@ -2,14 +2,20 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
-import { Typography, CircularProgress, List, Paper } from '@material-ui/core';
+import { Typography, LinearProgress, List, Paper } from '@material-ui/core';
 import ListingCard from './ListingCard';
 import EditListing from './EditListing';
 
 const useStyles = makeStyles((theme) => ({
-  root: { maxHeight: '100%', overflow: 'auto' },
+  root: { maxHeight: '100%', overflow: 'auto', textAlign: 'center' },
   topText: {
     paddingBottom: "2.5%"
+  }, 
+  loading: {
+    marginTop: "5%"
+  }, 
+  container: {
+    display: 'grid', gridRowGap: '1rem'
   }
 }));
 
@@ -57,10 +63,10 @@ const MyListings = () => {
     <div className={styles.root}>
       <Typography className={styles.topText} variant="h5">My Listings</Typography>
       {loading ? (
-        <CircularProgress />
+        <LinearProgress className={styles.loading} />
       ) : (
         <div>
-          <List>
+          <List className={styles.container}>
             {myListings.map((item) => (
               <ListingCard item={item} deleteItem={deleteItem} editItem={editItem} loading= {loading} />
             ))}

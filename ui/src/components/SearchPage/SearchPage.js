@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchPage(props) {
-  const searchTerm = props.match.params.query;
+  const searchTerm = props.match.params.query; 
   const classes = useStyles();
 
   return (
@@ -71,7 +71,7 @@ export default function SearchPage(props) {
           <FilterPanel/>
         </div>
         <div className={classes.rPanel}>
-          <ResultPanel searchTerm={searchTerm} />
+          <ResultPanel searchTerm={searchTerm !== undefined ? searchTerm : ""} />
         </div>
       </div>
     </div>
