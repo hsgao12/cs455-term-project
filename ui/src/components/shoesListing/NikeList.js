@@ -50,7 +50,7 @@ export default function NikeList() {
   const classes = useStyles();
   return (
     <main className={classes.content}>
-      <a className={classes.button} href={'/search'}>
+      <a className={classes.button} href={'/search/Nike'}>
         See All
       </a>
       <div className={classes.toolbar} />

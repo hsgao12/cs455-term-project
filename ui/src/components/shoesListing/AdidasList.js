@@ -50,7 +50,7 @@ export default function AdidasList() {
   const classes = useStyles();
   return (
     <main className={classes.content}>
-      <a className={classes.button} href={'/search'}>
+      <a className={classes.button} href={'/search/Adidas'}>
         See All
       </a>
       <div className={classes.toolbar} />

@@ -1,18 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistStore } from 'redux-persist'
 
-import authReducer from './reducers/authReducer';
-import shoesReducer from './reducers/shoesReducer';
+import rootReducer from './reducers/rootReducer';
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  shoes: shoesReducer
-});
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-export default store;
+export const persistor = persistStore(store);
+
+export default {store, persistor};
