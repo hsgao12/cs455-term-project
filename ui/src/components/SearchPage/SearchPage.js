@@ -64,15 +64,63 @@ export default function SearchPage(props) {
   const [originalResults, setOriginalResults] = useState([]);
   const [filters, setFilters] = useState(
   {
-    price: [],
-        size:[]
+    "price": {},
+        "size":{}
   }
   );
   const classes = useStyles();
 
-  const handleFilter = (filters, category) => {
+  const handlePrice = (filters) => {
+    console.log("iam called");
+    console.log(filters["price"]);
+    let tmpArr = [];
+
+    if(!filters.first && !filters.second && !filters.third && !filters.forth && !filters.fifth && !filters.sixth && !filters.seventh){
+      tmpArr = [...originalResults];
+      setResults(tmpArr);
+    }
+
+    originalResults.forEach(shoe => {
+      if(filters.first && shoe.price <= 100){
+        tmpArr.push(shoe);
+      }
+      else if(filters.second && (shoe.price >= 100 && shoe.price <=200)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.third && (shoe.price >= 200 && shoe.price <=300)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.forth && (shoe.price >= 300 && shoe.price <=400)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.fifth && (shoe.price >= 400 && shoe.price <=500)){
+        console.log("i should be called");
+        tmpArr.push(shoe);
+      }
+      else if(filters.sixth && (shoe.price >= 500 && shoe.price <=600)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.seventh && shoe.price >= 600 ){
+        tmpArr.push(shoe);
+      }
+    });
+    setResults(tmpArr);
+  }
+
+  const handleSize = () => {
+
+  }
+
+  const handleFilter = (filter, category) => {
       const newFilters = {...filters};
-      newFilters[category] = filters;
+      newFilters[category] = filter;
+      setFilters(newFilters);
+
+      if(category == "price")
+        handlePrice(filter);
+      else
+        handleSize(filter);
+
   }
 
   useEffect(async () => {
@@ -98,7 +146,7 @@ export default function SearchPage(props) {
       </div>
       <div className={classes.shoesPanel}>
         <div className={classes.lPanel}>
-          <FilterPanel handleFilter={{}}/>
+          <FilterPanel handleFilter={(filters, category) => handleFilter(filters, category )}/>
         </div>
         <div className={classes.rPanel}>
           <ResultPanel results={results} originalResults={originalResults} setResults={setResults} setOriginalResults={setOriginalResults} />

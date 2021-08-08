@@ -102,7 +102,7 @@ export default function ResultPanel({ results, originalResults, setResults, setO
   if (results.length === 0) {
     return (
       <div>
-        <h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS</h2>
+        <h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS OR SEARCH TERM</h2>
       </div>
     );
   } else {
@@ -117,7 +117,7 @@ export default function ResultPanel({ results, originalResults, setResults, setO
                 onChange={handleSort}
             >
               <MenuItem value="None">
-                <em>None</em>
+                Default Order
               </MenuItem>
               <MenuItem value={"Highest Price"}>Highest Price </MenuItem>
               <MenuItem value={"Lowest Price"}>Lowest Price</MenuItem>

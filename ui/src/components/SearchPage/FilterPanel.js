@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function FilterPanel({handleFilter}) {
+export default function FilterPanel(props) {
     const classes = useStyles();
     const [selectedSize, setSelectedSize] = useState(false);
     const [selectedPrice, setSelectedPrice] = useState({
@@ -65,20 +65,24 @@ export default function FilterPanel({handleFilter}) {
         third: false,
         forth: false,
         fifth: false,
-        sixth : false
+        sixth : false,
+        seventh: false
     });
-    const [checked, setChecked] = React.useState(true);
+
     const  handleSize = (num) => {
         sizeOptions[num] = !sizeOptions[num];
         setSelectedSize(!selectedSize);
+        props.handleFilter(sizeOptions, "size");
 
     }
 
     const handleChange = (event) => {
-        setSelectedPrice({ ...selectedPrice, [event.target.name]: event.target.checked });
+        selectedPrice[event.target.name] = event.target.checked;
+        setSelectedPrice({...selectedPrice});
+        props.handleFilter(selectedPrice, "price");
     };
 
-    const {first, second, third, forth, fifth, sixth} = selectedPrice;
+    const {first, second, third, forth, fifth, sixth, seventh} = selectedPrice;
 
     return (
         <div>
@@ -160,6 +164,10 @@ export default function FilterPanel({handleFilter}) {
                         />
                         <FormControlLabel
                             control={<Checkbox color= "primary" checked={sixth} onChange={handleChange} name="sixth" />}
+                            label="$500 - $600"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox color= "primary" checked={seventh} onChange={handleChange} name="seventh" />}
                             label="Over $600"
                         />
                     </FormGroup>
