@@ -27,6 +27,25 @@ router.post('/addNewSneaker', async (req, res) => {
         });
 });
 
+//update shoes stock
+router.patch('/updateShoesStockAdd', async (req, res) => {
+    const shoes = req.body;
+    //update stock
+    Shoes.updateOne( {id: shoes.id, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
+        .then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
+            });
+        } else res.send({ message: "Stock Item was updated successfully." });
+    })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Stock with id=" + shoes.id
+            });
+        });
+});
+
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
     console.log("called with")
@@ -171,6 +190,7 @@ router.get('/getShoes/:brand', async (req, res) => {
 
 //Get request to get shoes by query
 router.get('/searchShoes/:query', async (req, res) => {
+
     Shoes.find({$or: [{brand: req.params.query}, {name: {$regex: req.params.query}}]})
         .exec()
         .then((docs) => {
@@ -181,7 +201,6 @@ router.get('/searchShoes/:query', async (req, res) => {
             res.status(500).json({
                 error: err,
             });
-        });
 });
 
 router.get('/searchShoes/', async (req, res) => {

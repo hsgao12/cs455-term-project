@@ -73,17 +73,36 @@ export default function ProductForSaleForm({
                   input={<Input />}
                   style={{minWidth: 120}}
                 >
-                  <MenuItem value={5}>US 5</MenuItem>
+                  <MenuItem value={1}>US 1</MenuItem>
+                  <MenuItem value={1.5}>US 1.5</MenuItem>
+                  <MenuItem value={2}>US 2</MenuItem>
+                  <MenuItem value={2.5}>US 2.5</MenuItem>
+                  <MenuItem value={3}>US 3.5</MenuItem>
+                  <MenuItem value={4}>US 4</MenuItem>
+                  <MenuItem value={4.5}>US 4.5</MenuItem>
+                  <MenuItem value={5.5}>US 5</MenuItem>
                   <MenuItem value={6}>US 6</MenuItem>
+                  <MenuItem value={6.5}>US 6.5</MenuItem>
                   <MenuItem value={7}>US 7</MenuItem>
+                  <MenuItem value={7.5}>US 7.5</MenuItem>
                   <MenuItem value={8}>US 8</MenuItem>
+                  <MenuItem value={8.5}>US 8.5</MenuItem>
                   <MenuItem value={9}>US 9</MenuItem>
+                  <MenuItem value={9.5}>US 9.5</MenuItem>
                   <MenuItem value={10}>US 10</MenuItem>
+                  <MenuItem value={10.5}>US 10.5</MenuItem>
                   <MenuItem value={11}>US 11</MenuItem>
+                  <MenuItem value={11.5}>US 11.5</MenuItem>
                   <MenuItem value={12}>US 12</MenuItem>
+                  <MenuItem value={12.5}>US 12.5</MenuItem>
                   <MenuItem value={13}>US 13</MenuItem>
+                  <MenuItem value={13.5}>US 13.5</MenuItem>
                   <MenuItem value={14}>US 14</MenuItem>
+                  <MenuItem value={14.5}>US 14.5</MenuItem>
                   <MenuItem value={15}>US 15</MenuItem>
+                  <MenuItem value={16}>US 16</MenuItem>
+                  <MenuItem value={17}>US 17</MenuItem>
+                  <MenuItem value={18}>US 18</MenuItem>
                 </Select>
               </FormControl>
             </form>

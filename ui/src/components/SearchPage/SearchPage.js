@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import TuneIcon from '@material-ui/icons/Tune';
 import { useLocation, useParams } from 'react-router';
+import Axios from 'axios';
 import {
   Button,
   Input,
@@ -58,8 +59,86 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchPage(props) {
-  const searchTerm = props.match.params.query; 
+  const searchTerm = props.match.params.query;
+  const [results, setResults] = useState([]);
+  const [originalResults, setOriginalResults] = useState([]);
+  const [filters, setFilters] = useState(
+  {
+    "price": {},
+        "size":{}
+  }
+  );
+
   const classes = useStyles();
+
+  const handlePrice = (filters) => {
+    console.log("iam called");
+    console.log(filters["price"]);
+    let tmpArr = [];
+
+    if(!filters.first && !filters.second && !filters.third && !filters.forth && !filters.fifth && !filters.sixth && !filters.seventh){
+      tmpArr = [...originalResults];
+      setResults(tmpArr);
+    }
+
+    originalResults.forEach(shoe => {
+      if(filters.first && shoe.price <= 100){
+        tmpArr.push(shoe);
+      }
+      else if(filters.second && (shoe.price >= 100 && shoe.price <=200)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.third && (shoe.price >= 200 && shoe.price <=300)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.forth && (shoe.price >= 300 && shoe.price <=400)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.fifth && (shoe.price >= 400 && shoe.price <=500)){
+        console.log("i should be called");
+        tmpArr.push(shoe);
+      }
+      else if(filters.sixth && (shoe.price >= 500 && shoe.price <=600)){
+        tmpArr.push(shoe);
+      }
+      else if(filters.seventh && shoe.price >= 600 ){
+        tmpArr.push(shoe);
+      }
+    });
+    setResults(tmpArr);
+  }
+
+  const handleSize = () => {
+
+  }
+
+  const handleFilter = (filter, category) => {
+      const newFilters = {...filters};
+      newFilters[category] = filter;
+      setFilters(newFilters);
+
+      if(category == "price")
+        handlePrice(filter);
+      else
+        handleSize(filter);
+
+  }
+
+  useEffect(async () => {
+    if(searchTerm && searchTerm !== " ") {
+       Axios.get(`/searchShoes/${searchTerm}`).then((res) => {
+        const resultData = res.data;
+        setResults(resultData);
+        setOriginalResults(resultData);
+      });
+    } else {
+       Axios.get(`/getShoes`).then((res) => {
+        const resultData = res.data;
+        setResults(resultData);
+        setOriginalResults(resultData);
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -68,10 +147,10 @@ export default function SearchPage(props) {
       </div>
       <div className={classes.shoesPanel}>
         <div className={classes.lPanel}>
-          <FilterPanel/>
+          <FilterPanel handleFilter={(filters, category) => handleFilter(filters, category )}/>
         </div>
         <div className={classes.rPanel}>
-          <ResultPanel searchTerm={searchTerm !== undefined ? searchTerm : ""} />
+          <ResultPanel results={results} originalResults={originalResults} setResults={setResults} setOriginalResults={setOriginalResults} />
         </div>
       </div>
     </div>
