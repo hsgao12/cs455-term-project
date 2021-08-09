@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import userIDValue from '../../store/actions/authActions';
 import axios from 'axios';
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ export default function ProductBuyConfirmation({
       size: size,
       price: amount.intitialAmount,
     };
-    console.log(sellerItemData);
+
   const buyerData = {
     buyerId:userIDValue.userID,
     sold:true,
@@ -60,8 +61,16 @@ export default function ProductBuyConfirmation({
         cvv: billingData.cvv,
       },
     };
-    console.log(billing);
+
+    const shoes = {
+      sneakerId: props.location.state.shoe._id,
+      size: size.toString(),
+      price: amount.intitialAmount,
+    };
+
+
     await axios.post('/addUserBilling', billing);
+    await axios.patch('/updateShoesStockDec', shoes);
     setMessage('Great, Thanks for buying the sneaker!');
   };
 

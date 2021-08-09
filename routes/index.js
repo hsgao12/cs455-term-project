@@ -31,7 +31,7 @@ router.post('/addNewSneaker', async (req, res) => {
 router.patch('/updateShoesStockAdd', async (req, res) => {
     const shoes = req.body;
     //update stock
-    Shoes.updateOne( {id: shoes.id, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
+    Shoes.updateOne( {_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
         .then(data => {
         if (!data) {
             res.status(404).send({
@@ -39,6 +39,42 @@ router.patch('/updateShoesStockAdd', async (req, res) => {
             });
         } else res.send({ message: "Stock Item was updated successfully." });
     })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Stock with id=" + shoes.id
+            });
+        });
+});
+
+//update shoes stock
+router.patch('/updateShoesStockDec', async (req, res) => {
+    const shoes = req.body;
+    let flag = false;
+
+    Shoes.findOne({_id: shoes.sneakerId})
+        .then((result) => {
+            result.stock.forEach(item => {
+                if(item.size = shoes.size && item.quantity == 0)
+                    flag = true;
+            });
+        })
+        .catch((error) => {
+            res.status(400).send(error);
+        });
+    if(flag) {
+        console.log("stock is already 0");
+        return;
+    }
+
+    //update stock
+    Shoes.updateOne( {_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": -1}})
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
+                });
+            } else res.send({ message: "Stock Item was updated successfully." });
+        })
         .catch(err => {
             res.status(500).send({
                 message: "Error updating Stock with id=" + shoes.id
@@ -201,6 +237,7 @@ router.get('/searchShoes/:query', async (req, res) => {
             res.status(500).json({
                 error: err,
             });
+        });
 });
 
 router.get('/searchShoes/', async (req, res) => {

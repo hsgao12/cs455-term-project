@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FilterPanel(props) {
     const classes = useStyles();
-    const [selectedSize, setSelectedSize] = useState(false);
+    const [selectedSize, setSelectedSize] = useState(sizeOptions);
     const [selectedPrice, setSelectedPrice] = useState({
         first: false,
         second: false,
@@ -70,9 +70,16 @@ export default function FilterPanel(props) {
     });
 
     const  handleSize = (num) => {
-        sizeOptions[num] = !sizeOptions[num];
-        setSelectedSize(!selectedSize);
-        props.handleFilter(sizeOptions, "size");
+        let newSizeFilter = {...sizeOptions};
+        if(selectedSize[num] == false) {
+            newSizeFilter[num] = !newSizeFilter[num];
+            setSelectedSize({...newSizeFilter});
+            props.handleFilter({selected:num}, "size");
+        }else {
+            newSizeFilter[num] = !selectedSize[num];
+            setSelectedSize({...newSizeFilter});
+            props.handleFilter({}, "size");
+        }
 
     }
 
@@ -89,52 +96,52 @@ export default function FilterPanel(props) {
             <div className='sizebtns'>
                 <h2>SIZES</h2>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["1"] ? "sizebtnSelected" : "sizebtn"} id='1' onClick={() => {handleSize('1')}}>1</button>
-                    <button className={sizeOptions["1.5"] ? "sizebtnSelected" : "sizebtn"} id='1.5' onClick={() => {handleSize('1.5')}}>1.5</button>
-                    <button className={sizeOptions["2"] ? "sizebtnSelected" : "sizebtn"} id='2' onClick={() => {handleSize('2')}}>2</button>
-                    <button className={sizeOptions["2.5"] ? "sizebtnSelected" : "sizebtn"} id='2.5' onClick={() => {handleSize('2.5')}}>2.5</button>
+                    <button className={selectedSize["1"] ? "sizebtnSelected" : "sizebtn"} id='1' onClick={() => {handleSize('1')}}>1</button>
+                    <button className={selectedSize["1.5"] ? "sizebtnSelected" : "sizebtn"} id='1.5' onClick={() => {handleSize('1.5')}}>1.5</button>
+                    <button className={selectedSize["2"] ? "sizebtnSelected" : "sizebtn"} id='2' onClick={() => {handleSize('2')}}>2</button>
+                    <button className={selectedSize["2.5"] ? "sizebtnSelected" : "sizebtn"} id='2.5' onClick={() => {handleSize('2.5')}}>2.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["3"] ? "sizebtnSelected" : "sizebtn"} id='3' onClick={() => {handleSize('3')}}>3</button>
-                    <button className={sizeOptions["3.5"] ? "sizebtnSelected" : "sizebtn"} id='3.5' onClick={() => {handleSize('3.5')}}>3.5</button>
-                    <button className={sizeOptions["4"] ? "sizebtnSelected" : "sizebtn"} id='4' onClick={() => {handleSize('4')}}>4</button>
-                    <button className={sizeOptions["4.5"] ? "sizebtnSelected" : "sizebtn"} id='4.5' onClick={() => {handleSize('4.5')}}>4.5</button>
+                    <button className={selectedSize["3"] ? "sizebtnSelected" : "sizebtn"} id='3' onClick={() => {handleSize('3')}}>3</button>
+                    <button className={selectedSize["3.5"] ? "sizebtnSelected" : "sizebtn"} id='3.5' onClick={() => {handleSize('3.5')}}>3.5</button>
+                    <button className={selectedSize["4"] ? "sizebtnSelected" : "sizebtn"} id='4' onClick={() => {handleSize('4')}}>4</button>
+                    <button className={selectedSize["4.5"] ? "sizebtnSelected" : "sizebtn"} id='4.5' onClick={() => {handleSize('4.5')}}>4.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["5"] ? "sizebtnSelected" : "sizebtn"} id='5' onClick={() => {handleSize('5')}}>5</button>
-                    <button className={sizeOptions["5.5"] ? "sizebtnSelected" : "sizebtn"} id='5.5' onClick={() => {handleSize('5.5')}}>5.5</button>
-                    <button className={sizeOptions["6"] ? "sizebtnSelected" : "sizebtn"} id='6' onClick={() => {handleSize('6')}}>6</button>
-                    <button className={sizeOptions["6.5"] ? "sizebtnSelected" : "sizebtn"} id='6.5' onClick={() => {handleSize('6.5')}}>6.5</button>
+                    <button className={selectedSize["5"] ? "sizebtnSelected" : "sizebtn"} id='5' onClick={() => {handleSize('5')}}>5</button>
+                    <button className={selectedSize["5.5"] ? "sizebtnSelected" : "sizebtn"} id='5.5' onClick={() => {handleSize('5.5')}}>5.5</button>
+                    <button className={selectedSize["6"] ? "sizebtnSelected" : "sizebtn"} id='6' onClick={() => {handleSize('6')}}>6</button>
+                    <button className={selectedSize["6.5"] ? "sizebtnSelected" : "sizebtn"} id='6.5' onClick={() => {handleSize('6.5')}}>6.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["7"] ? "sizebtnSelected" : "sizebtn"} id='7' onClick={() => {handleSize('7')}}>7</button>
-                    <button className={sizeOptions["7.5"] ? "sizebtnSelected" : "sizebtn"} id='7.5' onClick={() => {handleSize('7.5')}}>7.5</button>
-                    <button className={sizeOptions["8"] ? "sizebtnSelected" : "sizebtn"} id='8' onClick={() => {handleSize('8')}}>8</button>
-                    <button className={sizeOptions["8.5"] ? "sizebtnSelected" : "sizebtn"} id='8.5' onClick={() => {handleSize('8.5')}}>8.5</button>
+                    <button className={selectedSize["7"] ? "sizebtnSelected" : "sizebtn"} id='7' onClick={() => {handleSize('7')}}>7</button>
+                    <button className={selectedSize["7.5"] ? "sizebtnSelected" : "sizebtn"} id='7.5' onClick={() => {handleSize('7.5')}}>7.5</button>
+                    <button className={selectedSize["8"] ? "sizebtnSelected" : "sizebtn"} id='8' onClick={() => {handleSize('8')}}>8</button>
+                    <button className={selectedSize["8.5"] ? "sizebtnSelected" : "sizebtn"} id='8.5' onClick={() => {handleSize('8.5')}}>8.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["9"] ? "sizebtnSelected" : "sizebtn"} id='9' onClick={() => {handleSize('9')}}>9</button>
-                    <button className={sizeOptions["9.5"] ? "sizebtnSelected" : "sizebtn"} id='9.5' onClick={() => {handleSize('9.5')}}>9.5</button>
-                    <button className={sizeOptions["10"] ? "sizebtnSelected" : "sizebtn"} id='10' onClick={() => {handleSize('10')}}>10</button>
-                    <button className={sizeOptions["10.5"] ? "sizebtnSelected" : "sizebtn"} id='10.5' onClick={() => {handleSize('10.5')}}>10.5</button>
+                    <button className={selectedSize["9"] ? "sizebtnSelected" : "sizebtn"} id='9' onClick={() => {handleSize('9')}}>9</button>
+                    <button className={selectedSize["9.5"] ? "sizebtnSelected" : "sizebtn"} id='9.5' onClick={() => {handleSize('9.5')}}>9.5</button>
+                    <button className={selectedSize["10"] ? "sizebtnSelected" : "sizebtn"} id='10' onClick={() => {handleSize('10')}}>10</button>
+                    <button className={selectedSize["10.5"] ? "sizebtnSelected" : "sizebtn"} id='10.5' onClick={() => {handleSize('10.5')}}>10.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["11"] ? "sizebtnSelected" : "sizebtn"} id='11' onClick={() => {handleSize('11')}}>11</button>
-                    <button className={sizeOptions["11.5"] ? "sizebtnSelected" : "sizebtn"} id='11.5' onClick={() => {handleSize('11.5')}}>11.5</button>
-                    <button className={sizeOptions["12"] ? "sizebtnSelected" : "sizebtn"} id='12' onClick={() => {handleSize('12')}}>12</button>
-                    <button className={sizeOptions["12.5"] ? "sizebtnSelected" : "sizebtn"} id='12.5' onClick={() => {handleSize('12.5')}}>12.5</button>
+                    <button className={selectedSize["11"] ? "sizebtnSelected" : "sizebtn"} id='11' onClick={() => {handleSize('11')}}>11</button>
+                    <button className={selectedSize["11.5"] ? "sizebtnSelected" : "sizebtn"} id='11.5' onClick={() => {handleSize('11.5')}}>11.5</button>
+                    <button className={selectedSize["12"] ? "sizebtnSelected" : "sizebtn"} id='12' onClick={() => {handleSize('12')}}>12</button>
+                    <button className={selectedSize["12.5"] ? "sizebtnSelected" : "sizebtn"} id='12.5' onClick={() => {handleSize('12.5')}}>12.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["13"] ? "sizebtnSelected" : "sizebtn"} id='13' onClick={() => {handleSize('13')}}>13</button>
-                    <button className={sizeOptions["13.5"] ? "sizebtnSelected" : "sizebtn"} id='13.5' onClick={() => {handleSize('13.5')}}>13.5</button>
-                    <button className={sizeOptions["14"] ? "sizebtnSelected" : "sizebtn"} id='14' onClick={() => {handleSize('14')}}>14</button>
-                    <button className={sizeOptions["14.5"] ? "sizebtnSelected" : "sizebtn"} id='14.5' onClick={() => {handleSize('14.5')}}>14.5</button>
+                    <button className={selectedSize["13"] ? "sizebtnSelected" : "sizebtn"} id='13' onClick={() => {handleSize('13')}}>13</button>
+                    <button className={selectedSize["13.5"] ? "sizebtnSelected" : "sizebtn"} id='13.5' onClick={() => {handleSize('13.5')}}>13.5</button>
+                    <button className={selectedSize["14"] ? "sizebtnSelected" : "sizebtn"} id='14' onClick={() => {handleSize('14')}}>14</button>
+                    <button className={selectedSize["14.5"] ? "sizebtnSelected" : "sizebtn"} id='14.5' onClick={() => {handleSize('14.5')}}>14.5</button>
                 </div>
                 <div className='btnGroup'>
-                    <button className={sizeOptions["15"] ? "sizebtnSelected" : "sizebtn"} id='15' onClick={() => {handleSize('15')}}>15</button>
-                    <button className={sizeOptions["16"] ? "sizebtnSelected" : "sizebtn"} id='16' onClick={() => {handleSize('16')}}>16</button>
-                    <button className={sizeOptions["17"] ? "sizebtnSelected" : "sizebtn"} id='17' onClick={() => {handleSize('17')}}>17</button>
-                    <button className={sizeOptions["18"] ? "sizebtnSelected" : "sizebtn"} id='18' onClick={() => {handleSize('18')}}>18</button>
+                    <button className={selectedSize["15"] ? "sizebtnSelected" : "sizebtn"} id='15' onClick={() => {handleSize('15')}}>15</button>
+                    <button className={selectedSize["16"] ? "sizebtnSelected" : "sizebtn"} id='16' onClick={() => {handleSize('16')}}>16</button>
+                    <button className={selectedSize["17"] ? "sizebtnSelected" : "sizebtn"} id='17' onClick={() => {handleSize('17')}}>17</button>
+                    <button className={selectedSize["18"] ? "sizebtnSelected" : "sizebtn"} id='18' onClick={() => {handleSize('18')}}>18</button>
                 </div>
             </div>
             <div className="priceBtn">

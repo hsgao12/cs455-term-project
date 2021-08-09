@@ -64,63 +64,65 @@ export default function SearchPage(props) {
   const [originalResults, setOriginalResults] = useState([]);
   const [filters, setFilters] = useState(
   {
-    "price": {},
-        "size":{}
+    price: {},
+        size:{}
   }
   );
 
   const classes = useStyles();
 
-  const handlePrice = (filters) => {
-    console.log("iam called");
-    console.log(filters["price"]);
+  const executeFilter = (filter) => {
     let tmpArr = [];
-
-    if(!filters.first && !filters.second && !filters.third && !filters.forth && !filters.fifth && !filters.sixth && !filters.seventh){
+    console.log(filter);
+    if(!filter.price.first && !filter.price.second && !filter.price.third && !filter.price.forth && !filter.price.fifth && !filter.price.sixth && !filter.price.seventh){
+      console.log("am i all not true?");
       tmpArr = [...originalResults];
-      setResults(tmpArr);
+    } else {
+
+      originalResults.forEach(shoe => {
+        if (filter.price.first && shoe.price <= 100) {
+          tmpArr.push(shoe);
+        } else if (filter.price.second && (shoe.price >= 100 && shoe.price <= 200)) {
+          tmpArr.push(shoe);
+        } else if (filter.price.third && (shoe.price >= 200 && shoe.price <= 300)) {
+          tmpArr.push(shoe);
+        } else if (filter.price.forth && (shoe.price >= 300 && shoe.price <= 400)) {
+          tmpArr.push(shoe);
+        } else if (filter.price.fifth && (shoe.price >= 400 && shoe.price <= 500)) {
+          tmpArr.push(shoe);
+        } else if (filter.price.sixth && (shoe.price >= 500 && shoe.price <= 600)) {
+          tmpArr.push(shoe);
+        } else if (filter.price.seventh && shoe.price >= 600) {
+          tmpArr.push(shoe);
+        }
+      });
     }
 
-    originalResults.forEach(shoe => {
-      if(filters.first && shoe.price <= 100){
-        tmpArr.push(shoe);
-      }
-      else if(filters.second && (shoe.price >= 100 && shoe.price <=200)){
-        tmpArr.push(shoe);
-      }
-      else if(filters.third && (shoe.price >= 200 && shoe.price <=300)){
-        tmpArr.push(shoe);
-      }
-      else if(filters.forth && (shoe.price >= 300 && shoe.price <=400)){
-        tmpArr.push(shoe);
-      }
-      else if(filters.fifth && (shoe.price >= 400 && shoe.price <=500)){
-        console.log("i should be called");
-        tmpArr.push(shoe);
-      }
-      else if(filters.sixth && (shoe.price >= 500 && shoe.price <=600)){
-        tmpArr.push(shoe);
-      }
-      else if(filters.seventh && shoe.price >= 600 ){
-        tmpArr.push(shoe);
-      }
-    });
-    setResults(tmpArr);
-  }
+    if(filter.size.selected) {
+      let finalArr = [];
+      tmpArr.forEach(shoe => {
+        shoe.stock.forEach(eachSize => {
+          if (eachSize.size == filter.size.selected && eachSize.quantity > 0)
+            finalArr.push(shoe);
+        });
+      });
 
-  const handleSize = () => {
-
+      setResults(finalArr);
+    }else {
+      setResults(tmpArr);
+    }
   }
 
   const handleFilter = (filter, category) => {
       const newFilters = {...filters};
-      newFilters[category] = filter;
-      setFilters(newFilters);
 
       if(category == "price")
-        handlePrice(filter);
+        newFilters.price = filter;
       else
-        handleSize(filter);
+        newFilters.size = filter;
+
+      setFilters(newFilters);
+      executeFilter(newFilters);
 
   }
 
