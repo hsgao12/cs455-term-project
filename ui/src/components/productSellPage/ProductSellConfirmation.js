@@ -58,13 +58,13 @@ export default function ProductSellConfirmation({
 
     const shoes = {
       sneakerId: props.location.state.shoe._id,
-      size: size,
+      size: size.toString(),
       price: amount.intitialAmount,
     };
 
     await axios.post('/addNewSellerItem', sellerItemData);
     await axios.post('/addUserBilling', billing);
-    await axios.patch('/updateShoesStock', shoes);
+    await axios.patch('/updateShoesStockAdd', shoes);
 
     setMessage('Great, the sneaker has been added to the Sale List.');
   };

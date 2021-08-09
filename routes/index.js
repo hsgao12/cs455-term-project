@@ -26,9 +26,22 @@ router.post('/addNewSneaker', async (req, res) => {
 });
 
 //update shoes stock
-router.patch('/updateShoesStock', async (req, res) => {
+router.patch('/updateShoesStockAdd', async (req, res) => {
     const shoes = req.body;
     //update stock
+    Shoes.updateOne( {id: shoes.id, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
+        .then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
+            });
+        } else res.send({ message: "Stock Item was updated successfully." });
+    })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Stock with id=" + shoes.id
+            });
+        });
 });
 
 //Post request to add a UserBilling
