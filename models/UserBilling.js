@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const UserBilling = new mongoose.Schema(
   {
     id: mongoose.Schema.Types.ObjectId,
+    sellerItemId: String,
     userId: String,
+    userType: String,
     billing: {
       address: String,
       province: String,

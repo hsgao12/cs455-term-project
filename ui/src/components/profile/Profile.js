@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { MainProfilePage } from './MainProfilePage';
-import ListItemPage from './ListItemPage';
+import MyListings from './MyListings';
 import MenuIcon from '@material-ui/icons/Menu';
 import BuyHistory from './BuyHistory';
 import SellHistory from './SellHistory';
@@ -23,6 +23,9 @@ import ViewHistory from './ViewHistory';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: '700px',
+  },
+  paper: {
     display: 'grid',
     gridTemplateColumns: 'auto 1fr',
     gridColumnGap: '1rem',
@@ -57,7 +60,7 @@ const Profile = (props) => {
         My Profile{/*rename this?*/}
       </ListItem>
       <ListItem button onClick={handleListButton}>
-        List item to sell
+        My Listings
       </ListItem>
       <ListItem button onClick={handleBuyButton}>
         Buy History
@@ -75,8 +78,8 @@ const Profile = (props) => {
   const [menuEl, setMenuEl] = useState(null);
 
   return (
-    <Container style={{ background: theme.palette.background, minHeight: "500px" }}>
-      <Paper className={styles.root}>
+    <Container>
+      <Paper className={styles.paper}>
         {!isSmall && sideBar}
         {isSmall && (
           <div>
@@ -95,9 +98,9 @@ const Profile = (props) => {
             </Menu>
           </div>
         )}
-        <div>
+        <div style={{ minHeight: '45rem' }}>
           {currentPage === 'main' && <MainProfilePage />}
-          {currentPage === 'list' && <ListItemPage />}
+          {currentPage === 'list' && <MyListings />}
           {currentPage === 'buy' && <BuyHistory />}
           {currentPage === 'sell' && <SellHistory />}
           {currentPage === 'view' && <ViewHistory />}

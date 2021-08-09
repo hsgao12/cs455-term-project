@@ -68,6 +68,7 @@ export default function SearchPage(props) {
         "size":{}
   }
   );
+
   const classes = useStyles();
 
   const handlePrice = (filters) => {

@@ -50,7 +50,7 @@ export default function SellCard(props) {
             </div>
         </div>
         <div className={styles.itemImageRoot}>
-            <img src={item.image} className={styles.itemImage} />
+            <img src={item.img} className={styles.itemImage} />
             <div className={styles.itemButtons}>
             </div>
         </div>

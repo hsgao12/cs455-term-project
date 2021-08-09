@@ -23,11 +23,17 @@ router.post("/:shoeID/:userID", async (req, res, next) => {
 router.get("/:userID", async (req, res, next) => {
     const id = req.params.userID;
     try {
-        const ids = (await shoesViewed.findOne({id})).items ?? [];
-        res.json(await Shoes.find(
+        const ids = ((await shoesViewed.findOne({id})).items ?? []);
+        const shoesBought = await Shoes.find(
             {_id:
                     {$in: ids.map((a) => mongoose.Types.ObjectId(a))}
-            }));
+            });
+
+        const shoeOrder = {};
+        shoesBought.forEach((shoe,idx)=>shoeOrder[shoe._id] = ids.indexOf(shoe._id));
+
+        shoesBought.sort((a,b)=>shoeOrder[b._id] - shoeOrder[a._id]);
+        res.json(shoesBought);
     } catch (e) {
         console.log(`view history get ${req.url}`);
         console.log(e);

@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const searchRouter = require('./routes/search');
 const viewRouter = require('./routes/viewHistory');
+const listingRouter = require('./routes/listing');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
 app.use('/viewHistory',viewRouter);
+app.use('/listing', listingRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('ui/build'));
