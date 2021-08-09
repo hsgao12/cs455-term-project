@@ -6,6 +6,7 @@ const SellerItem = require('../models/SellerItem');
 const UserBilling = require('../models/UserBilling');
 const PopularSneakers = require("../models/popularSneakers")
 const shoesViewed = require("../models/ShoeView");
+const nextViewd = require("../models/nextViewed")
 
 //Post request to add a sneaker for sale
 router.post('/addNewSneaker', async (req, res) => {
@@ -31,14 +32,14 @@ router.post('/addNewSneaker', async (req, res) => {
 router.patch('/updateShoesStockAdd', async (req, res) => {
     const shoes = req.body;
     //update stock
-    Shoes.updateOne( {_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
+    Shoes.updateOne({_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": 1}})
         .then(data => {
-        if (!data) {
-            res.status(404).send({
-                message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
-            });
-        } else res.send({ message: "Stock Item was updated successfully." });
-    })
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
+                });
+            } else res.send({message: "Stock Item was updated successfully."});
+        })
         .catch(err => {
             res.status(500).send({
                 message: "Error updating Stock with id=" + shoes.id
@@ -54,26 +55,26 @@ router.patch('/updateShoesStockDec', async (req, res) => {
     Shoes.findOne({_id: shoes.sneakerId})
         .then((result) => {
             result.stock.forEach(item => {
-                if(item.size = shoes.size && item.quantity == 0)
+                if (item.size = shoes.size && item.quantity == 0)
                     flag = true;
             });
         })
         .catch((error) => {
             res.status(400).send(error);
         });
-    if(flag) {
+    if (flag) {
         console.log("stock is already 0");
         return;
     }
 
     //update stock
-    Shoes.updateOne( {_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": -1}})
+    Shoes.updateOne({_id: shoes.sneakerId, "stock.size": shoes.size}, {$inc: {"stock.$.quantity": -1}})
         .then(data => {
             if (!data) {
                 res.status(404).send({
                     message: `Cannot update stock with id=${shoes.id}. Something Wrong!`
                 });
-            } else res.send({ message: "Stock Item was updated successfully." });
+            } else res.send({message: "Stock Item was updated successfully."});
         })
         .catch(err => {
             res.status(500).send({
@@ -352,14 +353,14 @@ function fakeSort(array, idx, fn) {
             const middleItem = array[(lower + upper) / 2];
             const firstItem = array[lower];
             const lastItem = array[upper - 1];
-            return [firstItem,middleItem,lastItem].sort(fn)[1];
+            return [firstItem, middleItem, lastItem].sort(fn)[1];
         } else {
             return array[upper - 1];
         }
     }
 
     //for loop to make sure the loop doesn't run forever
-    for(let i = 0;i<array.length;++i) {
+    for (let i = 0; i < array.length; ++i) {
         //console.log(`${lower} ${upper}`);
         //const middle = (lower + upper) / 2;
         const itemInCurrentIter = nextItemToCheck();
@@ -377,9 +378,9 @@ function fakeSort(array, idx, fn) {
         }
     }
     //sort only part of the array
-    let subArray = array.slice(lower,upper);
+    let subArray = array.slice(lower, upper);
     subArray.sort(fn);
-    for(let i = 0;i<subArray.length;++i){
+    for (let i = 0; i < subArray.length; ++i) {
         array[i + lower] = subArray[i];
     }
 
@@ -390,13 +391,13 @@ router.post("/recalculatePopularListings", async (req, res, next) => {
     try {
         const shoeStuff = {};
         const currentDate = new Date();
-        const allShoesViewed = await shoesViewed.find(
+        const allShoesViewed = shoesViewed.find(
             {
                 lastViewed:
                     {$gt: new Date(currentDate.getTime() - 86400000 * 7)}//1 week before today
             }
         );
-        for (const shoesViewed of allShoesViewed) {
+        for await (const shoesViewed of allShoesViewed) {
             const shoesViewedByPerson = {};
             //shoeStuff[shoeId] = (shoeStuff[shoeId] ?? 0) + 1;
             for (const shoeId of shoesViewed.items) {
@@ -419,5 +420,50 @@ router.post("/recalculatePopularListings", async (req, res, next) => {
     }
 });
 
+router.get("/recommended/userID", async (req, res, next) => {
+    try {
+        const viewHistory = (await shoesViewed.findOne({id: req.params.userID}).lean()).items;
+        const predictedNextThings = nextViewd.find({id: {$in: viewHistory}}).lean();
+        const values = {};
+
+        for await (const nextThing of predictedNextThings) {
+            for (const [id, amount] of Object.entries(nextThing["next"])) {
+                if (amount >= 0.1) {
+                    values[id] = (values[id] ?? 0) + amount;
+                }
+            }
+        }
+        const possibleNextThings = Object.keys(values);
+        if(possibleNextThings.length===0){
+            res.json([]);
+            return;
+        }
+        //possibleNextThings.sort((a,b)=>values[a]-values[b]);
+        fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
+        const res = [];
+        for (const possibleNextThing of possibleNextThings) {
+            const prob = values[possibleNextThing] / values[possibleNextThings[0]];
+            if (Math.random() <= prob) {
+                res.push(possibleNextThing);
+            }
+            if (res.length >= 4) {
+                break;
+            }
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+})
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
