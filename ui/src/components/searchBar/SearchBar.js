@@ -33,12 +33,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+    const setOpen = props.setOpen;
     const [term, setTerm] = useState(" ");
     const classes = useStyles();
     const handleChange = (event) => {
         setTerm(event.target.value);
     }
+
 
     return (
         <Paper component="form" className={classes.root}>
@@ -48,7 +50,7 @@ export default function SearchBar() {
                 inputProps={{ 'aria-label': 'What are you looking for?' }}
                 onChange={handleChange}
             />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
+            <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick = {() => {window.location.reload();}}>
                 <Link
                     to={{
                         pathname: `/search/${term}`,
