@@ -30,7 +30,7 @@ router.get("/:userID", async (req, res, next) => {
             });
 
         const shoeOrder = {};
-        shoesBought.forEach((shoe,idx)=>shoeOrder[shoe._id] = ids.indexOf(shoe._id));
+        ids.forEach((id,idx)=>shoeOrder[id] = idx);
 
         shoesBought.sort((a,b)=>shoeOrder[b._id] - shoeOrder[a._id]);
         res.json(shoesBought);
