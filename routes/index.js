@@ -438,7 +438,7 @@ router.get("/recommended/:userID", async (req, res, next) => {
             res.json([]);
             return;
         }
-        possibleNextThings = possibleNextThings.splice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
+        possibleNextThings = possibleNextThings.slice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
         //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
         const ret = [];
         for (const possibleNextThing of possibleNextThings) {
@@ -476,7 +476,7 @@ router.get("/recommendedFast/:userID", async (req, res, next) => {
             res.json([]);
             return;
         }
-        possibleNextThings = possibleNextThings.splice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
+        possibleNextThings = possibleNextThings.slice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
         //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
         const ret = [];
         for (const possibleNextThing of possibleNextThings) {
