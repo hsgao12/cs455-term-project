@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import userIDValue from '../../store/actions/authActions';
 import axios from 'axios';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,19 +34,17 @@ export default function ProductSellConfirmation({
     const sellerItemData = {
       sneakerId: props.location.state.shoe._id,
       sellerId: userIDValue.userID,
-      buyerId:'',
-      sold:false,
+      buyerId: '',
+      sold: false,
       size: size,
       price: amount.intitialAmount,
     };
 
     var response = await axios.post('/addNewSellerItem', sellerItemData);
     setSellerItemId(response.data);
-    console.log(sellerItemId)
+    console.log(sellerItemId);
     const billing = {
-      sellerItemId: response.data,
       userId: userIDValue.userID,
-      userType: "seller",
       billing: {
         address: billingData.address,
         province: billingData.province,
@@ -55,8 +53,10 @@ export default function ProductSellConfirmation({
       },
       payment: {
         cardNumber: billingData.creditCard,
-        expDate: billingData.ExpDate,
+        expDate: billingData.expDate,
         cvv: billingData.cvv,
+        firstName: billingData.firstName,
+        lastName: billingData.lastName,
       },
     };
 
@@ -92,7 +92,7 @@ export default function ProductSellConfirmation({
           <br></br>
           CVV: {billingData.cvv}
           <br></br>
-          Exp Date: {billingData.ExpDate}
+          Exp Date: {billingData.expDate}
           <br></br>
           <br></br>
           <div style={{ fontWeight: 'bold' }}>Billing Address </div>
