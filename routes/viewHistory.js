@@ -19,7 +19,7 @@ router.post("/:shoeID/:userID", async (req, res, next) => {
             {upsert: true, new: true, setDefaultsOnInsert: true, useFindAndModify: false}).lean();
         if (items.length > 1) {
             const alreadySeenThings = new Set();
-            for (let i = 0; i < Math.min(items.length - 1, 10); ++i) {
+            for (let i = 0; i < Math.min(items.length - 1, 5); ++i) {
                 const itemID = items[items.length - i - 2];
                 if (itemID !== req.params.shoeID && !alreadySeenThings.has(itemID)) {
                     const {next} = await nextViewed.findOne({id: itemID},"next").lean() ?? {next:{}};

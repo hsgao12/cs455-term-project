@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import {Tooltip} from "@material-ui/core";
+import Recommended from "../recommended/recommended";
 
 
 export default function ProductDetailPage(props) {
@@ -67,6 +68,7 @@ export default function ProductDetailPage(props) {
         });
     }, []);
   return (
+      <React.Fragment>
     <div className="detailPage">
       <div className="priceTable">
         <SizeQuantityPriceTable
@@ -115,6 +117,11 @@ export default function ProductDetailPage(props) {
             )}
         </div>
       </div>
+        <div style={{gridColumn:"span 2"}}>
+            <Recommended f={true}/>
+        </div>
     </div>
+
+      </React.Fragment>
   );
 }
