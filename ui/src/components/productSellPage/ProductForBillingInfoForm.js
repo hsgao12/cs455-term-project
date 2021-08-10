@@ -8,6 +8,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -99,6 +100,15 @@ export default function ProductForBillingInfoForm({
     setBillingData((prevBilling) => ({ ...prevBilling, [name]: value }));
   };
 
+  const handleExpiryDate = (event) => {
+    const value = event.target.value;
+    let clearValue = value.replace(/\D+/g, '');
+    if (clearValue.length > 3) {
+      clearValue = `${clearValue.slice(0, 2)}/${clearValue.slice(2, 4)}`;
+    }
+    setBillingData((prevBilling) => ({ ...prevBilling, expDate: clearValue }));
+  };
+
   const [countryText, setCountryText] = React.useState(billingData.country);
 
   return (
@@ -111,9 +121,10 @@ export default function ProductForBillingInfoForm({
         </Grid>
       )}
       <div className={classes.Info}>Credit Card</div>
+
       <FormControl fullWidth className={classes.margin}>
         <Grid container>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={4} sm={4}>
             <TextField
               name="cardNumber"
               label="Card Number"
@@ -122,12 +133,21 @@ export default function ProductForBillingInfoForm({
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={4} sm={4}>
             <TextField
               name="cvv"
               value={billingData.cvv}
               label="CVV"
               onChange={onChange}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={4} sm={4}>
+            <TextField
+              name="expDate"
+              value={billingData.expDate}
+              label="Expiry Date"
+              onChange={handleExpiryDate}
               variant="outlined"
             />
           </Grid>
@@ -168,6 +188,9 @@ export default function ProductForBillingInfoForm({
           onChange={onChange}
           variant="outlined"
         />
+        <br></br>
+        <br></br>
+        <TextField label="Expiry Date" name="expiryDate" variant="outlined" />
         <br></br>
         <Autocomplete
           options={countries}
