@@ -150,7 +150,7 @@ router.put('/updateSellerItem/:id/:size/:price', async (req, res) => {
     const size = req.params.size;
     const price = req.params.price;
     console.log(size)
-    SellerItem.findOneAndUpdate({"sneakerId": id, "price": price, "size": size},
+    SellerItem.findOneAndUpdate({"sneakerId": id, "price": price, "size": size, "sold": false},
         req.body, {useFindAndModify: false})
         .then(data => {
             if (!data) {

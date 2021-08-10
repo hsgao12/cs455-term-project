@@ -1,12 +1,11 @@
-import { React, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import userIDValue from '../../store/actions/authActions';
 import axios from 'axios';
 import { connect } from "react-redux";
-
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,12 +27,14 @@ export default function ProductBuyConfirmation({
   const classes = useStyles();
   const [messageDisplay, setMessageDisplay] = useState(false);
   const [message, setMessage] = useState('');
+  const user = useSelector((state) => state.auth.user);
+
 
   const handleVerifyAndSubmitClick = async () => {
     setMessageDisplay(true);
     const sellerItemData = {
       sneakerId: props.location.state.shoe._id,
-      sellerId: userIDValue.userID,
+      sellerId: user.id,
       buyerId:'',
       sold:false,
       size: size,
@@ -41,13 +42,14 @@ export default function ProductBuyConfirmation({
     };
 
   const buyerData = {
-    buyerId:userIDValue.userID,
+    buyerId: user.id,
     sold:true,
   }
+  console.log(buyerData);
     var response = await axios.put('/updateSellerItem'+'/'+sellerItemData.sneakerId+'/'+sellerItemData.size+'/'+sellerItemData.price, buyerData);
     const billing = {
       sellerItemId: response.data,
-      userId: userIDValue.userID,
+      userId: user.id,
       userType: "buyer",
       billing: {
         address: billingData.address,
