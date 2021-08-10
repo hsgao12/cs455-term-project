@@ -20,6 +20,7 @@ import { makeStyles, createMuiTheme, ThemeProvider, lighten, darken, useMediaQue
 
 import SearchPage from "./components/SearchPage/SearchPage";
 import Admin from "./components/admin/admin"
+import Recommended from "./components/recommended/recommended";
 
 
 const theme = createTheme({
@@ -61,6 +62,7 @@ function App() {
                             <Switch>
                                 <Route path="/shoes/:shoesId" component={ProductDetailPage} exact />
                                 <PrivateRoute path={"/profile"} component={Profile} exact />
+                                <PrivateRoute path={"/recommended"} component={Recommended} exact />
                                 <Route path="/" component={HomePage} exact />
                                 <Route path="/search/:query" component={SearchPage} exact />
                                 <Route path="/search" component={SearchPage} exact />

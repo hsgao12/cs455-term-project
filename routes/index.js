@@ -420,7 +420,7 @@ router.post("/recalculatePopularListings", async (req, res, next) => {
     }
 });
 
-router.get("/recommended/userID", async (req, res, next) => {
+router.get("/recommended/:userID", async (req, res, next) => {
     try {
         const viewHistory = (await shoesViewed.findOne({id: req.params.userID}).lean()).items;
         const predictedNextThings = nextViewd.find({id: {$in: viewHistory}}).lean();
@@ -434,22 +434,23 @@ router.get("/recommended/userID", async (req, res, next) => {
             }
         }
         const possibleNextThings = Object.keys(values);
-        if(possibleNextThings.length===0){
+        if (possibleNextThings.length === 0) {
             res.json([]);
             return;
         }
         //possibleNextThings.sort((a,b)=>values[a]-values[b]);
         fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
-        const res = [];
+        const ret = [];
         for (const possibleNextThing of possibleNextThings) {
-            const prob = values[possibleNextThing] / values[possibleNextThings[0]];
-            if (Math.random() <= prob) {
-                res.push(possibleNextThing);
+            const prob = values[possibleNextThing] / (values[possibleNextThings[0]] * 1.5);
+            if (Math.random() <= Math.sqrt(prob)) {
+                ret.push(possibleNextThing);
             }
-            if (res.length >= 4) {
+            if (ret.length >= 14) {
                 break;
             }
         }
+        res.json(await Shoes.find({_id: {$in: ret.map((a) => Types.ObjectId(a))}}).lean());
 
     } catch (e) {
         console.log(e);
