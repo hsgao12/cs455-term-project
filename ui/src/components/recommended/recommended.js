@@ -51,11 +51,9 @@ export default function Recommended({f}) {
 
     return <Container className={styles.rootMain}>
         <Paper>
-            <Link to={"/recommended"}>
                 <Button variant={"contained"} color={"primary"}>
                     Recommended based on recently viewed
                 </Button>
-            </Link>
             <Paper className={styles.root}>
 
                 {shoes.map((shoe) => <ShoesCard shoe={shoe}/>)}
