@@ -73,7 +73,8 @@
 }
 
 .detailPage {
-    display: flex;
+    display: inline grid;
+    grid-template-columns: auto auto;
     
 }
 

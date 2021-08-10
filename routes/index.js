@@ -450,25 +450,63 @@ router.get("/recommended/:userID", async (req, res, next) => {
 
         for await (const nextThing of predictedNextThings) {
             for (const [id, amount] of Object.entries(nextThing["next"])) {
-                if (amount >= 0.1) {
+                if (amount >= 0.25) {
                     values[id] = (values[id] ?? 0) + amount;
                 }
             }
         }
-        const possibleNextThings = Object.keys(values);
+        let possibleNextThings = Object.keys(values);
         if (possibleNextThings.length === 0) {
             res.json([]);
             return;
         }
-        //possibleNextThings.sort((a,b)=>values[a]-values[b]);
-        fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
+        possibleNextThings = possibleNextThings.slice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
+        //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
+        const ret = [];
+        for (const possibleNextThing of possibleNextThings) {
+            const prob = values[possibleNextThing] / (values[possibleNextThings[0]] * 1.5);
+
+            if (Math.random() <= Math.sqrt(prob)) {
+                ret.push(possibleNextThing);
+            }
+            if (ret.length >= 14) {
+                break;
+            }
+        }
+        console.log(ret);
+        res.json(await Shoes.find({_id: {$in: ret.map((a) => Types.ObjectId(a))}}).lean());
+    } catch (e) {
+        console.log(e);
+    }
+})
+
+router.get("/recommendedFast/:userID", async (req, res, next) => {
+    try {
+        const viewHistory = (await shoesViewed.findOne({id: req.params.userID}).lean()).items;
+        const predictedNextThings = nextViewd.find({id: {$in: viewHistory}}).lean();
+        const values = {};
+
+        for await (const nextThing of predictedNextThings) {
+            for (const [id, amount] of Object.entries(nextThing["next"])) {
+                if (amount >= 0.25) {
+                    values[id] = (values[id] ?? 0) + amount;
+                }
+            }
+        }
+        let possibleNextThings = Object.keys(values);
+        if (possibleNextThings.length === 0) {
+            res.json([]);
+            return;
+        }
+        possibleNextThings = possibleNextThings.slice(0,possibleNextThings.length*0.5).sort((a,b)=>values[a]-values[b]);
+        //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
         const ret = [];
         for (const possibleNextThing of possibleNextThings) {
             const prob = values[possibleNextThing] / (values[possibleNextThings[0]] * 1.5);
             if (Math.random() <= Math.sqrt(prob)) {
                 ret.push(possibleNextThing);
             }
-            if (ret.length >= 14) {
+            if (ret.length >= 4) {
                 break;
             }
         }
