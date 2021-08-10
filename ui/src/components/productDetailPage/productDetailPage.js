@@ -4,6 +4,7 @@ import SizeQuantityPriceTable from './sizeQuantityPriceTable';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
+import {Tooltip} from "@material-ui/core";
 
 
 export default function ProductDetailPage(props) {
@@ -64,13 +65,13 @@ export default function ProductDetailPage(props) {
         .catch((err) => {
             console.log(err);
         });
-    }, []); 
+    }, []);
   return (
     <div className="detailPage">
       <div className="priceTable">
         <SizeQuantityPriceTable
         resultArray={resultArray}
-        itemsForPurchaseAvailable={itemsForPurchaseAvailable} 
+        itemsForPurchaseAvailable={itemsForPurchaseAvailable}
         />
       </div>
       <div className="details" key={shoes.id}>
@@ -107,6 +108,11 @@ export default function ProductDetailPage(props) {
           >
           <button className="buy">Click to Buy</button>
           </Link>)}
+            {!itemsForPurchaseAvailable && (
+                <Tooltip title={"no items to buy"} arrow placement={"top"}>
+                 <button className="buy" style={{background:"gray",cursor:"auto"}} disabled={true}>Click to Buy</button>
+                </Tooltip>
+            )}
         </div>
       </div>
     </div>

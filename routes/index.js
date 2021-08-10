@@ -451,7 +451,6 @@ router.get("/recommended/:userID", async (req, res, next) => {
             }
         }
         res.json(await Shoes.find({_id: {$in: ret.map((a) => Types.ObjectId(a))}}).lean());
-
     } catch (e) {
         console.log(e);
     }
