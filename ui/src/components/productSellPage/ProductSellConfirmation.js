@@ -43,7 +43,6 @@ export default function ProductSellConfirmation({
 
     var response = await axios.post('/addNewSellerItem', sellerItemData);
     setSellerItemId(response.data);
-    console.log(sellerItemId)
     const billing = {
       sellerItemId: response.data,
       userId: user.id,

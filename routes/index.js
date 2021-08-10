@@ -6,7 +6,29 @@ const SellerItem = require('../models/SellerItem');
 const UserBilling = require('../models/UserBilling');
 const PopularSneakers = require("../models/popularSneakers")
 const shoesViewed = require("../models/ShoeView");
-const nextViewd = require("../models/nextViewed")
+const nextViewd = require("../models/nextViewed");
+const User = require("../models/user");
+
+//get All listring from seller item
+router.get('/getAllListing', async (req, res) => {
+    try {
+        const result = await SellerItem.find({});
+        console.log(result);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+});
+
+router.get('/getAllUser', async (req, res) => {
+    try {
+        const result = await User.find({});
+        console.log(result);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+});
 
 //Post request to add a sneaker for sale
 router.post('/addNewSneaker', async (req, res) => {

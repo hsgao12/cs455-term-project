@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/data-grid": "^4.0.0-alpha.35",
     "react-router-dom": "^5.2.0"
   },
   "proxy": "http://localhost:5000"
