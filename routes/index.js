@@ -113,23 +113,6 @@ router.patch('/updateShoesStockDec', async (req, res) => {
 
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
-  // const userBilling = new UserBilling(req.body);
-  // userBilling
-  //   .save()
-  //   .then((result) => {
-  //     console.log(result);
-  //     res.status(200).json({
-  //       message: 'User billing successfully added to database',
-  //       billing: result,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     res.status(500).json({
-  //       error: err,
-  //     });
-  //   });
-
   const { billing, billingSaved, userId } = req.body;
   if (billingSaved) {
     try {
@@ -160,8 +143,23 @@ router.post('/addUserBilling', async (req, res) => {
     }
   } else {
     try {
-      const newBilling = new UserBilling(billing);
-      const ret = userBilling.save();
+      const newBilling = new UserBilling({
+        userId: userId,
+        billing: {
+          address: billing.address,
+          province: billing.province,
+          country: billing.country,
+          postalCode: billing.postalCode,
+        },
+        payment: {
+          cardNumber: billing.cardNumber,
+          expDate: billing.expDate,
+          cvv: billing.cvv,
+          firstName: billing.firstName,
+          lastName: billing.lastName,
+        },
+      });
+      const ret = newBilling.save();
       res.status(200).json({
         message: 'Billing saved',
         billing: ret,

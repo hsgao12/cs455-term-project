@@ -70,7 +70,7 @@ export default function ProductBuyPage(props) {
     province: '',
     postalCode: '',
     country: '',
-    creditCard: '',
+    cardNumber: '',
     cvv: '',
     ExpDate: '',
   };

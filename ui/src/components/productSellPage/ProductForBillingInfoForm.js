@@ -6,6 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import CreditCard from './CreditCard';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  creditCard: {
+    marginTop: theme.spacing(3),
+  },
 }));
 
 export default function ProductForBillingInfoForm({
@@ -45,6 +51,7 @@ export default function ProductForBillingInfoForm({
   const [error, setError] = React.useState('');
   const [selectedDate, handleDateChange] = React.useState(null);
   const [open, setOpen] = React.useState(true);
+  const [focus, setFocus] = React.useState('aa');
   const countries = ['Canada', 'US', 'China', 'India'];
 
   const handleSubmit = () => {
@@ -71,6 +78,29 @@ export default function ProductForBillingInfoForm({
       );
     } else {
       setConfirmationInfo(true);
+    }
+  };
+
+  const handleFocus = (event) => {
+    console.log(event.target.name);
+    switch (event.target.name) {
+      case 'cvv':
+        setFocus('cvc');
+        break;
+      case 'firstName':
+        setFocus('name');
+        break;
+      case 'lastName':
+        setFocus('name');
+        break;
+      case 'expDate':
+        setFocus('expiry');
+        break;
+      case 'cardNumber':
+        setFocus('number');
+        break;
+      default:
+        break;
     }
   };
 
@@ -103,38 +133,54 @@ export default function ProductForBillingInfoForm({
           <Paper className={classes.paper}>{error}</Paper>
         </Grid>
       )}
+
+      <div className={classes.creditCard}>
+        <CreditCard
+          cvc={billingData.cvv}
+          name={billingData.firstName + ' ' + billingData.lastName}
+          expDate={billingData.expDate}
+          number={billingData.cardNumber}
+          focus={focus}
+        />
+      </div>
       <div className={classes.Info}>Credit Card</div>
 
       <FormControl fullWidth className={classes.margin}>
-        <Grid container>
-          <Grid item xs={4} sm={4}>
+        <List>
+          <ListItem>
             <TextField
               name="cardNumber"
               label="Card Number"
               onChange={onChange}
+              fullWidth
               value={billingData.cardNumber}
               variant="outlined"
+              InputProps={{ onFocus: handleFocus }}
             />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <TextField
-              name="cvv"
-              value={billingData.cvv}
-              label="CVV"
-              onChange={onChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
+          </ListItem>
+          <ListItem>
             <TextField
               name="expDate"
               value={billingData.expDate}
+              fullWidth
               label="Expiry Date"
               onChange={handleExpiryDate}
               variant="outlined"
+              inputProps={{ onFocus: handleFocus }}
             />
-          </Grid>
-        </Grid>
+          </ListItem>
+          <ListItem>
+            <TextField
+              name="cvv"
+              value={billingData.cvv}
+              label="CVC"
+              fullWidth
+              onChange={onChange}
+              variant="outlined"
+              inputProps={{ onFocus: handleFocus }}
+            />
+          </ListItem>
+        </List>
         <br></br>
         <br></br>
         <div style={{ fontWeight: 'bold', textAlign: 'left' }}>
@@ -146,6 +192,7 @@ export default function ProductForBillingInfoForm({
           name="firstName"
           value={billingData.firstName}
           onChange={onChange}
+          inputProps={{ onFocus: handleFocus }}
           variant="outlined"
         />
         <br></br>
@@ -154,6 +201,7 @@ export default function ProductForBillingInfoForm({
           name="lastName"
           value={billingData.lastName}
           onChange={onChange}
+          inputProps={{ onFocus: handleFocus }}
           variant="outlined"
         />
         <br></br>
