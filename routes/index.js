@@ -89,25 +89,63 @@ router.patch('/updateShoesStockDec', async (req, res) => {
 
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
-  console.log('called with');
-  console.log(req.body);
+  // const userBilling = new UserBilling(req.body);
+  // userBilling
+  //   .save()
+  //   .then((result) => {
+  //     console.log(result);
+  //     res.status(200).json({
+  //       message: 'User billing successfully added to database',
+  //       billing: result,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.error(err);
+  //     res.status(500).json({
+  //       error: err,
+  //     });
+  //   });
 
-  const userBilling = new UserBilling(req.body);
-  userBilling
-    .save()
-    .then((result) => {
-      console.log(result);
+  const { billing, billingSaved, userId } = req.body;
+  if (billingSaved) {
+    try {
+      let ret = await UserBilling.findOneAndUpdate(
+        { userId: userId },
+        {
+          billing: {
+            address: billing.address,
+            province: billing.province,
+            country: billing.country,
+            postalCode: billing.postalCode,
+          },
+          payment: {
+            cardNumber: billing.cardNumber,
+            expDate: billing.expDate,
+            cvv: billing.cvv,
+            firstName: billing.firstName,
+            lastName: billing.lastName,
+          },
+        }
+      );
       res.status(200).json({
-        message: 'User billing successfully added to database',
-        billing: result,
+        message: 'Billing updated',
+        billing: ret,
       });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({
-        error: err,
+    } catch (err) {
+      res.status(400).json({ err: err.message });
+    }
+  } else {
+    try {
+      const newBilling = new UserBilling(billing);
+      const ret = userBilling.save();
+      res.status(200).json({
+        message: 'Billing saved',
+        billing: ret,
       });
-    });
+    } catch (err) {
+      res.status(400).json({ err: err.message });
+    }
+  }
 });
 
 router.get('/getUserBilling/:id', async (req, res) => {

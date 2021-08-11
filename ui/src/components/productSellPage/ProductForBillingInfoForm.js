@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -31,17 +29,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-const BillInfo = {
-  firstName: '',
-  lastName: '',
-  address: '',
-  province: '',
-  postalCode: '',
-  country: '',
-  creditCard: '',
-  cvv: '',
-  expDate: '',
-};
+
 export default function ProductForBillingInfoForm({
   props,
   size,
@@ -60,28 +48,23 @@ export default function ProductForBillingInfoForm({
   const countries = ['Canada', 'US', 'China', 'India'];
 
   const handleSubmit = () => {
-    var dt = new Date(selectedDate);
-    var dtm = dt.getMonth();
-    var dty = dt.getFullYear();
-    BillInfo.expDate = dtm + '/' + dty;
-    if (isNaN(BillInfo.creditCard)) {
+    if (isNaN(billingData.cardNumber)) {
       setError(
         'Card Number is not of type Number. Please enter a valid number!'
       );
-    } else if (isNaN(BillInfo.cvv)) {
+    } else if (isNaN(billingData.cvv)) {
       setError('CVV is not of type Number. Please enter a valid number!');
     } else if (
-      !BillInfo.firstName ||
-      !BillInfo.lastName ||
-      !BillInfo.address ||
-      !BillInfo.province ||
-      !BillInfo.postalCode ||
-      !BillInfo.country ||
-      BillInfo.expDate === '11/1969' ||
-      !BillInfo.creditCard ||
-      !BillInfo.cvv ||
-      !BillInfo.expDate ||
-      BillInfo.expDate === null
+      !billingData.firstName ||
+      !billingData.lastName ||
+      !billingData.address ||
+      !billingData.province ||
+      !billingData.postalCode ||
+      !billingData.country ||
+      !billingData.cardNumber ||
+      !billingData.cvv ||
+      !billingData.expDate ||
+      billingData.expDate === null
     ) {
       setError(
         'One of the required fields is empty, please input all the fields!'
@@ -153,21 +136,6 @@ export default function ProductForBillingInfoForm({
           </Grid>
         </Grid>
         <br></br>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <DatePicker
-            variant="inline"
-            openTo="year"
-            minDate={new Date('2021-03-01')}
-            maxDate={new Date('2030-06-01')}
-            value={selectedDate}
-            onChange={(newValue) => {
-              handleDateChange(newValue);
-            }}
-            views={['year', 'month']}
-            label="Card Exp Date"
-            helperText="Start from year selection"
-          />
-        </MuiPickersUtilsProvider>
         <br></br>
         <div style={{ fontWeight: 'bold', textAlign: 'left' }}>
           Billing Info
@@ -189,8 +157,6 @@ export default function ProductForBillingInfoForm({
           variant="outlined"
         />
         <br></br>
-        <br></br>
-        <TextField label="Expiry Date" name="expiryDate" variant="outlined" />
         <br></br>
         <Autocomplete
           options={countries}

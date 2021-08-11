@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import userIDValue from '../../store/actions/authActions';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,9 @@ export default function ProductSellConfirmation({
   amount,
   billingData,
   setBillingInfo,
+  billingSaved,
 }) {
+  const user = useSelector((state) => state.auth.user);
   const classes = useStyles();
   const [messageDisplay, setMessageDisplay] = useState(false);
   const [message, setMessage] = useState('');
@@ -33,7 +36,7 @@ export default function ProductSellConfirmation({
     setMessageDisplay(true);
     const sellerItemData = {
       sneakerId: props.location.state.shoe._id,
-      sellerId: userIDValue.userID,
+      sellerId: user.id,
       buyerId: '',
       sold: false,
       size: size,
@@ -44,7 +47,7 @@ export default function ProductSellConfirmation({
     setSellerItemId(response.data);
     console.log(sellerItemId);
     const billing = {
-      userId: userIDValue.userID,
+      userId: user.id,
       billing: {
         address: billingData.address,
         province: billingData.province,
@@ -67,7 +70,11 @@ export default function ProductSellConfirmation({
     };
 
     await axios.post('/addNewSellerItem', sellerItemData);
-    await axios.post('/addUserBilling', billing);
+    await axios.post('/addUserBilling', {
+      billing: billingData,
+      billingSaved: billingSaved,
+      userId: user.id,
+    });
     await axios.patch('/updateShoesStockAdd', shoes);
 
     setMessage('Great, the sneaker has been added to the Sale List.');
