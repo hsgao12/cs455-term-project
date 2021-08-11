@@ -39,6 +39,20 @@ router.get('/getUser/:id', async (req, res) => {
   }
 });
 
+router.get('/getAllUsers', async (req, res) => {
+  User.find()
+      .exec()
+      .then((docs) => {
+        res.status(200).json(docs);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+        });
+      });
+});
+
 router.put('/setUserAddress/:id', async (req, res) => {
   const id = req.params.id;
   const { address, city, country } = req.body;

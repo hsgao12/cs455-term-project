@@ -84,6 +84,7 @@ export const signin = (data, onError, setLoginFormOpen) => {
       const res = await firebase
         .auth()
         .signInWithEmailAndPassword(data.email, data.password);
+        console.log("aaaaaaaaaaaaaaaaaaaaaa"+res);
       // TODO: use proper way to get uid
       userIDValue.userID = res.user.uid;
       console.log(userIDValue.userID);

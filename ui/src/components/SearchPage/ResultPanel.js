@@ -9,6 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import {LinearProgress, List} from "@material-ui/core";
+import ListingCard from "../profile/ListingCard";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +44,15 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  loading: {
+    height:30,
+    width: '100%',
+    marginTop: '30%',
+    marginLeft:'10%'
+  },
 }));
 
-export default function ResultPanel({ results, originalResults, setResults, setOriginalResults }) {
+export default function ResultPanel({ results, originalResults, setResults, setOriginalResults, loading }) {
   const [shoes, setShoes] = useState([]);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(24);
@@ -99,11 +107,13 @@ export default function ResultPanel({ results, originalResults, setResults, setO
     }
   }
 
+
   if (results.length === 0) {
     return (
-      <div>
-        <h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS OR SEARCH TERM</h2>
-      </div>
+        <div>
+          {loading ? (<LinearProgress className={classes.loading} />) :
+              (<h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS OR SEARCH TERM</h2>)}
+        </div>
     );
   } else {
     return (
@@ -127,18 +137,21 @@ export default function ResultPanel({ results, originalResults, setResults, setO
           </FormControl>
         </div>
         <div className={classes.toolbar} />
-        <Grid container justify="center" spacing={4}>
-          {results.slice(minIndex, maxIndex).map((shoe) => (
-            <Grid key={shoe._id} item xs={3}>
-              <ShoesCard shoe={shoe} />
+        {loading ? (
+            <LinearProgress className={classes.loading} />
+        ) : (
+            <Grid container justify="center" spacing={4}>
+              {results.slice(minIndex, maxIndex).map((shoe) => (
+                  <Grid key={shoe._id} item xs={3}>
+                    <ShoesCard shoe={shoe} />
+                  </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+        )}
         <Pagination
-          count={Math.floor(shoes.length / 24 + 1)}
-          shape="rounded"
-          onChange={handleChange}
-        />
+            count={Math.floor(results.length / 24 + 1)}
+            shape="rounded"
+            onChange={handleChange}/>
       </main>
     );
   }

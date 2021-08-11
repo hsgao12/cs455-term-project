@@ -5,6 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import ProductForBuyForm from './ProductForBuyForm';
 import ProductForBillingInfoForm from '../productSellPage/ProductForBillingInfoForm';
 import ProductBuyConfirmation from './ProductBuyConfirmation';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -73,6 +76,20 @@ export default function ProductBuyPage(props) {
   };
   const [billingData, setBillingData] = React.useState(initialBillingInfo);
   const [confirmationInfo, setConfirmationInfo] = React.useState(false);
+  const [billingSaved, setBillingSaved] = React.useState(false);
+
+  const user = useSelector((state) => state.auth.user);
+
+  React.useEffect(async () => {
+    const res = await axios.get(`/getUserBilling/${user.id}`);
+    const billing = res.data.billing;
+    if (res.data.billing !== null) {
+      const fetchedBillingInfo = { ...billing.billing, ...billing.payment };
+      setBillingData(fetchedBillingInfo);
+      setBillingSaved(true);
+    }
+  }, []);
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -90,6 +107,7 @@ export default function ProductBuyPage(props) {
                 amount={amount}
                 billingData={billingData}
                 setBillingInfo={setBillingInfo}
+                billingSaved={billingSaved}
               />
             </Paper>
           )}
@@ -105,6 +123,7 @@ export default function ProductBuyPage(props) {
                   setConfirmationInfo={setConfirmationInfo}
                   billingData={billingData}
                   setBillingData={setBillingData}
+                  billingSaved={billingSaved}
                 />
               ) : (
                 <ProductForBuyForm
@@ -114,6 +133,7 @@ export default function ProductBuyPage(props) {
                   amount={amount}
                   setAmount={setAmount}
                   setBillingInfo={setBillingInfo}
+                  billingSaved={billingSaved}
                 />
               )}
             </Paper>

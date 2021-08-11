@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchPage(props) {
   const searchTerm = props.match.params.query;
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [originalResults, setOriginalResults] = useState([]);
   const [filters, setFilters] = useState(
   {
@@ -132,12 +133,14 @@ export default function SearchPage(props) {
         const resultData = res.data;
         setResults(resultData);
         setOriginalResults(resultData);
+        setLoading(false);
       });
     } else {
        Axios.get(`/getShoes`).then((res) => {
         const resultData = res.data;
         setResults(resultData);
         setOriginalResults(resultData);
+         setLoading(false);
       });
     }
   }, []);
@@ -152,7 +155,7 @@ export default function SearchPage(props) {
           <FilterPanel handleFilter={(filters, category) => handleFilter(filters, category )}/>
         </div>
         <div className={classes.rPanel}>
-          <ResultPanel results={results} originalResults={originalResults} setResults={setResults} setOriginalResults={setOriginalResults} />
+          <ResultPanel loading ={loading} results={results} originalResults={originalResults} setResults={setResults} setOriginalResults={setOriginalResults} />
         </div>
       </div>
     </div>

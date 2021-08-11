@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import userIDValue from '../../store/actions/authActions';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -27,11 +26,13 @@ export default function ProductSellConfirmation({
   setBillingInfo,
   billingSaved,
 }) {
-  const user = useSelector((state) => state.auth.user);
   const classes = useStyles();
   const [messageDisplay, setMessageDisplay] = useState(false);
   const [message, setMessage] = useState('');
   const [sellerItemId, setSellerItemId] = useState('');
+  const user = useSelector((state) => state.auth.user);
+  function handleBackToProductPage() {}
+
   const handleVerifyAndSubmitClick = async () => {
     setMessageDisplay(true);
     const sellerItemData = {
@@ -43,7 +44,10 @@ export default function ProductSellConfirmation({
       price: amount.intitialAmount,
     };
 
-    var response = await axios.post('/addNewSellerItem', sellerItemData);
+    var response = await axios.post('/addNewSellerItem', {
+      ...sellerItemData,
+      size: size.toString(),
+    });
     setSellerItemId(response.data);
     console.log(sellerItemId);
     const billing = {
@@ -68,8 +72,6 @@ export default function ProductSellConfirmation({
       size: size.toString(),
       price: amount.intitialAmount,
     };
-
-    await axios.post('/addNewSellerItem', sellerItemData);
     await axios.post('/addUserBilling', {
       billing: billingData,
       billingSaved: billingSaved,
@@ -109,14 +111,34 @@ export default function ProductSellConfirmation({
           {billingData.postalCode} {billingData.country}
           <br></br>
           <br></br>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={handleVerifyAndSubmitClick}
-          >
-            Verify and Confirm
-          </Button>
+          <Grid container>
+            <Grid item xs={6} sm={6}>
+              <Link
+                style={{ color: 'inherit', textDecoration: 'inherit' }}
+                to={{
+                  pathname: '/shoes/' + props.location.state.shoe._id,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Back to Product Page
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={handleVerifyAndSubmitClick}
+              >
+                Verify and Confirm
+              </Button>
+            </Grid>
+          </Grid>
         </Paper>
       </Grid>
       <br></br>

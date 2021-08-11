@@ -1,5 +1,6 @@
 const express = require('express'); 
 const router = express.Router();
+const {Mongoose, Types} = require('mongoose');
 const SellerItem = require('../models/SellerItem'); 
 
 router.delete('/deleteListing/:id', async (req, res) => {
@@ -21,6 +22,7 @@ router.put('/editListing/:id', async (req, res) => {
     } catch (err) {
         res.status(400).json({message: err.message});
     }
-})
+});
+
 
 module.exports = router;

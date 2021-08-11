@@ -6,6 +6,29 @@ const SellerItem = require('../models/SellerItem');
 const UserBilling = require('../models/UserBilling');
 const PopularSneakers = require('../models/popularSneakers');
 const shoesViewed = require('../models/ShoeView');
+const nextViewd = require('../models/nextViewed');
+const User = require('../models/user');
+
+//get All listring from seller item
+router.get('/getAllListing', async (req, res) => {
+  try {
+    const result = await SellerItem.find({});
+    console.log(result);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.get('/getAllUser', async (req, res) => {
+  try {
+    const result = await User.find({});
+    console.log(result);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 //Post request to add a sneaker for sale
 router.post('/addNewSneaker', async (req, res) => {
@@ -31,6 +54,7 @@ router.post('/addNewSneaker', async (req, res) => {
 router.patch('/updateShoesStockAdd', async (req, res) => {
   const shoes = req.body;
   //update stock
+  console.log(shoes.size);
   Shoes.updateOne(
     { _id: shoes.sneakerId, 'stock.size': shoes.size },
     { $inc: { 'stock.$.quantity': 1 } }
@@ -205,7 +229,7 @@ router.put('/updateSellerItem/:id/:size/:price', async (req, res) => {
   const price = req.params.price;
   console.log(size);
   SellerItem.findOneAndUpdate(
-    { sneakerId: id, price: price, size: size },
+    { sneakerId: id, price: price, size: size, sold: false },
     req.body,
     { useFindAndModify: false }
   )
@@ -416,36 +440,56 @@ function fakeSort(array, idx, fn) {
     } else {
       return array[upper - 1];
     }
+    let lower = 0;
+    let upper = array.length;
+    //console.log("b");
+
+    const nextItemToCheck = () => {
+      if (upper - lower > 1) {
+        const middleItem = array[(lower + upper) / 2];
+        const firstItem = array[lower];
+        const lastItem = array[upper - 1];
+        return [firstItem, middleItem, lastItem].sort(fn)[1];
+      } else {
+        return array[upper - 1];
+      }
+    };
+
+    //for loop to make sure the loop doesn't run forever
+    for (let i = 0; i < array.length; ++i) {
+      //console.log(`${lower} ${upper}`);
+      //const middle = (lower + upper) / 2;
+      const itemInCurrentIter = nextItemToCheck();
+      const partitionPoint = partition(
+        array,
+        lower,
+        upper,
+        (a) => fn(a, itemInCurrentIter) < 0
+      );
+      const partitionPoint2 = partition(
+        array,
+        partitionPoint,
+        upper,
+        (a) => fn(a, itemInCurrentIter) === 0
+      );
+      if (partitionPoint <= idx && partitionPoint2 > idx) {
+        return array;
+      }
+
+      if (partitionPoint > idx) {
+        upper = partitionPoint;
+      }
+      if (partitionPoint < idx) {
+        lower = partitionPoint2;
+      }
+    }
+    //sort only part of the array
+    let subArray = array.slice(lower, upper);
+    subArray.sort(fn);
+    for (let i = 0; i < subArray.length; ++i) {
+      array[i + lower] = subArray[i];
+    }
   };
-
-  //for loop to make sure the loop doesn't run forever
-  for (let i = 0; i < array.length; ++i) {
-    //console.log(`${lower} ${upper}`);
-    //const middle = (lower + upper) / 2;
-    const itemInCurrentIter = nextItemToCheck();
-    const partitionPoint = partition(
-      array,
-      lower,
-      upper,
-      (a) => fn(a, itemInCurrentIter) < 0
-    );
-    const partitionPoint2 = partition(
-      array,
-      partitionPoint,
-      upper,
-      (a) => fn(a, itemInCurrentIter) === 0
-    );
-    if (partitionPoint <= idx && partitionPoint2 > idx) {
-      return array;
-    }
-
-    if (partitionPoint > idx) {
-      upper = partitionPoint;
-    }
-    if (partitionPoint < idx) {
-      lower = partitionPoint2;
-    }
-  }
   //sort only part of the array
   let subArray = array.slice(lower, upper);
   subArray.sort(fn);
@@ -460,10 +504,10 @@ router.post('/recalculatePopularListings', async (req, res, next) => {
   try {
     const shoeStuff = {};
     const currentDate = new Date();
-    const allShoesViewed = await shoesViewed.find({
+    const allShoesViewed = shoesViewed.find({
       lastViewed: { $gt: new Date(currentDate.getTime() - 86400000 * 7) }, //1 week before today
     });
-    for (const shoesViewed of allShoesViewed) {
+    for await (const shoesViewed of allShoesViewed) {
       const shoesViewedByPerson = {};
       //shoeStuff[shoeId] = (shoeStuff[shoeId] ?? 0) + 1;
       for (const shoeId of shoesViewed.items) {
@@ -489,6 +533,102 @@ router.post('/recalculatePopularListings', async (req, res, next) => {
     //console.log(shoeStuff);
     //console.log(sortedShoes.map((a)=>({a,b:shoeStuff[a]})));
     res.json({});
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get('/recommended/:userID', async (req, res, next) => {
+  try {
+    const viewHistory = (
+      await shoesViewed.findOne({ id: req.params.userID }).lean()
+    ).items;
+    const predictedNextThings = nextViewd
+      .find({ id: { $in: viewHistory } })
+      .lean();
+    const values = {};
+
+    for await (const nextThing of predictedNextThings) {
+      for (const [id, amount] of Object.entries(nextThing['next'])) {
+        if (amount >= 0.25) {
+          values[id] = (values[id] ?? 0) + amount;
+        }
+      }
+    }
+    let possibleNextThings = Object.keys(values);
+    if (possibleNextThings.length === 0) {
+      res.json([]);
+      return;
+    }
+    possibleNextThings = possibleNextThings
+      .slice(0, possibleNextThings.length * 0.5)
+      .sort((a, b) => values[a] - values[b]);
+    //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
+    const ret = [];
+    for (const possibleNextThing of possibleNextThings) {
+      const prob =
+        values[possibleNextThing] / (values[possibleNextThings[0]] * 1.5);
+
+      if (Math.random() <= Math.sqrt(prob)) {
+        ret.push(possibleNextThing);
+      }
+      if (ret.length >= 14) {
+        break;
+      }
+    }
+    console.log(ret);
+    res.json(
+      await Shoes.find({
+        _id: { $in: ret.map((a) => Types.ObjectId(a)) },
+      }).lean()
+    );
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get('/recommendedFast/:userID', async (req, res, next) => {
+  try {
+    const viewHistory = (
+      await shoesViewed.findOne({ id: req.params.userID }).lean()
+    ).items;
+    const predictedNextThings = nextViewd
+      .find({ id: { $in: viewHistory } })
+      .lean();
+    const values = {};
+
+    for await (const nextThing of predictedNextThings) {
+      for (const [id, amount] of Object.entries(nextThing['next'])) {
+        if (amount >= 0.25) {
+          values[id] = (values[id] ?? 0) + amount;
+        }
+      }
+    }
+    let possibleNextThings = Object.keys(values);
+    if (possibleNextThings.length === 0) {
+      res.json([]);
+      return;
+    }
+    possibleNextThings = possibleNextThings
+      .slice(0, possibleNextThings.length * 0.5)
+      .sort((a, b) => values[a] - values[b]);
+    //fakeSort(possibleNextThings, possibleNextThings.length * 0.5, (a, b) => values[b] - values[a]);
+    const ret = [];
+    for (const possibleNextThing of possibleNextThings) {
+      const prob =
+        values[possibleNextThing] / (values[possibleNextThings[0]] * 1.5);
+      if (Math.random() <= Math.sqrt(prob)) {
+        ret.push(possibleNextThing);
+      }
+      if (ret.length >= 4) {
+        break;
+      }
+    }
+    res.json(
+      await Shoes.find({
+        _id: { $in: ret.map((a) => Types.ObjectId(a)) },
+      }).lean()
+    );
   } catch (e) {
     console.log(e);
   }
