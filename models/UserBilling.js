@@ -1,11 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const UserBilling = new mongoose.Schema(
   {
     id: mongoose.Schema.Types.ObjectId,
-    sellerItemId: String,
     userId: String,
-    userType: String,
     billing: {
       address: String,
       province: String,
@@ -16,11 +14,13 @@ const UserBilling = new mongoose.Schema(
       cardNumber: String,
       expDate: String,
       cvv: Number,
+      firstName: String,
+      lastName: String,
     },
   },
   {
-    collection: "userBilling",
+    collection: 'userBilling',
   }
 );
 
-module.exports = mongoose.model("UserBilling", UserBilling);
+module.exports = mongoose.model('UserBilling', UserBilling);
