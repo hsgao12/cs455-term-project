@@ -54,7 +54,11 @@ function ProductForSale(props, size) {
 
 export default function ProductSellPage(props) {
   const classes = useStyles();
-  const [billingInfo, setBillingInfo] = React.useState(false);
+  const initialBillingStatus= {
+    billingInfo: false,
+    billingInfoType: '',
+  };
+  const [billingInfo, setBillingInfo] = React.useState(initialBillingStatus);
   const [size, setSize] = React.useState('');
   const initialAmount = {
     intitialAmount: '',
@@ -91,7 +95,7 @@ export default function ProductSellPage(props) {
   }, []);
   return (
     <div className={classes.root}>
-      <Grid container>
+      <Grid container >
         <Grid item xs={6} sm={6}>
           <Paper style={{ height: '100vh' }} className={classes.paper}>
             {ProductForSale(props, size)}
@@ -99,7 +103,7 @@ export default function ProductSellPage(props) {
         </Grid>
         <Grid item xs={6} sm={6}>
           {confirmationInfo && (
-            <Paper style={{ height: '100vh' }} className={classes.paper}>
+            <Paper style={{ height: '100vh'}} className={classes.paper}>
               <ProductSellConfirmation
                 props={props}
                 size={size}
@@ -111,13 +115,15 @@ export default function ProductSellPage(props) {
             </Paper>
           )}
           {!confirmationInfo && (
-            <Paper style={{ height: '100vh' }} className={classes.paper}>
-              {billingInfo ? (
+            <Paper style={{ height: '100vh'}} className={classes.paper}>
+              {billingInfo.billingInfo ? (
                 <ProductForBillingInfoForm
                   props={props}
                   size={size}
                   amount={amount}
+                  setAmount={setAmount}
                   setSize={setSize}
+                  billingInfo={billingInfo}
                   setBillingInfo={setBillingInfo}
                   setConfirmationInfo={setConfirmationInfo}
                   billingData={billingData}
@@ -127,6 +133,7 @@ export default function ProductSellPage(props) {
               ) : (
                 <ProductForSaleForm
                   props={props}
+                  size={size}
                   setSize={setSize}
                   amount={amount}
                   setAmount={setAmount}

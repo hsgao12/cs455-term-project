@@ -54,7 +54,11 @@ function ProductForSale(props, size) {
 
 export default function ProductBuyPage(props) {
   const classes = useStyles();
-  const [billingInfo, setBillingInfo] = React.useState(false);
+  const initialBillingStatus= {
+    billingInfo: false,
+    billingInfoType: '',
+  };
+  const [billingInfo, setBillingInfo] = React.useState(initialBillingStatus);
   const [size, setSize] = React.useState('');
   const initialAmount = {
     intitialAmount: '',
@@ -113,12 +117,14 @@ export default function ProductBuyPage(props) {
           )}
           {!confirmationInfo && (
             <Paper style={{ height: '100vh' }} className={classes.paper}>
-              {billingInfo ? (
+              {billingInfo.billingInfo ? (
                 <ProductForBillingInfoForm
                   props={props}
                   size={size}
                   amount={amount}
+                  setAmount={setAmount}
                   setSize={setSize}
+                  billingInfo={billingInfo}
                   setBillingInfo={setBillingInfo}
                   setConfirmationInfo={setConfirmationInfo}
                   billingData={billingData}

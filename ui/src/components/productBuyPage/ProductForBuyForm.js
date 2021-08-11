@@ -17,7 +17,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import Menu from "@material-ui/core/Menu";
-
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,15 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'left',
+    color: 'red',
+    backgroundColor: '#ffcccc',
+  },
+  bg: {
+    backgroundColor: '#ff7675',
+  }
 }));
 export default function ProductForBuyForm({
   props,
@@ -37,6 +47,7 @@ export default function ProductForBuyForm({
 }) {
   const classes = useStyles();
   const [resultArray, setResultArray] = useState([]);
+  const [error, setError] = useState('');
 var distinct = [];
 for (var i = 0; i < resultArray.length; i++){
   if (!distinct.includes(resultArray[i].size))
@@ -83,7 +94,18 @@ for (var i = 0; i < resultArray.length; i++){
     setOpen(true);
   };
   const handleBillingInfoClick = () => {
-    setBillingInfo(true);
+    if(size == undefined || size == '' ){
+      setError("Size cannot be null, please select size of the sneaker for sale");
+    }
+    else{
+      setError('');
+      const initialBillingStatus= {
+        billingInfo: true,
+        billingInfoType: 'buy'
+      }
+      setBillingInfo(initialBillingStatus);
+    }
+   
   };
 
   const handleClose = () => {
@@ -92,6 +114,12 @@ for (var i = 0; i < resultArray.length; i++){
 
   return (
     <div>
+        {error !== '' && (
+        <Grid className={classes.bg} item xs={12} sm={12}>
+          <Paper className={classes.paper}>{error}</Paper>
+        </Grid>
+      )}
+      <br></br>
       <InputLabel>size</InputLabel>
 
       <Select onChange={handleChange}>

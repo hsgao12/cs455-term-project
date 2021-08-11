@@ -15,7 +15,8 @@ import List from "@material-ui/core/List";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -23,9 +24,19 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'left',
+    color: 'red',
+    backgroundColor: '#ffcccc',
+  },
+  bg: {
+    backgroundColor: '#ff7675',
+  },
 }));
 export default function ProductForSaleForm({
   props,
+  size,
   setSize,
   amount,
   setAmount,
@@ -33,6 +44,7 @@ export default function ProductForSaleForm({
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState('');
   const handleChange = (event) => {
     setSize(event.target.value);
   };
@@ -41,7 +53,22 @@ export default function ProductForSaleForm({
     setOpen(true);
   };
   const handleBillingInfoClick = () => {
-    setBillingInfo(true);
+      console.log(size);
+      console.log(amount.intitialAmount);
+      if(size == undefined || size == '' ){
+        setError("Size cannot be null, please select size of the sneaker for sale");
+      }
+      else if(amount.intitialAmount == undefined || amount.intitialAmount == ""){
+        setError("Please enter amount for sale");
+      }
+      else{
+        setError('');
+        const initialBillingStatus= {
+          billingInfo: true,
+          billingInfoType: 'sell'
+        }
+        setBillingInfo(initialBillingStatus);
+      }
   };
 
   const handleClose = () => {
@@ -60,6 +87,11 @@ export default function ProductForSaleForm({
   };
   return (
     <div>
+        {error !== '' && (
+        <Grid className={classes.bg} item xs={12} sm={12}>
+          <Paper className={classes.paper}>{error}</Paper>
+        </Grid>
+      )}
       <div>
         <Button onClick={handleClickOpen}>Select Size</Button>
         <Dialog open={open} onClose={handleClose}>
