@@ -8,6 +8,7 @@ const User = new mongoose.Schema({
   address: String,
   city: String,
   country: String,
+  isAdmin: Boolean,
 });
 
 module.exports = mongoose.model('Users', User);
