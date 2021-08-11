@@ -86,7 +86,7 @@ export default function ProductBuyConfirmation({
       userId: user.id,
     });
     await axios.patch('/updateShoesStockDec', shoes);
-    setMessage('Great, Thanks for buying the sneaker!');
+    setMessage('Great, your purchase order is confirmed!');
   };
 
   return (
@@ -151,7 +151,7 @@ export default function ProductBuyConfirmation({
       <br></br>
       {messageDisplay && (
         <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>{message}</Paper>
+          <Paper style={{ backgroundColor: '#e8f5e9' }} className={classes.paper}>{message}</Paper>
         </Grid>
       )}
     </Grid>

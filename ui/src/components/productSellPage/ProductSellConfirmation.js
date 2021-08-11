@@ -144,7 +144,7 @@ export default function ProductSellConfirmation({
       <br></br>
       {messageDisplay && (
         <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>{message}</Paper>
+          <Paper Paper style={{ backgroundColor: '#e8f5e9' }}className={classes.paper}>{message}</Paper>
         </Grid>
       )}
     </Grid>
