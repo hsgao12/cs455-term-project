@@ -28,12 +28,16 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
-app.use('/viewHistory',viewRouter);
+app.use('/viewHistory', viewRouter);
 app.use('/listing', listingRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('ui/build'));
 }
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/ui/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

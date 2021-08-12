@@ -61,7 +61,7 @@ Fetched data from the backend to populate price table with size, quantity and pr
 
 * Caleb Tran:
 
-* Joseph Gao: 
+* Joseph Gao: Worked on authentication, some parts of profile page (my profile, add listing). Helped rework credit card info and billing section, helped implement some backend endpoints related to user profile/seller items, helped set up Redux state management, set up state persistance across pages. 
 
 * Jungwook Jang: 
 
