@@ -73,12 +73,14 @@
 }
 
 .detailPage {
-    display: inline grid;
+    display: inline-flex;
     grid-template-columns: auto auto;
-    
+    margin:auto;
 }
 
 .priceTable {
+    display:inline-table;
     margin-top: 50px;
-
+    margin-left: 50px;
+    justify-content: left;
 }

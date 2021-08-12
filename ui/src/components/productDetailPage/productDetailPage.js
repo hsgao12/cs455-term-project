@@ -117,10 +117,11 @@ export default function ProductDetailPage(props) {
             )}
         </div>
       </div>
+      </div>
         <div style={{gridColumn:"span 2"}}>
             <Recommended f={true}/>
         </div>
-    </div>
+   
 
       </React.Fragment>
   );
