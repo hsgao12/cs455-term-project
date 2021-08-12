@@ -59,11 +59,11 @@ Developed WeinerX website to facilitate the buying/selling of sneakers between u
 * Gurveer Kaur: Worked on navbar using javascript, css and facilitated routing to various pages. Database design and implementation of frontend and backend integration for buyer and seller to buy/sell sneakers from the app (click to buy/click to sell, display shoe availability based on size and min price, get user credit card info and billing info, display total payment/payout amount after deducting transaction/shipping and processing charges). Api endpoint to post/update/get data from/to saleItem collection and userBillingInfo collection.
 Fetched data from the backend to populate price table with size, quantity and price on product detail page.
 
-* Caleb Tran:
+* Caleb Tran: Worked on the layout of the profile page, parts of the nav bar, login/register pages, view/buy/sell history and popular sneakers. Implemented recommended sneakers using a markov-chain like algorithm. 
 
 * Joseph Gao: Worked on authentication, some parts of profile page (my profile, add listing). Helped rework credit card info and billing section, helped implement some backend endpoints related to user profile/seller items, helped set up Redux state management, set up state persistance across pages. 
 
-* Jungwook Jang: 
+* Jungwook Jang: Worked on mainly on home page, Search Page, Admin Page, etc(product detail page, each listing of sneakers). Implemented custom grid style filter panel to enable user can select each size of shoes from scratch. Implemented various Api endpoint to allow data interation between client side and database. Implemented pagination with custom logic to avoid massive shoes rendered in one page. Created a simple logic to update the lowest asking price when user add a list of sneakers, or buy a sneakers.
 
 ## UI Design ## 
 
