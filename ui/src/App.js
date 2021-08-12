@@ -77,7 +77,7 @@ function App() {
                 exact
               />
               <Route path="/ProductBuyPage" component={ProductBuyPage} exact />
-              <Route
+              {/* <Route
                 path="/Admin"
                 render={() => {
                   return isAdmin ? (
@@ -87,7 +87,7 @@ function App() {
                   );
                 }}
                 component={Admin}
-              />
+              /> */}
             </Switch>
 
             {/* </PersistGate> */}
