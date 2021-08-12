@@ -30,8 +30,8 @@ Developed a website to facilitate the buying/selling of sneakers between users o
 ### Stretch Requirements ###
 * - [x] Recommend sneakers
 * - [x] Display price chart
-* - [] 360 degree shoes image
-* - [] Tracking sale process (payment transactions, Delivery)
+* -[] 360 degree shoes image
+* -[] Tracking sale process (payment transactions, Delivery)
 
 ## Task Breakdown ##
 
