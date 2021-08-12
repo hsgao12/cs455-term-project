@@ -117,10 +117,12 @@ export default function ProductDetailPage(props) {
             )}
         </div>
       </div>
-        <div style={{gridColumn:"span 2"}}>
-            <Recommended f={true}/>
-        </div>
-    </div>
+      </div>
+          {user && 
+              <div style={{gridColumn: "span 2"}}>
+                  <Recommended f={true}/>
+              </div>
+          }
 
       </React.Fragment>
   );

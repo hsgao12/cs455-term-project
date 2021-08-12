@@ -8,52 +8,62 @@
 
 ## Project Description ##
 
-We are planning to create a website to facilitate the buying/selling of sneakers between users on our website. This website will support sellers being able to either list and sell their sneakers, or buyers being able to view listings and purchasing sneakers. We will store user logins, as well as sale listings and price history on our website, as well as user shipping/purchasing information, and sneaker information. With this data, users will be able to create accounts, view listings, and view the price history of different sneakers they want to purchase. Additional functionally may include recommending sneakers based on previous purchases/page views, and displaying price charts.  
+Developed WeinerX website to facilitate the buying/selling of sneakers between users on our website. The website supports sellers being able to list and sell their sneakers, and buyers being able to view listings and purchasing sneakers. We are storing user logins, as well as sale listings and price history to the database, as well as user shipping/purchasing information, and sneaker information. With this data, users will be able to create accounts, view listings, and view the price history of different sneakers they want to purchase. Additional functionally includes recommending sneakers based on previous purchases/page views, and displaying price table.  
 
 ## Task Requirements ##
-
+* - [x] indicates completed; [] indicates not completed
 ### Minimum Viable Project Requirements ###
-* 3UI (seller, buyer, admin)
-* Create accounts
-* Shoes listing
-* Basic search (Non Complex query search)
+* - [x] 3UI (seller, buyer, admin) 
+* - [x] Create accounts
+* - [x] Shoes listing
+* - [x] Basic search (Non Complex query search)
 
 ### Standard Requirements ###
-* Search with complex filters (size, brand, price, etc)
-* Seller reviews 
-* View seller profile
-* View price history 
-* View popular listings 
-* Implement payment
-* Upcoming release info
+* - [x] Search with complex filters (size, brand, price, etc)
+*   [] Seller reviews 
+* - [x] View seller profile
+* - [x] View price history 
+* - [x] View popular listings 
+* - [x] Implement payment (simulated) saving credit card info to database
+* - [x] Upcoming release info
 
 ### Stretch Requirements ###
-* Recommend sneakers
-* Display price chart
-* 360 degree shoes image
-* Tracking sale process (payment transactions, Delivery)
+* - [x] Recommend sneakers
+* - [x] Display price chart
+*   [] 360 degree shoes image
+* - [x] Tracking sale process (buy history/sale history)
 
-## Task Breakdown ##
+## Technology Used ##
 
-### Register/Login ### 
-* Registration page UI 
-* Login page UI 
-* Storing login data in DB
-* User authentication
-
-### Shoe Listing ### 
-* Page UI 
-* Fetch product info from DB
-* Fetch seller info from DB 
-
-## Frontend/Backend ## 
+### Frontend/Backend ### 
 * HTML 
 * CSS 
 * Javascript 
-* React
+* React/Redux
 * NodeJS 
 * MongoDB
 * materialUI 
+
+### Website Deployment ### 
+* Heroku
+
+## Above and Beyond functionality ##
+* Implemented pagination to display large data items (shoes) on Search page
+* search feature to filter on price and brand
+
+## Next Steps ##
+* Add Seller Reviews
+* 360 degree rotation of shoes
+
+## List of Contributions ##
+* Gurveer Kaur: Worked on navbar using javascript, css and facilitated routing to various pages. Database design and implementation of frontend and backend integration for buyer and seller to buy/sell sneakers from the app (click to buy/click to sell, display shoe availability based on size and min price, get user credit card info and billing info, display total payment/payout amount after deducting transaction/shipping and processing charges). Api endpoint to post/update/get data from/to saleItem collection and userBillingInfo collection.
+Fetched data from the backend to populate price table with size, quantity and price on product detail page.
+
+* Caleb Tran:
+
+* Joseph Gao: 
+
+* Jungwook Jang: 
 
 ## UI Design ## 
 
