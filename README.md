@@ -63,7 +63,7 @@ Fetched data from the backend to populate price table with size, quantity and pr
 
 * Joseph Gao: Worked on authentication, some parts of profile page (my profile, add listing). Helped rework credit card info and billing section, helped implement some backend endpoints related to user profile/seller items, helped set up Redux state management, set up state persistance across pages. 
 
-* Jungwook Jang: 
+* Jungwook Jang: Worked on mainly on home page, Search Page, Admin Page, etc(product detail page, each listing of sneakers). Implemented custom grid style filter panel to enable user can select each size of shoes from scratch. Implemented various Api endpoint to allow data interation between client side and database. Implemented pagination with custom logic to avoid massive shoes rendered in one page. Created a simple logic to update the lowest asking price when user add a list of sneakers, or buy a sneakers.
 
 ## UI Design ## 
 
