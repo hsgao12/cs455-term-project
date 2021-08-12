@@ -224,25 +224,39 @@ export default function ProductForBillingInfoForm({
           Billing Info
         </div>
         <br></br>
+        <Grid container spacing={3}>
+        <Grid item xs={6}>
         <TextField
           label="First Name"
           name="firstName"
+          fullWidth
           value={billingData.firstName}
           onChange={onChange}
           inputProps={{ onFocus: handleFocus }}
           variant="outlined"
-        />
-        <br></br>
+        /></Grid>
+        <Grid item xs={6}>
         <TextField
           label="Last Name"
           name="lastName"
+          fullWidth
           value={billingData.lastName}
           onChange={onChange}
           inputProps={{ onFocus: handleFocus }}
           variant="outlined"
+        /></Grid>
+       </Grid>
+        <br></br>
+        <TextField
+          label="Address"
+          variant="outlined"
+          name="address"
+          value={billingData.address}
+          onChange={onChange}
         />
         <br></br>
-        <br></br>
+        <Grid container spacing={3}>
+        <Grid item xs>
         <Autocomplete
           options={countries}
           style={{ width: 300 }}
@@ -262,17 +276,8 @@ export default function ProductForBillingInfoForm({
             <TextField {...params} label="Country" variant="outlined" />
           )}
         />
-        <br></br>
-        <TextField
-          label="Address"
-          variant="outlined"
-          name="address"
-          value={billingData.address}
-          onChange={onChange}
-        />
-        <br></br>
-        <Grid container>
-          <Grid item xs={6} sm={6}>
+        </Grid>
+          <Grid item xs>
             <TextField
               label="Province"
               name="province"
@@ -281,7 +286,7 @@ export default function ProductForBillingInfoForm({
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs>
             <TextField
               label="Postal Code"
               name="postalCode"
@@ -292,6 +297,8 @@ export default function ProductForBillingInfoForm({
           </Grid>
         </Grid>
       </FormControl>
+      <br></br>
+      <br></br>
       <Grid container>
         <Grid item xs={6} sm={6}>
           <Button

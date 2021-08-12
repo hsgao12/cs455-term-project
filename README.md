@@ -50,6 +50,7 @@ Developed WeinerX website to facilitate the buying/selling of sneakers between u
 ## Above and Beyond functionality ##
 * Implemented pagination to display large data items (shoes) on Search page
 * search feature to filter on price and brand
+* Implemented recommended sneakers using a markov-chain like algorithm
 
 ## Next Steps ##
 * Add Seller Reviews
