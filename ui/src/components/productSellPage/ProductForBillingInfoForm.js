@@ -107,39 +107,37 @@ export default function ProductForBillingInfoForm({
   };
 
   const handleBack = () => {
-    if(billingInfo.billingInfoType == 'sell'){
+    if (billingInfo.billingInfoType == 'sell') {
       const initialAmount = {
         intitialAmount: '',
         transAmount: '',
         proccessingAmount: '',
         payOut: '',
       };
-  
+
       setAmount(initialAmount);
       setSize('');
-      const initialBillingStatus= {
+      const initialBillingStatus = {
         billingInfo: false,
-        billingInfoType: 'sell'
-      }
+        billingInfoType: 'sell',
+      };
       setBillingInfo(initialBillingStatus);
-    }
-    else if(billingInfo.billingInfoType == 'buy'){
+    } else if (billingInfo.billingInfoType == 'buy') {
       const initialAmount = {
         intitialAmount: '',
         proccessingAmount: '',
         shippingAmount: '',
         total: '',
       };
-  
+
       setAmount(initialAmount);
       setSize('');
-      const initialBillingStatus= {
+      const initialBillingStatus = {
         billingInfo: false,
-        billingInfoType: 'buy'
-      }
+        billingInfoType: 'buy',
+      };
       setBillingInfo(initialBillingStatus);
     }
-   
   };
 
   const onChange = (event) => {
@@ -168,53 +166,59 @@ export default function ProductForBillingInfoForm({
         </Grid>
       )}
 
-      <div className={classes.creditCard}>
-        <CreditCard
-          cvc={billingData.cvv}
-          name={billingData.firstName + ' ' + billingData.lastName}
-          expDate={billingData.expDate}
-          number={billingData.cardNumber}
-          focus={focus}
-        />
-      </div>
       <div className={classes.Info}>Credit Card</div>
 
       <FormControl fullWidth className={classes.margin}>
-        <List>
-          <ListItem>
-            <TextField
-              name="cardNumber"
-              label="Card Number"
-              onChange={onChange}
-              fullWidth
-              value={billingData.cardNumber}
-              variant="outlined"
-              InputProps={{ onFocus: handleFocus }}
-            />
-          </ListItem>
-          <ListItem>
-            <TextField
-              name="expDate"
-              value={billingData.expDate}
-              fullWidth
-              label="Expiry Date"
-              onChange={handleExpiryDate}
-              variant="outlined"
-              inputProps={{ onFocus: handleFocus }}
-            />
-          </ListItem>
-          <ListItem>
-            <TextField
-              name="cvv"
-              value={billingData.cvv}
-              label="CVC"
-              fullWidth
-              onChange={onChange}
-              variant="outlined"
-              inputProps={{ onFocus: handleFocus }}
-            />
-          </ListItem>
-        </List>
+        <Grid container>
+          <Grid item xs={12} sm={6}>
+            <div className={classes.creditCard}>
+              <CreditCard
+                cvc={billingData.cvv}
+                name={billingData.firstName + ' ' + billingData.lastName}
+                expDate={billingData.expDate}
+                number={billingData.cardNumber}
+                focus={focus}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <List>
+              <ListItem>
+                <TextField
+                  name="cardNumber"
+                  label="Card Number"
+                  onChange={onChange}
+                  fullWidth
+                  value={billingData.cardNumber}
+                  variant="outlined"
+                  InputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="expDate"
+                  value={billingData.expDate}
+                  fullWidth
+                  label="Expiry Date"
+                  onChange={handleExpiryDate}
+                  variant="outlined"
+                  inputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="cvv"
+                  value={billingData.cvv}
+                  label="CVC"
+                  fullWidth
+                  onChange={onChange}
+                  variant="outlined"
+                  inputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+            </List>
+          </Grid>
+        </Grid>
         <br></br>
         <br></br>
         <div style={{ fontWeight: 'bold', textAlign: 'left' }}>
