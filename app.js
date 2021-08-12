@@ -28,7 +28,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
-app.use('/viewHistory',viewRouter);
+app.use('/viewHistory', viewRouter);
 app.use('/listing', listingRouter);
 
 if (process.env.NODE_ENV === 'production') {

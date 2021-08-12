@@ -8,6 +8,11 @@ const PopularSneakers = require('../models/popularSneakers');
 const shoesViewed = require('../models/ShoeView');
 const nextViewd = require('../models/nextViewed');
 const User = require('../models/user');
+const path = require('path');
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 //get All listring from seller item
 router.get('/getAllListing', async (req, res) => {
