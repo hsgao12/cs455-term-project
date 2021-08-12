@@ -53,7 +53,7 @@ for (var i = 0; i < resultArray.length; i++){
   if (!distinct.includes(resultArray[i].size))
   distinct.push(resultArray[i].size)
 }
- console.log(distinct) 
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -69,7 +69,6 @@ for (var i = 0; i < resultArray.length; i++){
 
   const handleChange = (event) => {
     setSize(event.target.value);
-    console.log(resultArray);
     //Math.max.apply(Math, array.map(function(o) { return o.y; }))
     var resultArrayForSelectedSize = []
     for (var i = 0; i < resultArray.length; i++){
@@ -77,9 +76,8 @@ for (var i = 0; i < resultArray.length; i++){
         resultArrayForSelectedSize.push(resultArray[i]);
       }
     }
-    console.log(resultArrayForSelectedSize)
+
     var buyAmount = Math.min.apply(Math, resultArrayForSelectedSize.map(function(o) { return o.price; }))
-    console.log(buyAmount)
     setAmount({
       intitialAmount: Number(buyAmount),
       proccessingAmount: 0.03 * Number(buyAmount),

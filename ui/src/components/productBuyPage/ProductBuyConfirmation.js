@@ -46,7 +46,6 @@ export default function ProductBuyConfirmation({
       buyerId: user.id,
       sold: true,
     };
-    console.log(buyerData);
     var response = await axios.put(
       '/updateSellerItem' +
         '/' +
@@ -86,6 +85,35 @@ export default function ProductBuyConfirmation({
       userId: user.id,
     });
     await axios.patch('/updateShoesStockDec', shoes);
+    //handle price update
+    let minPrice = Number.MAX_SAFE_INTEGER;
+    let zeroStock = false;
+    await axios.get(`/getSizeAndPrice/${props.location.state.shoe._id}`)
+        .then(res => {
+          if(!res.data || res.data.length == 0){
+            zeroStock = true;
+          }
+          for(let i =0; i<res.data.length;i++){
+            if(minPrice >= res.data[i].price)
+              minPrice = res.data[i].price;
+          }
+
+        }).catch(err => {
+          console.log(err);
+        });
+
+    let oriShoes = await axios.get(`/sneaker/${props.location.state.shoe._id}`)
+        .then(res => {
+          return res.data;
+        }).catch(err=>{
+          console.log(err);
+        });
+
+    if(!zeroStock) {
+      let newShoes = {sneakerId: oriShoes._id, price: minPrice};
+      await axios.patch(`/updateSneakerPrice`, newShoes);
+    }
+
     setMessage('Great, your purchase order is confirmed!');
   };
 

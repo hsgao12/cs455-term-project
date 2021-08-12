@@ -53,7 +53,6 @@ export default (state = initialState, action) => {
         success: action.payload,
       };
     case SET_SHIPPING:
-      console.log(action.payload);
       return {
         ...state,
         user: {

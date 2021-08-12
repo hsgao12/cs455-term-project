@@ -43,7 +43,6 @@ export default function ViewHistory(props) {
 
     useEffect(async () => {
         const result = (await axios.get(`/viewHistory/${user.id}`)).data;
-        console.log(result);
         setShoesViewed(result);
     }, []);
 

@@ -74,7 +74,7 @@ export default function ProductSellPage(props) {
     province: '',
     postalCode: '',
     country: '',
-    creditCard: '',
+    cardNumber: '',
     cvv: '',
     expDate: '',
   };
@@ -87,11 +87,12 @@ export default function ProductSellPage(props) {
   React.useEffect(async () => {
     const res = await axios.get(`/getUserBilling/${user.id}`);
     const billing = res.data.billing;
-    if (res.data.billing !== null) {
+    if (res.data.billing) {
       const fetchedBillingInfo = { ...billing.billing, ...billing.payment };
       setBillingData(fetchedBillingInfo);
       setBillingSaved(true);
     }
+
   }, []);
   return (
     <div className={classes.root}>

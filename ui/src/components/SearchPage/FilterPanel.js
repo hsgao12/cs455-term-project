@@ -94,10 +94,6 @@ export default function FilterPanel(props) {
 
     return (
         <div>
-            <div className='searchbtn'>
-                <h2>Search</h2>
-                <SearchButton/>
-            </div>
             <div className='sizebtns'>
                 <h2>SIZES</h2>
                 <div className='btnGroup'>

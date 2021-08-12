@@ -36,8 +36,6 @@ const useStyles = makeStyles({
 });
 export default function SizeQuantityPriceTable( {resultArray, itemsForPurchaseAvailable}) { 
     const classes = useStyles();
-    console.log(resultArray);
-    console.log(itemsForPurchaseAvailable);
     return (
         <div>
         <TableContainer component={Paper}>

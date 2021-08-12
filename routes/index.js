@@ -50,11 +50,28 @@ router.post('/addNewSneaker', async (req, res) => {
     });
 });
 
+router.patch('/updateSneakerPrice', async (req, res) => {
+  const shoes = req.body;
+  console.log(shoes);
+  Shoes.updateOne({_id:shoes.sneakerId}, {$set: {price:shoes.price}})
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot update price with id=${shoes.id}. Something Wrong!`,
+          });
+        } else res.send({ message: 'Price was updated successfully.' });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: 'Error updating price with id=' + shoes.id,
+        });
+      });
+});
+
 //update shoes stock
 router.patch('/updateShoesStockAdd', async (req, res) => {
   const shoes = req.body;
   //update stock
-  console.log(shoes.size);
   Shoes.updateOne(
     { _id: shoes.sneakerId, 'stock.size': shoes.size },
     { $inc: { 'stock.$.quantity': 1 } }
@@ -113,23 +130,6 @@ router.patch('/updateShoesStockDec', async (req, res) => {
 
 //Post request to add a UserBilling
 router.post('/addUserBilling', async (req, res) => {
-  // const userBilling = new UserBilling(req.body);
-  // userBilling
-  //   .save()
-  //   .then((result) => {
-  //     console.log(result);
-  //     res.status(200).json({
-  //       message: 'User billing successfully added to database',
-  //       billing: result,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     res.status(500).json({
-  //       error: err,
-  //     });
-  //   });
-
   const { billing, billingSaved, userId } = req.body;
   if (billingSaved) {
     try {
@@ -160,8 +160,23 @@ router.post('/addUserBilling', async (req, res) => {
     }
   } else {
     try {
-      const newBilling = new UserBilling(billing);
-      const ret = userBilling.save();
+      const newBilling = new UserBilling({
+        userId: userId,
+        billing: {
+          address: billing.address,
+          province: billing.province,
+          country: billing.country,
+          postalCode: billing.postalCode,
+        },
+        payment: {
+          cardNumber: billing.cardNumber,
+          expDate: billing.expDate,
+          cvv: billing.cvv,
+          firstName: billing.firstName,
+          lastName: billing.lastName,
+        },
+      });
+      const ret = newBilling.save();
       res.status(200).json({
         message: 'Billing saved',
         billing: ret,
@@ -308,7 +323,7 @@ router.get('/getShoes/:brand', async (req, res) => {
 //Get request to get shoes by query
 router.get('/searchShoes/:query', async (req, res) => {
   Shoes.find({
-    $or: [{ brand: req.params.query }, { name: { $regex: req.params.query } }],
+    $or: [{ brand: { $regex : new RegExp(req.params.query, "i") } }, { name: { $regex : new RegExp(req.params.query, "i") } }],
   })
     .exec()
     .then((docs) => {

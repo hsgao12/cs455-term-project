@@ -43,13 +43,16 @@ export default function Recommended({f}) {
     const styles = useStyles();
 
     const [shoes, setShoes] = useState([]);
+    const handleClick = () => {
+        window.location.reload();
+    }
 
     useEffect(async () => {
         const res = await Axios.get(`/recommended${f ? "Fast" : ""}/${user.id}`);
         setShoes(res.data);
     }, []);
 
-    return <Container className={styles.rootMain}>
+    return( <Container className={styles.rootMain} onClick={handleClick}>
         <Paper>
                 <Button variant={"contained"} color={"primary"}>
                     Recommended based on recently viewed
@@ -59,6 +62,6 @@ export default function Recommended({f}) {
                 {shoes.map((shoe) => <ShoesCard shoe={shoe}/>)}
             </Paper>
         </Paper>
-    </Container>
+    </Container>);
 
 }

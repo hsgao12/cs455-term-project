@@ -73,10 +73,8 @@ export default function SearchPage(props) {
   const classes = useStyles();
 
   const executeFilter = (filter) => {
-    let tmpArr = [];
-    console.log(filter);
+    let tmpArr = [];;
     if(!filter.price.first && !filter.price.second && !filter.price.third && !filter.price.forth && !filter.price.fifth && !filter.price.sixth && !filter.price.seventh){
-      console.log("am i all not true?");
       tmpArr = [...originalResults];
     } else {
 

@@ -6,6 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import CreditCard from './CreditCard';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -13,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: 'red',
     backgroundColor: '#ffcccc',
+  },
+  scrollBar:{
+    overflow: 'hidden'
   },
   billingInfo: {
     fontWeight: 'bold',
@@ -27,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: theme.spacing(1),
+  },
+  creditCard: {
+    marginTop: theme.spacing(3),
   },
 }));
 
@@ -47,6 +56,7 @@ export default function ProductForBillingInfoForm({
   const [error, setError] = React.useState('');
   const [selectedDate, handleDateChange] = React.useState(null);
   const [open, setOpen] = React.useState(true);
+  const [focus, setFocus] = React.useState('aa');
   const countries = ['Canada', 'US', 'China', 'India'];
 
   const handleSubmit = () => {
@@ -76,40 +86,60 @@ export default function ProductForBillingInfoForm({
     }
   };
 
+  const handleFocus = (event) => {
+    switch (event.target.name) {
+      case 'cvv':
+        setFocus('cvc');
+        break;
+      case 'firstName':
+        setFocus('name');
+        break;
+      case 'lastName':
+        setFocus('name');
+        break;
+      case 'expDate':
+        setFocus('expiry');
+        break;
+      case 'cardNumber':
+        setFocus('number');
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleBack = () => {
-    if(billingInfo.billingInfoType == 'sell'){
+    if (billingInfo.billingInfoType == 'sell') {
       const initialAmount = {
         intitialAmount: '',
         transAmount: '',
         proccessingAmount: '',
         payOut: '',
       };
-  
+
       setAmount(initialAmount);
       setSize('');
-      const initialBillingStatus= {
+      const initialBillingStatus = {
         billingInfo: false,
-        billingInfoType: 'sell'
-      }
+        billingInfoType: 'sell',
+      };
       setBillingInfo(initialBillingStatus);
-    }
-    else if(billingInfo.billingInfoType == 'buy'){
+    } else if (billingInfo.billingInfoType == 'buy') {
       const initialAmount = {
         intitialAmount: '',
         proccessingAmount: '',
         shippingAmount: '',
         total: '',
       };
-  
+
       setAmount(initialAmount);
       setSize('');
-      const initialBillingStatus= {
+      const initialBillingStatus = {
         billingInfo: false,
-        billingInfoType: 'buy'
-      }
+        billingInfoType: 'buy',
+      };
       setBillingInfo(initialBillingStatus);
     }
-   
   };
 
   const onChange = (event) => {
@@ -129,7 +159,7 @@ export default function ProductForBillingInfoForm({
   const [countryText, setCountryText] = React.useState(billingData.country);
 
   return (
-    <div>
+    <div className={classes.scrollBar}>
       <div className={classes.billingInfo}>Billing</div>
       <div>Please choose your billing method</div>
       {error !== '' && (
@@ -137,36 +167,58 @@ export default function ProductForBillingInfoForm({
           <Paper className={classes.paper}>{error}</Paper>
         </Grid>
       )}
+
       <div className={classes.Info}>Credit Card</div>
 
       <FormControl fullWidth className={classes.margin}>
         <Grid container>
-          <Grid item xs={4} sm={4}>
-            <TextField
-              name="cardNumber"
-              label="Card Number"
-              onChange={onChange}
-              value={billingData.cardNumber}
-              variant="outlined"
-            />
+          <Grid item xs={12} sm={6}>
+            <div className={classes.creditCard}>
+              <CreditCard
+                cvc={billingData.cvv}
+                name={billingData.firstName + ' ' + billingData.lastName}
+                expDate={billingData.expDate}
+                number={billingData.cardNumber}
+                focus={focus}
+              />
+            </div>
           </Grid>
-          <Grid item xs={4} sm={4}>
-            <TextField
-              name="cvv"
-              value={billingData.cvv}
-              label="CVV"
-              onChange={onChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <TextField
-              name="expDate"
-              value={billingData.expDate}
-              label="Expiry Date"
-              onChange={handleExpiryDate}
-              variant="outlined"
-            />
+          <Grid item xs={12} sm={6}>
+            <List>
+              <ListItem>
+                <TextField
+                  name="cardNumber"
+                  label="Card Number"
+                  onChange={onChange}
+                  fullWidth
+                  value={billingData.cardNumber}
+                  variant="outlined"
+                  InputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="expDate"
+                  value={billingData.expDate}
+                  fullWidth
+                  label="Expiry Date"
+                  onChange={handleExpiryDate}
+                  variant="outlined"
+                  inputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="cvv"
+                  value={billingData.cvv}
+                  label="CVC"
+                  fullWidth
+                  onChange={onChange}
+                  variant="outlined"
+                  inputProps={{ onFocus: handleFocus }}
+                />
+              </ListItem>
+            </List>
           </Grid>
         </Grid>
         <br></br>
@@ -175,30 +227,45 @@ export default function ProductForBillingInfoForm({
           Billing Info
         </div>
         <br></br>
+        <Grid container spacing={3}>
+        <Grid item xs={6}>
         <TextField
           label="First Name"
           name="firstName"
+          fullWidth
           value={billingData.firstName}
           onChange={onChange}
+          inputProps={{ onFocus: handleFocus }}
           variant="outlined"
-        />
-        <br></br>
+        /></Grid>
+        <Grid item xs={6}>
         <TextField
           label="Last Name"
           name="lastName"
+          fullWidth
           value={billingData.lastName}
           onChange={onChange}
+          inputProps={{ onFocus: handleFocus }}
           variant="outlined"
+        /></Grid>
+       </Grid>
+        <br></br>
+        <TextField
+          label="Address"
+          variant="outlined"
+          name="address"
+          value={billingData.address}
+          onChange={onChange}
         />
         <br></br>
-        <br></br>
+        <Grid container spacing={3}>
+        <Grid item xs>
         <Autocomplete
           options={countries}
           style={{ width: 300 }}
           name="country"
           value={billingData.country}
           onChange={(event, newValue) => {
-            console.log(newValue);
             setBillingData((prevBilling) => ({
               ...prevBilling,
               country: newValue,
@@ -212,17 +279,8 @@ export default function ProductForBillingInfoForm({
             <TextField {...params} label="Country" variant="outlined" />
           )}
         />
-        <br></br>
-        <TextField
-          label="Address"
-          variant="outlined"
-          name="address"
-          value={billingData.address}
-          onChange={onChange}
-        />
-        <br></br>
-        <Grid container>
-          <Grid item xs={6} sm={6}>
+        </Grid>
+          <Grid item xs>
             <TextField
               label="Province"
               name="province"
@@ -231,7 +289,7 @@ export default function ProductForBillingInfoForm({
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs>
             <TextField
               label="Postal Code"
               name="postalCode"
@@ -242,6 +300,8 @@ export default function ProductForBillingInfoForm({
           </Grid>
         </Grid>
       </FormControl>
+      <br></br>
+      <br></br>
       <Grid container>
         <Grid item xs={6} sm={6}>
           <Button

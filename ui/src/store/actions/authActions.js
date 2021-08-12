@@ -57,7 +57,6 @@ export const getUserById = (id) => {
       const res = await axios.get(`/users/getUser/${id}`);
       if (res != null) {
         const userData = res.data.user;
-        console.log(userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -84,10 +83,8 @@ export const signin = (data, onError, setLoginFormOpen) => {
       const res = await firebase
         .auth()
         .signInWithEmailAndPassword(data.email, data.password);
-        console.log("aaaaaaaaaaaaaaaaaaaaaa"+res);
       // TODO: use proper way to get uid
       userIDValue.userID = res.user.uid;
-      console.log(userIDValue.userID);
       dispatch(getUserById(res.user.uid));
       dispatch(setLoading(false));
       setLoginFormOpen(false);
