@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
   rightSide: {
     marginLeft: "auto",
     marginRight: "1em",
-    display: "grid",
     gridTemplateColumns: "auto auto"
   },
   rightSideSmall: {
@@ -72,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 function Navbar(props) {
 
   const { authenticated, loading } = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -101,6 +101,15 @@ function Navbar(props) {
         <div className={styles.rightSide}>
           {authenticated ? (
             <React.Fragment>
+              {user?.isAdmin ? (
+                  <Link to="/Admin" style={{textDecoration: "none"}}>
+                    <ContrastNavButton style={{ height: "100%" }} size={"large"}>
+                            Admin
+                    </ContrastNavButton>
+                  </Link>
+                  ) :
+                  null
+              }
               <Link to="/profile" style={{textDecoration: "none"}}>
                 <ContrastNavButton
                   style={{ height: "100%" }}
@@ -134,6 +143,15 @@ function Navbar(props) {
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
             {authenticated ? (
               <React.Fragment>
+                {user?.isAdmin ? (
+                        <Link to="/Admin" style={{textDecoration: "none"}}>
+                          <ContrastNavButton style={{ height: "100%" }} size={"large"}>
+                            Admin
+                          </ContrastNavButton>
+                        </Link>
+                    ) :
+                    null
+                }
                 <Link to="/profile">
                   <MenuItem>
                     <ContrastNavButton

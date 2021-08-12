@@ -22,7 +22,7 @@ export default function ListingMessage(){
 
     return (
         <div>
-            There is currently {numOflist} listing in our market. And {numOfSold} item has been sold. Keep doing great job.
+            <h5>There is currently {numOflist} listing in our market. And {numOfSold} item has been sold. Keep doing great job.</h5>
         </div>
     );
 
