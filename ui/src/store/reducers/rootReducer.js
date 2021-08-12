@@ -1,19 +1,21 @@
-import { combineReducers } from "redux";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storageSession from 'redux-persist/lib/storage/session';
 
-import authReducer from "./authReducer"; 
-import shoesReducer from "./shoesReducer"; 
+import authReducer from './authReducer';
+import shoesReducer from './shoesReducer';
 
 const persistConfig = {
-    key: 'root', 
-    storage, 
-    whitelist: ["auth", "shoes"]
-}
+  key: 'root',
+  storage: storageSession,
+  whitelist: ['auth', 'shoes'],
+};
 
 const rootReducer = combineReducers({
-    auth: authReducer, 
-    shoes: shoesReducer
-}); 
+  auth: authReducer,
+  shoes: shoesReducer,
+});
 
-export default persistReducer(persistConfig, rootReducer);
+// export default persistReducer(persistConfig, rootReducer);
+
+export default rootReducer;

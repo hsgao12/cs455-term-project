@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore } from 'redux-persist'
+import { persistStore } from 'redux-persist';
 
 import rootReducer from './reducers/rootReducer';
-
 
 export const store = createStore(
   rootReducer,
@@ -13,4 +12,6 @@ export const store = createStore(
 
 export const persistor = persistStore(store);
 
-export default {store, persistor};
+// export default {store, persistor};
+
+export default store;
