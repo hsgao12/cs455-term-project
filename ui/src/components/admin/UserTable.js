@@ -52,7 +52,7 @@ export default function UserTable() {
 
 
     return (
-        <div style={{ height: 400, width: '45%' }}>
+        <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={users}
                 getRowId={(row)=>row.id}
