@@ -159,7 +159,7 @@ export default function ProductForBillingInfoForm({
   const [countryText, setCountryText] = React.useState(billingData.country);
 
   return (
-    <div className={classes.scrollBar}>
+    <div>
       <div className={classes.billingInfo}>Billing</div>
       <div>Please choose your billing method</div>
       {error !== '' && (
