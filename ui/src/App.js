@@ -61,7 +61,35 @@ function App() {
           <Provider store={store}>
             {/* <PersistGate persistor={persistor}> */}
             <Navbar />
-            <CustomSwitch />
+            <Switch>
+              <Route
+                path="/shoes/:shoesId"
+                component={ProductDetailPage}
+                exact
+              />
+              <PrivateRoute path={'/profile'} component={Profile} exact />
+              <Route path="/" component={HomePage} exact />
+              <Route path="/search/:query" component={SearchPage} exact />
+              <Route path="/search" component={SearchPage} exact />
+              <Route
+                path="/ProductSellPage"
+                component={ProductSellPage}
+                exact
+              />
+              <Route path="/ProductBuyPage" component={ProductBuyPage} exact />
+              <Route
+                path="/Admin"
+                render={() => {
+                  return isAdmin ? (
+                    <Redirect to="/Admin" />
+                  ) : (
+                    <Redirect to="/" />
+                  );
+                }}
+                component={Admin}
+              />
+            </Switch>
+
             {/* </PersistGate> */}
           </Provider>
         </Router>
