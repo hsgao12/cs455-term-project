@@ -90,7 +90,7 @@ export default function ProductBuyConfirmation({
     let zeroStock = false;
     await axios.get(`/getSizeAndPrice/${props.location.state.shoe._id}`)
         .then(res => {
-          if(!res.data){
+          if(!res.data || res.data.length == 0){
             zeroStock = true;
           }
           for(let i =0; i<res.data.length;i++){
