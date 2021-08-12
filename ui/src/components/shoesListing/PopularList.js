@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ShoesCard from './ShoesCard';
 import Axios from 'axios';
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -22,13 +23,15 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgb(0,99,64)',
     fontFamily: 'RingsideWideSSm-Medium_Web, sans-serif',
     fontSize: 20,
-    fontWeight: 400,
+    fontWeight: 500,
     textAlign: 'right',
+      cursor: 'pointer',
   },
 }));
 
 export default function PopularList() {
   const [shoes, setShoes] = useState([]);
+  const history = useHistory();
 
   const updateShoes = () => {
     Axios.get('/popularListings')
@@ -43,6 +46,10 @@ export default function PopularList() {
       });
   };
 
+    const handleClick = () => {
+        history.push(`/search/`);
+    }
+
   useEffect(() => {
     updateShoes();
   }, []);
@@ -50,7 +57,7 @@ export default function PopularList() {
   const classes = useStyles();
   return (
     <main className={classes.content}>
-      <a className={classes.button} href={'/search'}>
+      <a className={classes.button} onClick={handleClick}>
         See All
       </a>
       <div className={classes.toolbar} />

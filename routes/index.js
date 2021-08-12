@@ -323,7 +323,7 @@ router.get('/getShoes/:brand', async (req, res) => {
 //Get request to get shoes by query
 router.get('/searchShoes/:query', async (req, res) => {
   Shoes.find({
-    $or: [{ brand: req.params.query }, { name: { $regex: req.params.query } }],
+    $or: [{ brand: { $regex : new RegExp(req.params.query, "i") } }, { name: { $regex : new RegExp(req.params.query, "i") } }],
   })
     .exec()
     .then((docs) => {

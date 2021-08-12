@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import NikeList from "../shoesListing/NikeList";
 import SearchBar from "../searchBar/SearchBar";
 import PopularList from "../shoesListing/PopularList";
-import AdidasList from "../shoesListing/AdidasList";
 import "./homePageStyle.css";
 import {makeStyles} from '@material-ui/core/styles';
 import {Box, Typography} from "@material-ui/core";
 import Background from './mainPPic.jpeg';
+import ShoesList from "../shoesListing/ShoesList";
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -57,13 +56,13 @@ export default function HomePage() {
             <div className={styles.infolists}>
                 <div className={styles.box}>
                     <Typography variant={'h6'} className={styles.boxHeader}>Nike</Typography>
-                    <NikeList/>
+                    <ShoesList term={"Nike"}/>
                 </div>
             </div>
             <div className={styles.infolists}>
                 <div className={styles.box}>
                     <Typography variant={'h6'} className={styles.boxHeader}>Adidas</Typography>
-                    <AdidasList/>
+                    <ShoesList term={"Adidas"}/>
                 </div>
             </div>
         </div>
