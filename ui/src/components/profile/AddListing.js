@@ -85,7 +85,6 @@ const AddListing = (props) => {
   const debouncedEvent = debounce(onChange, 300);
 
   const onOpen = (event) => {
-    console.log(event);
   };
 
   const styles = useStyles();

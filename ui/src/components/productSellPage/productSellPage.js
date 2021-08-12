@@ -88,12 +88,11 @@ export default function ProductSellPage(props) {
     const res = await axios.get(`/getUserBilling/${user.id}`);
     const billing = res.data.billing;
     if (res.data.billing) {
-      console.log(res.data.billing);
       const fetchedBillingInfo = { ...billing.billing, ...billing.payment };
       setBillingData(fetchedBillingInfo);
       setBillingSaved(true);
     }
-    console.log(billingData);
+
   }, []);
   return (
     <div className={classes.root}>

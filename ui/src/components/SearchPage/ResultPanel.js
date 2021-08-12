@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
     maxWidth: '100%',
-    minWidth: '100%',
+    minWidth: 1322,
     margin: 'auto',
   },
   root: {

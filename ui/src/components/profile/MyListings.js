@@ -42,7 +42,6 @@ const MyListings = () => {
     try {
       setLoading(true);
       const res = await axios.delete(`/listing/deleteListing/${id}`);
-      console.log(res);
       const newListings = myListings.filter((item) => { return item._id !== id });
       setMyListings(newListings); 
       setLoading(false);
@@ -54,8 +53,7 @@ const MyListings = () => {
   const editItem = async (id, newSize, newPrice) => {
     try {
       setLoading(true); 
-      let res = await axios.put(`/listing/editListing/${id}`, {price: newPrice, size: newSize}); 
-      console.log(res); 
+      let res = await axios.put(`/listing/editListing/${id}`, {price: newPrice, size: newSize});
       res = await axios.get(`/users/myListings/${user.id}`); 
       setMyListings(res.data.listings); 
       setLoading(false); 

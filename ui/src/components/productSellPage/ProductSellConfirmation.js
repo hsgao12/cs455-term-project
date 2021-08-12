@@ -49,7 +49,6 @@ export default function ProductSellConfirmation({
       size: size.toString(),
     });
     setSellerItemId(response.data);
-    console.log(sellerItemId);
     const billing = {
       userId: user.id,
       billing: {
@@ -78,6 +77,32 @@ export default function ProductSellConfirmation({
       userId: user.id,
     });
     await axios.patch('/updateShoesStockAdd', shoes);
+    //handle price update
+    let minPrice = Number.MAX_SAFE_INTEGER;
+    await axios.get(`/getSizeAndPrice/${props.location.state.shoe._id}`)
+        .then(res => {
+          for(let i =0; i<res.data.length;i++){
+            if(minPrice >= res.data[i].price)
+              minPrice = res.data[i].price;
+          }
+
+        }).catch(err => {
+          console.log(err);
+        });
+
+    let oriShoes = await axios.get(`/sneaker/${props.location.state.shoe._id}`)
+        .then(res => {
+          return res.data;
+        }).catch(err=>{
+          console.log(err);
+        });
+
+    let newShoes = {sneakerId: oriShoes._id, price: oriShoes.price};
+    if(minPrice <= oriShoes.price) {
+      newShoes.price = minPrice;
+      await axios.patch(`/updateSneakerPrice/`, newShoes);
+    }
+
 
     setMessage('Great, the sneaker has been added to the Sale List.');
   };
