@@ -141,9 +141,6 @@ export default function ProductForSaleForm({
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleClose} color="primary">
               Ok
             </Button>
           </DialogActions>
