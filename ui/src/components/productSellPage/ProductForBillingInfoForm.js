@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     backgroundColor: '#ffcccc',
   },
+  scrollBar:{
+    overflow: 'hidden'
+  },
   billingInfo: {
     fontWeight: 'bold',
   },
@@ -156,7 +159,7 @@ export default function ProductForBillingInfoForm({
   const [countryText, setCountryText] = React.useState(billingData.country);
 
   return (
-    <div>
+    <div className={classes.scrollBar}>
       <div className={classes.billingInfo}>Billing</div>
       <div>Please choose your billing method</div>
       {error !== '' && (
