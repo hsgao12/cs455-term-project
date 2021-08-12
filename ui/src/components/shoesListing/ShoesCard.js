@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
   price: {
     fontWeight: '700',
   },
+  lowPrice:{
+    display:'inline',
+    color: 'rgba(0,0,0,0.5)',
+    fontFamily: 'RingsideRegular-Book, sans-serif',
+  },
   link: {
     textDecoration: 'none',
     color: theme.palette.getContrastText(theme.palette.background.default),
@@ -49,11 +54,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ShoesCard({ shoe }) {
+  const history = useHistory();
   const classes = useStyles();
+
+  const handleClick = () => {
+    history.push(`/shoes/${shoe._id}`);
+  }
+
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <Link to={`/shoes/${shoe._id}`} className={classes.link}>
+      <CardActionArea onClick={handleClick}>
           <CardMedia
             className={classes.media}
             image={shoe.img}
@@ -65,14 +75,13 @@ export default function ShoesCard({ shoe }) {
                 {shoe.name}
               </Typography>
               <Typography variant="h5" className={classes.price}>
-                ${shoe.price}
+                <Typography className={classes.lowPrice}>Lowest Ask:</Typography> ${shoe.price}
               </Typography>
               <Typography className={classes.numSale}>
                 #Of Sale: {shoe.numberOfSale}
               </Typography>
             </div>
           </CardContent>
-        </Link>
       </CardActionArea>
     </Card>
   );

@@ -50,11 +50,28 @@ router.post('/addNewSneaker', async (req, res) => {
     });
 });
 
+router.patch('/updateSneakerPrice', async (req, res) => {
+  const shoes = req.body;
+  console.log(shoes);
+  Shoes.updateOne({_id:shoes.sneakerId}, {$set: {price:shoes.price}})
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot update price with id=${shoes.id}. Something Wrong!`,
+          });
+        } else res.send({ message: 'Price was updated successfully.' });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: 'Error updating price with id=' + shoes.id,
+        });
+      });
+});
+
 //update shoes stock
 router.patch('/updateShoesStockAdd', async (req, res) => {
   const shoes = req.body;
   //update stock
-  console.log(shoes.size);
   Shoes.updateOne(
     { _id: shoes.sneakerId, 'stock.size': shoes.size },
     { $inc: { 'stock.$.quantity': 1 } }

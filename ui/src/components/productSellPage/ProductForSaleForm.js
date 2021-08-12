@@ -53,8 +53,6 @@ export default function ProductForSaleForm({
     setOpen(true);
   };
   const handleBillingInfoClick = () => {
-      console.log(size);
-      console.log(amount.intitialAmount);
       if(size == undefined || size == '' ){
         setError("Size cannot be null, please select size of the sneaker for sale");
       }

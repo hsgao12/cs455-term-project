@@ -24,11 +24,8 @@ export default function ProductDetailPage(props) {
     }
     setResultArray(arrayR);
     if (arrayR.length > 0) {
-      console.log(arrayR.length);
       setItemsForPurchaseAvailable(true);
-      console.log(itemsForPurchaseAvailable);
     }
-    console.log(itemsForPurchaseAvailable);
   }
   useEffect(() => {
     Axios.get(`/sneaker/${shoeId}`).then((res) => {

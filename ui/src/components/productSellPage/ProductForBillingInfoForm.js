@@ -84,7 +84,6 @@ export default function ProductForBillingInfoForm({
   };
 
   const handleFocus = (event) => {
-    console.log(event.target.name);
     switch (event.target.name) {
       case 'cvv':
         setFocus('cvc');
@@ -250,7 +249,6 @@ export default function ProductForBillingInfoForm({
           name="country"
           value={billingData.country}
           onChange={(event, newValue) => {
-            console.log(newValue);
             setBillingData((prevBilling) => ({
               ...prevBilling,
               country: newValue,

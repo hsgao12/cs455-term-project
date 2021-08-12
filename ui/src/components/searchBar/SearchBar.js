@@ -6,8 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
-import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,11 +33,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchBar(props) {
+    const history = useHistory();
     const setOpen = props.setOpen;
     const [term, setTerm] = useState(" ");
     const classes = useStyles();
     const handleChange = (event) => {
         setTerm(event.target.value);
+    }
+    const handleKeypress = (event) => {
+        if (event.keyCode === 13) {
+            handleClick(event);
+        }
+    };
+
+    const handleClick = (event) => {
+        history.push(`/search/${term}`);
     }
 
 
@@ -50,15 +59,8 @@ export default function SearchBar(props) {
                 inputProps={{ 'aria-label': 'What are you looking for?' }}
                 onChange={handleChange}
             />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick = {() => {window.location.reload();}}>
-                <Link
-                    to={{
-                        pathname: `/search/${term}`,
-
-                    }}
-                >
+            <IconButton id= "searchbutton11" type="submit" className={classes.iconButton} aria-label="search" onKeyPress={handleKeypress} onClick = {handleClick}>
                     <SearchIcon/>
-                </Link>
             </IconButton>
         </Paper>
     );
