@@ -9,9 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import {LinearProgress, List} from "@material-ui/core";
-import ListingCard from "../profile/ListingCard";
-
+import { LinearProgress, List } from '@material-ui/core';
+import ListingCard from '../profile/ListingCard';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -20,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
-    maxWidth: '1322px',
-    minWidth: '1322px',
+    maxWidth: '100%',
+    minWidth: '100%',
     margin: 'auto',
   },
   root: {
@@ -34,9 +33,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     textAlign: 'right',
   },
-  sortbtn: {
-
-  },
+  sortbtn: {},
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200,
@@ -45,19 +42,25 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   loading: {
-    height:30,
+    height: 30,
     width: '100%',
     marginTop: '30%',
-    marginLeft:'10%'
+    marginLeft: '10%',
   },
 }));
 
-export default function ResultPanel({ results, originalResults, setResults, setOriginalResults, loading }) {
+export default function ResultPanel({
+  results,
+  originalResults,
+  setResults,
+  setOriginalResults,
+  loading,
+}) {
   const [shoes, setShoes] = useState([]);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(24);
   const [originList, setOriginList] = useState([]);
-  const [sort, setSort] = useState("none");
+  const [sort, setSort] = useState('none');
   const classes = useStyles();
 
   const handleChange = (event) => {
@@ -66,8 +69,8 @@ export default function ResultPanel({ results, originalResults, setResults, setO
       setMinIndex(0);
       setMaxIndex(24);
     } else {
-      setMinIndex((value-1) * 24);
-      setMaxIndex((value) * 24);
+      setMinIndex((value - 1) * 24);
+      setMaxIndex(value * 24);
     }
   };
 
@@ -75,45 +78,49 @@ export default function ResultPanel({ results, originalResults, setResults, setO
     let sortValue = event.target.value;
     setSort(sortValue);
     let tmpArr = [...results];
-    switch(sortValue) {
-      case "Highest Price":
-        tmpArr.sort(function(a,b){
-          return b.price-a.price;
+    switch (sortValue) {
+      case 'Highest Price':
+        tmpArr.sort(function (a, b) {
+          return b.price - a.price;
         });
         setResults(tmpArr);
         break;
-      case "Lowest Price":
-        tmpArr.sort(function(a,b){
-          return a.price-b.price;
+      case 'Lowest Price':
+        tmpArr.sort(function (a, b) {
+          return a.price - b.price;
         });
         setResults(tmpArr);
         break;
-      case "Highest Sale":
-        tmpArr.sort(function(a,b){
-          return b.numberOfSale-a.numberOfSale;
+      case 'Highest Sale':
+        tmpArr.sort(function (a, b) {
+          return b.numberOfSale - a.numberOfSale;
         });
         setResults(tmpArr);
         break;
-      case "Lowest Sale":
-        tmpArr.sort(function(a,b){
-          return a.numberOfSale-b.numberOfSale;
+      case 'Lowest Sale':
+        tmpArr.sort(function (a, b) {
+          return a.numberOfSale - b.numberOfSale;
         });
         setResults(tmpArr);
         break;
-      case "None":
+      case 'None':
         setResults([...originalResults]);
       default:
         break;
     }
-  }
-
+  };
 
   if (results.length === 0) {
     return (
-        <div>
-          {loading ? (<LinearProgress className={classes.loading} />) :
-              (<h2>NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS OR SEARCH TERM</h2>)}
-        </div>
+      <div>
+        {loading ? (
+          <LinearProgress className={classes.loading} />
+        ) : (
+          <h2>
+            NOTHING TO SEE HERE! PLEASE CHANGE YOUR FILTERS OR SEARCH TERM
+          </h2>
+        )}
+      </div>
     );
   } else {
     return (
@@ -122,36 +129,35 @@ export default function ResultPanel({ results, originalResults, setResults, setO
           <FormControl variant="filled" className={classes.formControl}>
             <InputLabel id="sort-label">Sort By:{sort}</InputLabel>
             <Select
-                labelId="sort-select-filled-label"
-                id="sort-select-id"
-                onChange={handleSort}
+              labelId="sort-select-filled-label"
+              id="sort-select-id"
+              onChange={handleSort}
             >
-              <MenuItem value="None">
-                Default Order
-              </MenuItem>
-              <MenuItem value={"Highest Price"}>Highest Price </MenuItem>
-              <MenuItem value={"Lowest Price"}>Lowest Price</MenuItem>
-              <MenuItem value={"Highest Sale"}>Highest Sale</MenuItem>
-              <MenuItem value={"Lowest Sale"}>Lowest Sale</MenuItem>
+              <MenuItem value="None">Default Order</MenuItem>
+              <MenuItem value={'Highest Price'}>Highest Price </MenuItem>
+              <MenuItem value={'Lowest Price'}>Lowest Price</MenuItem>
+              <MenuItem value={'Highest Sale'}>Highest Sale</MenuItem>
+              <MenuItem value={'Lowest Sale'}>Lowest Sale</MenuItem>
             </Select>
           </FormControl>
         </div>
         <div className={classes.toolbar} />
         {loading ? (
-            <LinearProgress className={classes.loading} />
+          <LinearProgress className={classes.loading} />
         ) : (
-            <Grid container justify="center" spacing={4}>
-              {results.slice(minIndex, maxIndex).map((shoe) => (
-                  <Grid key={shoe._id} item xs={3}>
-                    <ShoesCard shoe={shoe} />
-                  </Grid>
-              ))}
-            </Grid>
+          <Grid container justify="center" spacing={4}>
+            {results.slice(minIndex, maxIndex).map((shoe) => (
+              <Grid key={shoe._id} item xs={3}>
+                <ShoesCard shoe={shoe} />
+              </Grid>
+            ))}
+          </Grid>
         )}
         <Pagination
-            count={Math.floor(results.length / 24 + 1)}
-            shape="rounded"
-            onChange={handleChange}/>
+          count={Math.floor(results.length / 24 + 1)}
+          shape="rounded"
+          onChange={handleChange}
+        />
       </main>
     );
   }
