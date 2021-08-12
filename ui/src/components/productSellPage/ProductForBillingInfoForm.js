@@ -40,7 +40,9 @@ export default function ProductForBillingInfoForm({
   props,
   size,
   amount,
+  setAmount,
   setSize,
+  billingInfo,
   setBillingInfo,
   setConfirmationInfo,
   billingData,
@@ -105,7 +107,39 @@ export default function ProductForBillingInfoForm({
   };
 
   const handleBack = () => {
-    setBillingInfo(false);
+    if(billingInfo.billingInfoType == 'sell'){
+      const initialAmount = {
+        intitialAmount: '',
+        transAmount: '',
+        proccessingAmount: '',
+        payOut: '',
+      };
+  
+      setAmount(initialAmount);
+      setSize('');
+      const initialBillingStatus= {
+        billingInfo: false,
+        billingInfoType: 'sell'
+      }
+      setBillingInfo(initialBillingStatus);
+    }
+    else if(billingInfo.billingInfoType == 'buy'){
+      const initialAmount = {
+        intitialAmount: '',
+        proccessingAmount: '',
+        shippingAmount: '',
+        total: '',
+      };
+  
+      setAmount(initialAmount);
+      setSize('');
+      const initialBillingStatus= {
+        billingInfo: false,
+        billingInfoType: 'buy'
+      }
+      setBillingInfo(initialBillingStatus);
+    }
+   
   };
 
   const onChange = (event) => {

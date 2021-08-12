@@ -6,7 +6,7 @@ import Axios from "axios";
 import UserTable from "./UserTable";
 import ShoesTable from "./ShoesTable";
 import ListingMessage from "./ListingMessage";
-
+import "./admin.css";
 
 
 
@@ -18,10 +18,19 @@ function Admin() {
     const styles = useStyles();
 
 
-    return (<div>
-            <UserTable/>
-            <ShoesTable/>
-            <ListingMessage/>
+    return (<div className="adminContainer">
+            <div className="headerContainer">
+                <h2>User Table</h2>
+            </div>
+            <div className="tableContainer">
+                <UserTable/>
+            </div>
+            <div className="headerContainer">
+                <h2>Shoes Table</h2>
+            </div>
+            <div className="tableContainer">
+                <ShoesTable/>
+            </div>
         </div>
     );
 }

@@ -52,12 +52,12 @@ export default function UserTable() {
 
 
     return (
-        <div style={{ height: 400, width: '50%' }}>
+        <div style={{ height: 400, width: '45%' }}>
             <DataGrid
                 rows={users}
                 getRowId={(row)=>row.id}
                 columns={columns}
-                pageSize={5}
+                pageSize={50}
                 checkboxSelection
                 disableSelectionOnClick
             />

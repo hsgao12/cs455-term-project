@@ -16,6 +16,7 @@ router.post('/addUser', async (req, res) => {
     id: id,
     firstName: firstName,
     lastName: lastName,
+    isAdmin: false,
   });
 
   try {
