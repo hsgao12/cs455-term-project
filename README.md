@@ -11,7 +11,7 @@
 Developed a website to facilitate the buying/selling of sneakers between users on our website. The website supports sellers being able to list and sell their sneakers, and buyers being able to view listings and purchasing sneakers. We are storing user logins, as well as sale listings and price history to the database, as well as user shipping/purchasing information, and sneaker information. With this data, users will be able to create accounts, view listings, and view the price history of different sneakers they want to purchase. Additional functionally includes recommending sneakers based on previous purchases/page views, and displaying price table.  
 
 ## Task Requirements ##
-
+* - [x] indicates complete [] indicates not completed
 ### Minimum Viable Project Requirements ###
 * - [x] 3UI (seller, buyer, admin) 
 * - [x] Create accounts
@@ -25,28 +25,17 @@ Developed a website to facilitate the buying/selling of sneakers between users o
 * - [x] View price history 
 * - [x] View popular listings 
 * - [x] Implement payment (simulated) saving credit card info to database
-* Upcoming release info
+* - [x] Upcoming release info
 
 ### Stretch Requirements ###
 * - [x] Recommend sneakers
 * - [x] Display price chart
-* -[] 360 degree shoes image
-* -[] Tracking sale process (payment transactions, Delivery)
+* [] 360 degree shoes image
+* [x] Tracking sale process (buy history/sale history)
 
-## Task Breakdown ##
+## Technology Used ##
 
-### Register/Login ### 
-* Registration page UI 
-* Login page UI 
-* Storing login data in DB
-* User authentication
-
-### Shoe Listing ### 
-* Page UI 
-* Fetch product info from DB
-* Fetch seller info from DB 
-
-## Frontend/Backend ## 
+### Frontend/Backend ### 
 * HTML 
 * CSS 
 * Javascript 
@@ -54,6 +43,21 @@ Developed a website to facilitate the buying/selling of sneakers between users o
 * NodeJS 
 * MongoDB
 * materialUI 
+
+### Website Deployment ### 
+* Heroku
+
+## Above and Beyond functionality ##
+* Implemented pagination to display large data items (shoes) on Search page
+* search feature to filter on price and brand
+
+## Next Steps ##
+* Add Seller Reviews
+* 360 degree rotation of shoes
+
+## List of Contributions ##
+* Gurveer Kaur (d3o2b): Worked on navbar using simple javascript, css and facilitated routing to various pages. Database design and implementation of frontend and backend integration for buyer and seller ui to buy/sell sneakers from the app. Api endpoint to post/update/get data from/to saleItem collection and userBillingInfo collection.
+Fetched data from the backend to populate price table with size, quantity and price on product detail page.
 
 ## UI Design ## 
 
